@@ -1,4 +1,4 @@
-package com.example.memchip
+package local.kevin.memchip
 
 import io.flutter.embedding.android.FlutterActivity
 
