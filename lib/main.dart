@@ -7,6 +7,7 @@ import '/storage/storage.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
 import '/ui/router.dart';
+import '/utils/download_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +21,9 @@ void main() async {
   await defaults.init();
   await defaults.load();
 
+  final downmg = DownloadManager();
+  await downmg.init();
+
   runApp(
     MultiProvider(
       providers: [
@@ -30,6 +34,7 @@ void main() async {
           update: (context, value, previous) =>
               (previous is HttpClient) ? (previous..setToken(value.accessToken)) : HttpClient.token(value.accessToken),
         ),
+        ChangeNotifierProvider.value(value: downmg),
       ],
       child: MyApp(),
     ),

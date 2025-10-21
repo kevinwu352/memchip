@@ -20,9 +20,21 @@ Future<bool> direExist(String path) async {
   return exist;
 }
 
+bool direExistSync(String path) {
+  final dir = Directory(path);
+  final exist = dir.existsSync();
+  return exist;
+}
+
 Future<bool> fileExist(String path) async {
   final fil = File(path);
   final exist = await fil.exists();
+  return exist;
+}
+
+bool fileExistSync(String path) {
+  final fil = File(path);
+  final exist = fil.existsSync();
   return exist;
 }
 
