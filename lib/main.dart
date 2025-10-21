@@ -11,7 +11,7 @@ import '/ui/router.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await pathinit();
+  await pathInit();
 
   final secures = Secures();
   await secures.load();
