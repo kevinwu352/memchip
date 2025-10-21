@@ -1,20 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '/l10n/localizations.dart';
 
-void main() {
-  runApp(const MainApp());
+import '/core/core.dart';
+import '/storage/storage.dart';
+import '/network/network.dart';
+import '/theme/theme.dart';
+import '/ui/router.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await pathinit();
+
+  final secures = Secures();
+  await secures.load();
+
+  final defaults = Defaults();
+  await defaults.init();
+  await defaults.load();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: secures),
+        ChangeNotifierProvider.value(value: defaults),
+        ProxyProvider<Secures, Networkable>(
+          create: (context) => HttpClient.token(context.read<Secures>().accessToken),
+          update: (context, value, previous) =>
+              (previous is HttpClient) ? (previous..setToken(value.accessToken)) : HttpClient.token(value.accessToken),
+        ),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    final language = context.select((Defaults v) => v.language);
+    final theme = context.select((Defaults v) => v.theme);
+    return MaterialApp.router(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: language,
+      theme: ThemeData(colorScheme: MySchemes.light),
+      darkTheme: ThemeData(colorScheme: MySchemes.dark),
+      themeMode: theme,
+      routerConfig: router(),
     );
   }
 }
