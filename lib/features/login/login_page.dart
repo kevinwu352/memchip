@@ -6,8 +6,9 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Login')),
-      body: Text('--'),
+      body: SizedBox.expand(
+        child: SafeArea(child: Column(children: [SizedBox(height: 32), Image.asset('assets/images/logo.png')])),
+      ),
     );
   }
 }
