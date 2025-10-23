@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/theme/theme.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -64,8 +65,20 @@ class _LoginPageState extends State<LoginPage> {
                   Image.asset('assets/images/logo.png'),
 
                   SizedBox(height: 80),
-                  SizedBox(width: double.infinity, child: Text('Sign In')),
-                  SizedBox(width: double.infinity, child: Text('Hi there! Nice to see you again.')),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Sign In',
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: MyColors.orange400),
+                    ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      'Hi there! Nice to see you again.',
+                      style: TextStyle(fontSize: 16, color: MyColors.orange400),
+                    ),
+                  ),
 
                   SizedBox(height: 50),
                   TextFormField(
@@ -78,10 +91,11 @@ class _LoginPageState extends State<LoginPage> {
                     cursorErrorColor: Colors.purple,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      labelStyle: TextStyle(color: Colors.green),
+                      labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
                       hintText: 'example@email.com',
+                      hintStyle: TextStyle(fontSize: 14, color: MyColors.gray500),
                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                      enabledBorder: UnderlineInputBorder(),
+                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
                       focusedBorder: UnderlineInputBorder(),
                       errorBorder: UnderlineInputBorder(),
                       focusedErrorBorder: UnderlineInputBorder(),
