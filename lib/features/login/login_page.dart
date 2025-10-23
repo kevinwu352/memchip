@@ -49,117 +49,125 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SizedBox.expand(
         child: Listener(
           onPointerDown: (event) => FocusManager.instance.primaryFocus?.unfocus(),
-          child: SingleChildScrollView(
-            child: SafeArea(
-              minimum: EdgeInsets.symmetric(horizontal: 30),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    SizedBox(height: 32),
-                    Image.asset('assets/images/logo.png'),
+          child: SafeArea(
+            minimum: EdgeInsets.symmetric(horizontal: 30),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  SizedBox(height: 32),
+                  Image.asset('assets/images/logo.png'),
 
-                    SizedBox(height: 80),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        AppLocalizations.of(context)!.login_title,
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: MyColors.orange400),
-                      ),
+                  SizedBox(height: 80),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      AppLocalizations.of(context)!.login_title,
+                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: MyColors.orange400),
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        AppLocalizations.of(context)!.login_subtitle,
-                        style: TextStyle(fontSize: 16, color: MyColors.orange400),
-                      ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Text(
+                      AppLocalizations.of(context)!.login_subtitle,
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: MyColors.orange400),
                     ),
+                  ),
 
-                    SizedBox(height: 50),
-                    TextFormField(
-                      controller: _emailCtr,
-                      validator: (value) => value == null || value.isEmpty ? '' : null,
-                      onChanged: (value) => emailChanged(value),
-                      autocorrect: false,
-                      textCapitalization: TextCapitalization.none,
-                      enableSuggestions: false,
-                      cursorColor: MyColors.gray800,
-                      cursorErrorColor: MyColors.gray800,
-                      style: TextStyle(fontSize: 14, color: MyColors.gray800),
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.login_email_caption,
-                        labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
-                        hintText: 'example@email.com',
-                        hintStyle: TextStyle(fontSize: 14, color: MyColors.gray500),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
-                        errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.violet200, width: 2),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.violet200, width: 2),
-                        ),
-                        // suffix: Text('data'),
-                        suffixIcon: _showEmailClear
-                            ? IconButton(
-                                onPressed: () => emailClear(),
-                                icon: Icon(Icons.cancel),
-                                iconSize: 18,
-                                color: MyColors.gray600,
-                              )
-                            : null,
+                  SizedBox(height: 50),
+                  TextFormField(
+                    controller: _emailCtr,
+                    validator: (value) => value == null || value.isEmpty ? '' : null,
+                    onChanged: (value) => emailChanged(value),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    enableSuggestions: false,
+                    cursorColor: MyColors.gray800,
+                    cursorErrorColor: MyColors.gray800,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.login_email_caption,
+                      labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
+                      hintText: 'example@email.com',
+                      hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
+                      errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
+                      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.violet200, width: 2)),
+                      focusedErrorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: MyColors.violet200, width: 2),
                       ),
+                      suffixIcon: _showEmailClear
+                          ? IconButton(
+                              onPressed: () => emailClear(),
+                              icon: Icon(Icons.cancel),
+                              iconSize: 18,
+                              color: MyColors.gray600,
+                            )
+                          : null,
                     ),
-                    SizedBox(height: 24),
-                    TextFormField(
-                      controller: _codeCtr,
-                      validator: (value) => value == null || value.isEmpty ? '' : null,
-                      onChanged: (value) => codeChanged(value),
-                      autocorrect: false,
-                      textCapitalization: TextCapitalization.none,
-                      enableSuggestions: false,
-                      cursorColor: MyColors.gray800,
-                      cursorErrorColor: MyColors.gray800,
-                      style: TextStyle(fontSize: 14, color: MyColors.gray800),
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.login_code_caption,
-                        labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
-                        hintText: '123456',
-                        hintStyle: TextStyle(fontSize: 14, color: MyColors.gray500),
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
-                        errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.violet200, width: 2),
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: MyColors.violet200, width: 2),
-                        ),
-                        suffixIcon: TextButton(
+                  ),
+                  SizedBox(height: 24),
+                  TextFormField(
+                    controller: _codeCtr,
+                    validator: (value) => value == null || value.isEmpty ? '' : null,
+                    onChanged: (value) => codeChanged(value),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    enableSuggestions: false,
+                    cursorColor: MyColors.gray800,
+                    cursorErrorColor: MyColors.gray800,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                    decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.login_code_caption,
+                      labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
+                      hintText: '123456',
+                      hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
+                      errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
+                      focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.violet200, width: 2)),
+                      focusedErrorBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: MyColors.violet200, width: 2),
+                      ),
+                      suffixIcon: UnconstrainedBox(
+                        child: FilledButton(
+                          style: FilledButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: MyColors.violet200, width: 1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            backgroundColor: MyColors.violet100,
+                            textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            padding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+                            minimumSize: Size.zero,
+                          ),
                           onPressed: () {},
                           child: Text(AppLocalizations.of(context)!.login_code_send),
                         ),
                       ),
                     ),
-                    // Spacer(),
-                    SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        style: FilledButton.styleFrom(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          backgroundColor: MyColors.violet300,
-                          textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                        ),
-                        onPressed: _allValid ? submitAction : null,
-                        child: Text(AppLocalizations.of(context)!.login_submit_caption),
+                  ),
+
+                  Spacer(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        backgroundColor: MyColors.violet300,
+                        textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                       ),
+                      onPressed: _allValid ? submitAction : null,
+                      child: Text(AppLocalizations.of(context)!.login_submit_caption),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
