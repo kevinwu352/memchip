@@ -15,14 +15,18 @@ class _LoginPageState extends State<LoginPage> {
 
   var _showEmailClear = false;
 
+  var _allValid = false;
+
   @override
   void initState() {
     super.initState();
-    _emailCtr.addListener(() {
-      setState(() {
-        _showEmailClear = _emailCtr.text.isNotEmpty;
-      });
-    });
+    // _emailCtr.addListener(() {
+    //   setState(() {
+    //     _showEmailClear = _emailCtr.text.isNotEmpty;
+    //     _allValid = _formKey.currentState!.validate();
+    //     print('all-valid:$_allValid');
+    //   });
+    // });
   }
 
   @override
@@ -30,6 +34,18 @@ class _LoginPageState extends State<LoginPage> {
     _emailCtr.dispose();
     _codeCtr.dispose();
     super.dispose();
+  }
+
+  void emailChanged(String value) {
+    setState(() {
+      _showEmailClear = value.isNotEmpty;
+      _allValid = _formKey.currentState!.validate();
+    });
+  }
+
+  void emailClear() {
+    _emailCtr.clear();
+    emailChanged('');
   }
 
   @override
@@ -54,20 +70,39 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 50),
                   TextFormField(
                     controller: _emailCtr,
-                    validator: (value) => null,
+                    validator: (value) => value == null || value.isEmpty ? '' : null,
+                    onChanged: (value) => emailChanged(value),
+                    autocorrect: false,
+                    textCapitalization: TextCapitalization.none,
+                    enableSuggestions: false,
+                    cursorErrorColor: Colors.purple,
                     decoration: InputDecoration(
                       labelText: 'Email',
+                      labelStyle: TextStyle(color: Colors.green),
                       hintText: 'example@email.com',
                       floatingLabelBehavior: FloatingLabelBehavior.always,
-                      border: UnderlineInputBorder(),
+                      enabledBorder: UnderlineInputBorder(),
+                      focusedBorder: UnderlineInputBorder(),
+                      errorBorder: UnderlineInputBorder(),
+                      focusedErrorBorder: UnderlineInputBorder(),
                       suffixIcon: _showEmailClear
-                          ? IconButton(onPressed: () => _emailCtr.clear(), icon: Icon(Icons.cancel))
+                          ? IconButton(onPressed: () => emailClear(), icon: Icon(Icons.cancel))
                           : null,
                     ),
                   ),
 
                   Spacer(),
-                  TextButton(onPressed: () {}, child: Text('Sign in')),
+                  IconButton(
+                    onPressed: _allValid
+                        ? () {
+                            print('submit');
+                            final val = _formKey.currentState!.validate();
+                            print('valid:$val');
+                          }
+                        : null,
+                    icon: Icon(Icons.run_circle),
+                  ),
+                  // TextButton(onPressed: () {}, child: Text('Sign in')),
                 ],
               ),
             ),
