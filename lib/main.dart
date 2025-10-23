@@ -5,7 +5,7 @@ import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/network/network.dart';
-import '/theme/theme.dart';
+// import '/theme/theme.dart';
 import '/ui/router.dart';
 import '/utils/download_manager.dart';
 
@@ -47,14 +47,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final language = context.select((Defaults v) => v.language);
-    final theme = context.select((Defaults v) => v.theme);
+    // final theme = context.select((Defaults v) => v.theme);
     return MaterialApp.router(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: language,
-      theme: ThemeData(colorScheme: MySchemes.light),
-      darkTheme: ThemeData(colorScheme: MySchemes.dark),
-      themeMode: theme,
+      // theme: ThemeData(colorScheme: MySchemes.light),
+      // darkTheme: ThemeData(colorScheme: MySchemes.dark),
+      // themeMode: theme,
       routerConfig: router(),
     );
   }
