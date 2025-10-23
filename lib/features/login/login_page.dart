@@ -29,14 +29,18 @@ class _LoginPageState extends State<LoginPage> {
   void emailChanged(String value) {
     setState(() {
       _showEmailClear = value.isNotEmpty;
-      _allValid = _formKey.currentState!.validate();
+      validate();
     });
   }
 
   void codeChanged(String value) {
     setState(() {
-      _allValid = _formKey.currentState!.validate();
+      validate();
     });
+  }
+
+  void validate() {
+    _allValid = _emailCtr.text.isNotEmpty && _codeCtr.text.isNotEmpty;
   }
 
   void emailClear() {
@@ -81,32 +85,29 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 50),
                   TextFormField(
                     controller: _emailCtr,
-                    validator: (value) => value == null || value.isEmpty ? '' : null,
                     onChanged: (value) => emailChanged(value),
                     autocorrect: false,
                     textCapitalization: TextCapitalization.none,
                     enableSuggestions: false,
                     cursorColor: MyColors.gray800,
-                    cursorErrorColor: MyColors.gray800,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
                     decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelText: AppLocalizations.of(context)!.login_email_caption,
                       labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
                       hintText: 'example@email.com',
                       hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
-                      errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
                       focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.violet200, width: 2)),
-                      focusedErrorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: MyColors.violet200, width: 2),
-                      ),
                       suffixIcon: _showEmailClear
                           ? IconButton(
                               onPressed: () => emailClear(),
                               icon: Icon(Icons.cancel),
                               iconSize: 18,
                               color: MyColors.gray600,
+                              focusNode: FocusNode(skipTraversal: true),
                             )
                           : null,
                     ),
@@ -114,26 +115,23 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 24),
                   TextFormField(
                     controller: _codeCtr,
-                    validator: (value) => value == null || value.isEmpty ? '' : null,
                     onChanged: (value) => codeChanged(value),
                     autocorrect: false,
                     textCapitalization: TextCapitalization.none,
                     enableSuggestions: false,
                     cursorColor: MyColors.gray800,
-                    cursorErrorColor: MyColors.gray800,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.join,
+                    onFieldSubmitted: (value) => FocusManager.instance.primaryFocus?.unfocus(),
                     decoration: InputDecoration(
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       labelText: AppLocalizations.of(context)!.login_code_caption,
                       labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
                       hintText: '123456',
                       hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
-                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
-                      errorBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
                       focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.violet200, width: 2)),
-                      focusedErrorBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: MyColors.violet200, width: 2),
-                      ),
                       suffixIcon: UnconstrainedBox(
                         child: FilledButton(
                           style: FilledButton.styleFrom(
