@@ -1,6 +1,9 @@
 {
   "@@locale": "en",
-  "welcom_msg": "Hello, {name}!",
-  "some_apples": "Hello, {count, plural, =0{no apples} =1{1 apple} other{{count} apples}}",
-  "escap": "Hello! '{Isn''t}' this''s a wonderful day?"
+  "login_title": "Sign In",
+  "login_subtitle": "Hi there! Nice to see you again.",
+  "login_email_caption": "Email",
+  "login_code_caption": "Code",
+  "login_code_send": "Send",
+  "login_submit_caption": "Sign in"
 }

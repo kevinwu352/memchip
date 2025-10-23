@@ -9,22 +9,20 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String welcom_msg(Object name) {
-    return 'Hello, $name!';
-  }
+  String get login_title => 'Sign In';
 
   @override
-  String some_apples(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count apples',
-      one: '1 apple',
-      zero: 'no apples',
-    );
-    return 'Hello, $_temp0';
-  }
+  String get login_subtitle => 'Hi there! Nice to see you again.';
 
   @override
-  String get escap => 'Hello! {Isn\'t} this\'s a wonderful day?';
+  String get login_email_caption => 'Email';
+
+  @override
+  String get login_code_caption => 'Code';
+
+  @override
+  String get login_code_send => 'Send';
+
+  @override
+  String get login_submit_caption => 'Sign in';
 }

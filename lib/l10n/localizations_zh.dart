@@ -9,22 +9,20 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String welcom_msg(Object name) {
-    return '你好, $name!';
-  }
+  String get login_title => 'Sign In';
 
   @override
-  String some_apples(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count apples',
-      one: '1 apple',
-      zero: 'no apples',
-    );
-    return '你好, $_temp0';
-  }
+  String get login_subtitle => 'Sign In';
 
   @override
-  String get escap => '你好! {Isn\'t} this\'s a wonderful day?';
+  String get login_email_caption => 'Email';
+
+  @override
+  String get login_code_caption => 'Code';
+
+  @override
+  String get login_code_send => 'Send';
+
+  @override
+  String get login_submit_caption => 'Sign in';
 }

@@ -98,23 +98,41 @@ abstract class AppLocalizations {
     Locale('zh'),
   ];
 
-  /// No description provided for @welcom_msg.
+  /// No description provided for @login_title.
   ///
   /// In en, this message translates to:
-  /// **'Hello, {name}!'**
-  String welcom_msg(Object name);
+  /// **'Sign In'**
+  String get login_title;
 
-  /// No description provided for @some_apples.
+  /// No description provided for @login_subtitle.
   ///
   /// In en, this message translates to:
-  /// **'Hello, {count, plural, =0{no apples} =1{1 apple} other{{count} apples}}'**
-  String some_apples(num count);
+  /// **'Hi there! Nice to see you again.'**
+  String get login_subtitle;
 
-  /// No description provided for @escap.
+  /// No description provided for @login_email_caption.
   ///
   /// In en, this message translates to:
-  /// **'Hello! \'{Isn\'\'t}\' this\'\'s a wonderful day?'**
-  String get escap;
+  /// **'Email'**
+  String get login_email_caption;
+
+  /// No description provided for @login_code_caption.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get login_code_caption;
+
+  /// No description provided for @login_code_send.
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get login_code_send;
+
+  /// No description provided for @login_submit_caption.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in'**
+  String get login_submit_caption;
 }
 
 class _AppLocalizationsDelegate

@@ -52,6 +52,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: language,
+      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
       // theme: ThemeData(colorScheme: MySchemes.light),
       // darkTheme: ThemeData(colorScheme: MySchemes.dark),
       // themeMode: theme,
