@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-// import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 import '/features/home/home_page.dart';
 import '/features/login/login_page.dart';
@@ -15,7 +15,10 @@ GoRouter router() => GoRouter(
   initialLocation: Routes.home,
   routes: [
     GoRoute(path: Routes.home, builder: (context, state) => HomePage()),
-    GoRoute(path: Routes.login, builder: (context, state) => LoginPage()),
+    GoRoute(
+      path: Routes.login,
+      builder: (context, state) => LoginPage.create(network: context.read()),
+    ),
     GoRoute(path: Routes.about, builder: (context, state) => AboutPage()),
   ],
 );
