@@ -57,6 +57,6 @@ Res parse<T>(String str, [T Function(Map<String, dynamic>)? init]) {
     }
     return res;
   } catch (e) {
-    throw HttpError.decodeError();
+    throw HttpError.decode;
   }
 }

@@ -32,7 +32,7 @@ final class HttpClient implements Networkable {
       final response = await _req(api);
       return Result.ok(response);
     } catch (e) {
-      final error = e is HttpError ? e : HttpError.unknownError();
+      final error = e is HttpError ? e : HttpError.unknown;
       return Result.error(error);
     }
   }
@@ -44,7 +44,7 @@ final class HttpClient implements Networkable {
       final res = await compute((message) => parse(message, init), response.body);
       return Result.ok(res);
     } catch (e) {
-      final error = e is HttpError ? e : HttpError.unknownError();
+      final error = e is HttpError ? e : HttpError.unknown;
       return Result.error(error);
     }
   }
@@ -63,10 +63,10 @@ final class HttpClient implements Networkable {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return response;
       } else {
-        throw HttpError.statusError();
+        throw HttpError.status;
       }
     } catch (e) {
-      throw e is HttpError ? e : HttpError.networkError();
+      throw e is HttpError ? e : HttpError.network;
     }
   }
 }

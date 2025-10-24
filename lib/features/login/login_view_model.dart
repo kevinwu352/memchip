@@ -51,7 +51,7 @@ final class LoginViewModel extends ChangeNotifier {
   void sendCode(String email) async {
     try {
       // await Future.delayed(Duration(seconds: 1));
-      // snack.value = HttpError.networkError().toString();
+      // snack.value = HttpError.network.toString();
       final result = await _network.reqRes(Api.accountSendCode(email), null);
       switch (result) {
         case Ok():
@@ -59,13 +59,13 @@ final class LoginViewModel extends ChangeNotifier {
           if (res.success) {
             snack.value = res.message;
           } else {
-            throw HttpError.operationFailed();
+            throw HttpError.operation;
           }
         case Error():
           throw result.error;
       }
     } catch (e) {
-      final err = e is HttpError ? e : HttpError.unknownError();
+      final err = e is HttpError ? e : HttpError.unknown;
       snack.value = err.toString();
     }
   }
