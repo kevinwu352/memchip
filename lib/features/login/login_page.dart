@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onSnack() {
     widget.vm.snack.addListener(() {
-      final msg = widget.vm.snack.value;
+      final msg = widget.vm.snack.value?.localized(context);
       if (msg != null) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }
