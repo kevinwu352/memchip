@@ -44,20 +44,29 @@ final class LoginViewModel extends ChangeNotifier {
   }
 
   void sendAction() {
+    if (_sending) return;
     sendCode(emailController.text);
-    startCounting();
+  }
+
+  var _sending = false;
+  bool get sending => _sending;
+  set sending(bool value) {
+    _sending = value;
+    notifyListeners();
   }
 
   void sendCode(String email) async {
     try {
-      // await Future.delayed(Duration(seconds: 1));
-      // snack.value = HttpError.network.toString();
+      sending = true;
       final result = await _network.reqRes(Api.accountSendCode(email), null);
+      sending = false;
+
       switch (result) {
         case Ok():
           final res = result.value;
           if (res.success) {
             snack.value = LocaleString(res.message);
+            startCounting();
           } else {
             throw HttpError.operation;
           }

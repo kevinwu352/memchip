@@ -116,18 +116,20 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide: BorderSide(color: MyColors.violet200, width: 2),
                         ),
                         suffixIcon: UnconstrainedBox(
-                          child: FilledButton(
-                            style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                              backgroundColor: MyColors.violet100,
-                              textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              padding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
-                              minimumSize: Size.zero,
-                            ),
-                            onPressed: widget.vm.sendEnabled ? widget.vm.sendAction : null,
-                            child: Text(AppLocalizations.of(context)!.login_code_send(widget.vm.countdown)),
-                          ),
+                          child: widget.vm.sending
+                              ? CircularProgressIndicator(constraints: BoxConstraints(minWidth: 24, minHeight: 24))
+                              : FilledButton(
+                                  style: FilledButton.styleFrom(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                                    backgroundColor: MyColors.violet100,
+                                    textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
+                                    minimumSize: Size.zero,
+                                  ),
+                                  onPressed: widget.vm.sendEnabled ? widget.vm.sendAction : null,
+                                  child: Text(AppLocalizations.of(context)!.login_code_send(widget.vm.countdown)),
+                                ),
                         ),
                       ),
                     ),
@@ -159,8 +161,10 @@ class _LoginPageState extends State<LoginPage> {
     widget.vm.snack.addListener(() {
       final msg = widget.vm.snack.value?.localized(context);
       if (msg != null) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }
+      widget.vm.snack.value = null;
     });
   }
 }
