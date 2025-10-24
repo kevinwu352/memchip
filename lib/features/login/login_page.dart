@@ -18,31 +18,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   void dispose() {
-    widget.vm.dis();
+    widget.vm.dispose();
     super.dispose();
   }
-
-  // void sendAction() {
-  //   setState(() {
-  //     countdown = 60;
-  //   });
-  //   Timer.periodic(Duration(seconds: 1), (timer) {
-  //     if (!mounted) {
-  //       // print('tick: unmounted cancel');
-  //       timer.cancel();
-  //       return;
-  //     }
-  //     if (countdown > 0) {
-  //       // print('tick: $_countdown next');
-  //       setState(() {
-  //         countdown -= 1;
-  //       });
-  //     } else {
-  //       // print('tick: $_countdown cancel');
-  //       timer.cancel();
-  //     }
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                       cursorColor: MyColors.gray800,
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
                       keyboardType: TextInputType.text,
-                      textInputAction: TextInputAction.join,
+                      textInputAction: TextInputAction.done,
                       onFieldSubmitted: (value) => FocusManager.instance.primaryFocus?.unfocus(),
                       decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,

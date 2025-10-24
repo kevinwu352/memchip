@@ -60,16 +60,12 @@ final class LoginViewModel extends ChangeNotifier {
     //     }
   }
 
+  Timer? timer;
   void startCounting() {
     countdown = 60;
     notifyListeners();
 
-    Timer.periodic(Duration(seconds: 1), (timer) {
-      // if (!mounted) {
-      //   // print('tick: unmounted cancel');
-      //   timer.cancel();
-      //   return;
-      // }
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (countdown > 0) {
         print('tick: $countdown next');
         countdown -= 1;
@@ -85,10 +81,11 @@ final class LoginViewModel extends ChangeNotifier {
     print('qwerty');
   }
 
-  // @override
-  void dis() {
+  @override
+  void dispose() {
     emailController.dispose();
     codeController.dispose();
-    // super.dispose();
+    timer?.cancel();
+    super.dispose();
   }
 }
