@@ -125,8 +125,8 @@ abstract class AppLocalizations {
   /// No description provided for @login_code_send.
   ///
   /// In en, this message translates to:
-  /// **'Send'**
-  String get login_code_send;
+  /// **'Send{seconds, plural, =0{} other{ ({seconds})}}'**
+  String login_code_send(num seconds);
 
   /// No description provided for @login_submit_caption.
   ///

@@ -21,7 +21,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_code_caption => 'Code';
 
   @override
-  String get login_code_send => 'Send';
+  String login_code_send(num seconds) {
+    String _temp0 = intl.Intl.pluralLogic(
+      seconds,
+      locale: localeName,
+      other: ' ($seconds)',
+      zero: '',
+    );
+    return 'Send$_temp0';
+  }
 
   @override
   String get login_submit_caption => 'Sign in';

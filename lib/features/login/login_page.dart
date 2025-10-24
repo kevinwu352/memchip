@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import '/l10n/localizations.dart';
 import '/theme/theme.dart';
@@ -15,9 +16,14 @@ class _LoginPageState extends State<LoginPage> {
   final _emailCtr = TextEditingController();
   final _codeCtr = TextEditingController();
 
-  var _showEmailClear = false;
+  var _showClear = false;
 
   var _allValid = false;
+  var _emailValid = false;
+
+  int _countdown = 0;
+
+  bool get _sendEnabled => _emailValid && _countdown <= 0;
 
   @override
   void dispose() {
@@ -28,7 +34,8 @@ class _LoginPageState extends State<LoginPage> {
 
   void emailChanged(String value) {
     setState(() {
-      _showEmailClear = value.isNotEmpty;
+      _showClear = value.isNotEmpty;
+      _emailValid = value.isNotEmpty;
       validate();
     });
   }
@@ -43,12 +50,36 @@ class _LoginPageState extends State<LoginPage> {
     _allValid = _emailCtr.text.isNotEmpty && _codeCtr.text.isNotEmpty;
   }
 
-  void emailClear() {
+  void clearAction() {
     _emailCtr.clear();
     emailChanged('');
   }
 
-  void submitAction() {}
+  void sendAction() {
+    setState(() {
+      _countdown = 60;
+    });
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        // print('tick: unmounted cancel');
+        timer.cancel();
+        return;
+      }
+      if (_countdown > 0) {
+        // print('tick: $_countdown next');
+        setState(() {
+          _countdown -= 1;
+        });
+      } else {
+        // print('tick: $_countdown cancel');
+        timer.cancel();
+      }
+    });
+  }
+
+  void submitAction() {
+    print('qwerty');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,9 +132,9 @@ class _LoginPageState extends State<LoginPage> {
                       hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
                       enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.gray300, width: 2)),
                       focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: MyColors.violet200, width: 2)),
-                      suffixIcon: _showEmailClear
+                      suffixIcon: _showClear
                           ? IconButton(
-                              onPressed: () => emailClear(),
+                              onPressed: () => clearAction(),
                               icon: Icon(Icons.cancel),
                               iconSize: 18,
                               color: MyColors.gray600,
@@ -135,18 +166,15 @@ class _LoginPageState extends State<LoginPage> {
                       suffixIcon: UnconstrainedBox(
                         child: FilledButton(
                           style: FilledButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: MyColors.violet200, width: 1),
-                              borderRadius: BorderRadius.circular(4),
-                            ),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                             backgroundColor: MyColors.violet100,
                             textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                             padding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
                             minimumSize: Size.zero,
                           ),
-                          onPressed: () {},
-                          child: Text(AppLocalizations.of(context)!.login_code_send),
+                          onPressed: _sendEnabled ? sendAction : null,
+                          child: Text(AppLocalizations.of(context)!.login_code_send(_countdown)),
                         ),
                       ),
                     ),

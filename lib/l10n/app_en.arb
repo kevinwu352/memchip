@@ -4,6 +4,6 @@
   "login_subtitle": "Hi there! Nice to see you again.",
   "login_email_caption": "Email",
   "login_code_caption": "Code",
-  "login_code_send": "Send",
+  "login_code_send": "Send{seconds, plural, =0{} other{ ({seconds})}}",
   "login_submit_caption": "Sign in"
 }
