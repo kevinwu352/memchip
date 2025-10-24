@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '/core/core.dart';
 import '/network/network.dart';
+import '/utils/api.dart';
 
 final class LoginViewModel extends ChangeNotifier {
   LoginViewModel({required Networkable network}) : _network = network;
   final Networkable _network;
+
+  ValueNotifier<String?> snack = ValueNotifier(null);
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -40,24 +44,25 @@ final class LoginViewModel extends ChangeNotifier {
   }
 
   void sendAction() {
-    sendCode();
+    sendCode(emailController.text);
     startCounting();
   }
 
-  void sendCode() {
-    //     try {
-    //       final network = context.read<Networkable>();
-    //       final res = await network.reqRaw(Api.accountSendCode('wuhp@proton.me'));
-    //       switch (res) {
-    //         case Ok():
-    //           print('done');
-    //         case Error():
-    //           print(res.error);
-    //       }
-    //     } catch (e) {
-    //       final error = e is HttpError ? e : HttpError.unknownError();
-    //       print(error);
-    //     }
+  void sendCode(String email) async {
+    try {
+      // await Future.delayed(Duration(seconds: 1));
+      // snack.value = HttpError.networkError().toString();
+      final res = await _network.reqRaw(Api.accountSendCode(email));
+      switch (res) {
+        case Ok():
+          break;
+        case Error():
+          snack.value = res.error.toString();
+      }
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknownError();
+      snack.value = err.toString();
+    }
   }
 
   Timer? timer;
@@ -67,11 +72,11 @@ final class LoginViewModel extends ChangeNotifier {
 
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (countdown > 0) {
-        print('tick: $countdown next');
+        // print('tick: $countdown next');
         countdown -= 1;
         notifyListeners();
       } else {
-        print('tick: $countdown cancel');
+        // print('tick: $countdown cancel');
         timer.cancel();
       }
     });
@@ -86,6 +91,7 @@ final class LoginViewModel extends ChangeNotifier {
     emailController.dispose();
     codeController.dispose();
     timer?.cancel();
+    snack.dispose();
     super.dispose();
   }
 }

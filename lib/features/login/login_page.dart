@@ -17,6 +17,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
+  void initState() {
+    super.initState();
+    _onSnack();
+  }
+
+  @override
   void dispose() {
     widget.vm.dispose();
     super.dispose();
@@ -147,5 +153,14 @@ class _LoginPageState extends State<LoginPage> {
         },
       ),
     );
+  }
+
+  void _onSnack() {
+    widget.vm.snack.addListener(() {
+      final msg = widget.vm.snack.value;
+      if (msg != null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
+      }
+    });
   }
 }
