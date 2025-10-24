@@ -9,6 +9,21 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
+  String get http_error_unknown => 'Unknown Error zh';
+
+  @override
+  String get http_error_network => 'Network Error zh';
+
+  @override
+  String get http_error_status => 'Status Error zh';
+
+  @override
+  String get http_error_decode => 'Decode Error zh';
+
+  @override
+  String get http_error_operation => 'Operation Failed zh';
+
+  @override
   String get login_title => 'Sign In';
 
   @override

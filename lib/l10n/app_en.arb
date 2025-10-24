@@ -1,5 +1,10 @@
 {
   "@@locale": "en",
+  "http_error_unknown": "Unknown Error en",
+  "http_error_network": "Network Error en",
+  "http_error_status": "Status Error en",
+  "http_error_decode": "Decode Error en",
+  "http_error_operation": "Operation Failed en",
   "login_title": "Sign In",
   "login_subtitle": "Hi there! Nice to see you again.",
   "login_email_caption": "Email",

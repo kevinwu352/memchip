@@ -1,5 +1,10 @@
 {
   "@@locale": "zh",
+  "http_error_unknown": "Unknown Error zh",
+  "http_error_network": "Network Error zh",
+  "http_error_status": "Status Error zh",
+  "http_error_decode": "Decode Error zh",
+  "http_error_operation": "Operation Failed zh",
   "login_title": "Sign In",
   "login_subtitle": "Sign In",
   "login_email_caption": "Email",

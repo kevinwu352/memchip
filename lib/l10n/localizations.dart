@@ -98,6 +98,36 @@ abstract class AppLocalizations {
     Locale('zh'),
   ];
 
+  /// No description provided for @http_error_unknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Error en'**
+  String get http_error_unknown;
+
+  /// No description provided for @http_error_network.
+  ///
+  /// In en, this message translates to:
+  /// **'Network Error en'**
+  String get http_error_network;
+
+  /// No description provided for @http_error_status.
+  ///
+  /// In en, this message translates to:
+  /// **'Status Error en'**
+  String get http_error_status;
+
+  /// No description provided for @http_error_decode.
+  ///
+  /// In en, this message translates to:
+  /// **'Decode Error en'**
+  String get http_error_decode;
+
+  /// No description provided for @http_error_operation.
+  ///
+  /// In en, this message translates to:
+  /// **'Operation Failed en'**
+  String get http_error_operation;
+
   /// No description provided for @login_title.
   ///
   /// In en, this message translates to:

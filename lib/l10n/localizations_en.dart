@@ -9,6 +9,21 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get http_error_unknown => 'Unknown Error en';
+
+  @override
+  String get http_error_network => 'Network Error en';
+
+  @override
+  String get http_error_status => 'Status Error en';
+
+  @override
+  String get http_error_decode => 'Decode Error en';
+
+  @override
+  String get http_error_operation => 'Operation Failed en';
+
+  @override
   String get login_title => 'Sign In';
 
   @override
