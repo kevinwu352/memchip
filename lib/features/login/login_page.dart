@@ -1,7 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/l10n/localizations.dart';
+import '/core/core.dart';
 import '/theme/theme.dart';
+import '/network/network.dart';
+import '/utils/api.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -75,6 +79,23 @@ class _LoginPageState extends State<LoginPage> {
         timer.cancel();
       }
     });
+    sendCode();
+  }
+
+  void sendCode() async {
+    try {
+      final network = context.read<Networkable>();
+      final res = await network.reqRaw(Api.accountSendCode('wuhp@proton.me'));
+      switch (res) {
+        case Ok():
+          print('done');
+        case Error():
+          print(res.error);
+      }
+    } catch (e) {
+      final error = e is HttpError ? e : HttpError.unknownError();
+      print(error);
+    }
   }
 
   void submitAction() {

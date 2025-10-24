@@ -16,8 +16,7 @@ final class HttpClient implements Networkable {
   final String host;
   final Map<String, String> headers;
 
-  HttpClient.token(String? token) : host = 'dummyjson.com', headers = {'token': ?token};
-  // HttpClient.token(String? token) : host = 'www.testingmcafeesites.com', headers = {'token': ?token};
+  HttpClient.token(String? token) : host = 'apiuniapp.paoxiaokeji.com', headers = {'token': ?token};
 
   void setToken(String? token) {
     if (token is String) {
