@@ -10,6 +10,8 @@ class Res {
 
   Res.fromJson(Map<String, dynamic> json) : code = json['code'] as int, message = json['message'] as String;
 
+  bool get success => code == 200;
+
   T? getObject<T>() => data is T ? data as T : null;
   List<T>? getList<T>() => data is List ? (data as List).whereType<T>().toList() : null;
 }
