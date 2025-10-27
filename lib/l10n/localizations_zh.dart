@@ -24,6 +24,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get http_error_operation => 'Operation Failed zh';
 
   @override
+  String get http_success => 'Done zh';
+
+  @override
   String get login_title => 'Sign In';
 
   @override

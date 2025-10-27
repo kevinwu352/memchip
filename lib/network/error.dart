@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memchip/l10n/localizations.dart';
 import '/core/core.dart';
 
-enum HttpError implements Exception, Localizable {
+enum HttpError implements Exception, Localable {
   unknown,
   network,
   status,

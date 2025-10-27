@@ -8,7 +8,7 @@ final class LoginViewModel extends ChangeNotifier {
   LoginViewModel({required Networkable network}) : _network = network;
   final Networkable _network;
 
-  ValueNotifier<Localizable?> snack = ValueNotifier(null);
+  ValueNotifier<Localable?> snack = ValueNotifier(null);
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -66,7 +66,7 @@ final class LoginViewModel extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            snack.value = LocaleString(res.message);
+            snack.value = LocaledStr(res.message);
             startCounting();
           } else {
             throw HttpError.operation;

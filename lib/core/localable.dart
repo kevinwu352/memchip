@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-abstract class Localizable {
+abstract class Localable {
   String? localized(BuildContext? context);
 }
 
-class LocaleString implements Localizable {
-  LocaleString(this.raw);
+class LocaledStr implements Localable {
+  LocaledStr(this.raw);
   final String raw;
   @override
   String? localized(BuildContext? context) => raw;

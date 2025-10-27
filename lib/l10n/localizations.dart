@@ -128,6 +128,12 @@ abstract class AppLocalizations {
   /// **'Operation Failed en'**
   String get http_error_operation;
 
+  /// No description provided for @http_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Done en'**
+  String get http_success;
+
   /// No description provided for @login_title.
   ///
   /// In en, this message translates to:

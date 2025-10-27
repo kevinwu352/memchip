@@ -24,6 +24,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get http_error_operation => 'Operation Failed en';
 
   @override
+  String get http_success => 'Done en';
+
+  @override
   String get login_title => 'Sign In';
 
   @override
