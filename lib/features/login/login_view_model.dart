@@ -44,6 +44,7 @@ final class LoginViewModel extends ChangeNotifier {
   }
 
   void sendAction() {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (_sending) return;
     sendCode(emailController.text);
   }
@@ -97,6 +98,7 @@ final class LoginViewModel extends ChangeNotifier {
   }
 
   void submitAction() {
+    FocusManager.instance.primaryFocus?.unfocus();
     print('qwerty');
   }
 

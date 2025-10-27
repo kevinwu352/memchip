@@ -46,6 +46,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initSafeMetrics(MediaQuery.viewPaddingOf(context));
+
     final language = context.select((Defaults v) => v.language);
     // final theme = context.select((Defaults v) => v.theme);
     return MaterialApp.router(

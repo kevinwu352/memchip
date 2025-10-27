@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/l10n/localizations.dart';
+import '/core/core.dart';
 import '/theme/theme.dart';
 import '/network/network.dart';
 import 'login_view_model.dart';
@@ -36,8 +37,8 @@ class _LoginPageState extends State<LoginPage> {
         listenable: widget.vm,
         builder: (context, child) {
           return SizedBox.expand(
-            child: SafeArea(
-              minimum: EdgeInsets.symmetric(horizontal: 30),
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(30, kSafeTop, 30, kSafeBot),
               child: Form(
                 key: widget.vm.formKey,
                 child: Column(
@@ -65,6 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       controller: widget.vm.emailController,
                       onChanged: widget.vm.emailChanged,
+                      onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                       autocorrect: false,
                       textCapitalization: TextCapitalization.none,
                       enableSuggestions: false,
@@ -97,6 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       controller: widget.vm.codeController,
                       onChanged: widget.vm.codeChanged,
+                      onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                       autocorrect: false,
                       textCapitalization: TextCapitalization.none,
                       enableSuggestions: false,
@@ -116,20 +119,22 @@ class _LoginPageState extends State<LoginPage> {
                           borderSide: BorderSide(color: MyColors.violet200, width: 2),
                         ),
                         suffixIcon: UnconstrainedBox(
-                          child: widget.vm.sending
-                              ? CircularProgressIndicator(constraints: BoxConstraints(minWidth: 24, minHeight: 24))
-                              : FilledButton(
-                                  style: FilledButton.styleFrom(
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                    backgroundColor: MyColors.violet100,
-                                    textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    padding: EdgeInsets.symmetric(vertical: 4, horizontal: 20),
-                                    minimumSize: Size.zero,
-                                  ),
-                                  onPressed: widget.vm.sendEnabled ? widget.vm.sendAction : null,
-                                  child: Text(AppLocalizations.of(context)!.login_code_send(widget.vm.countdown)),
-                                ),
+                          child: FilledButton(
+                            style: FilledButton.styleFrom(
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                              backgroundColor: MyColors.violet100,
+                              textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              minimumSize: Size(82, 24),
+                            ),
+                            onPressed: widget.vm.sendEnabled ? widget.vm.sendAction : null,
+                            child: widget.vm.sending
+                                ? CircularProgressIndicator(
+                                    color: Colors.white,
+                                    constraints: BoxConstraints(minWidth: 16, minHeight: 16),
+                                  )
+                                : Text(AppLocalizations.of(context)!.login_code_send(widget.vm.countdown)),
+                          ),
                         ),
                       ),
                     ),

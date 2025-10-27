@@ -8,3 +8,5 @@ export 'localizable.dart';
 export 'decode.dart';
 export 'result.dart';
 export 'command.dart';
+
+export 'metrics.dart';
