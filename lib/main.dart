@@ -1,3 +1,4 @@
+// import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '/l10n/localizations.dart';
@@ -13,6 +14,7 @@ import '/utils/download_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // debugPaintSizeEnabled = true;
 
   await pathInit();
 

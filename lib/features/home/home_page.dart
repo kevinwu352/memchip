@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:memchip/theme/colors.dart';
-// import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
-// import '/ui/router.dart';
+import '/theme/theme.dart';
+import '/ui/router.dart';
+import '/models/user_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,15 +22,11 @@ class _HomePageState extends State<HomePage> {
       body: SizedBox.expand(
         child: Column(
           children: [
-            // Container(
-            //   padding: EdgeInsets.only(top: kSafeTop),
-            //   width: double.infinity,
-            //   color: Colors.blue,
-            //   child: Text('data'),
-            // ),
-            SizedBox(height: kSafeTop),
-
-            _HeaderView(),
+            Selector<Defaults, UserModel?>(
+              selector: (_, object) => object.user,
+              builder: (context, value, child) =>
+                  _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, email: value?.email),
+            ),
 
             Selector<Secures, bool>(
               selector: (_, object) => object.showLogin,
@@ -67,7 +64,7 @@ class _HomePageState extends State<HomePage> {
 // }
 
 class _HeaderView extends StatelessWidget {
-  const _HeaderView({super.key, this.avatarUrl, this.nickname, this.email});
+  const _HeaderView({this.avatarUrl, this.nickname, this.email});
 
   final String? avatarUrl;
   final String? nickname;
@@ -75,41 +72,60 @@ class _HeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        CachedNetworkImage(
-          // imageUrl: 'https://picsum.photos/200',
-          // imageUrl: 'https://www.asdf1234.com/abcdef.jpg',
-          // imageUrl: 'https://mock.httpstatus.io/200?delay=16000',
-          imageUrl: avatarUrl ?? '',
-          placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
-          errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
-          width: 48,
-          height: 48,
-        ),
-        SizedBox(width: 12),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(30, kSafeTop + 30, 30, 30),
+      child: Row(
+        children: [
+          CachedNetworkImage(
+            // imageUrl: 'https://picsum.photos/200',
+            // imageUrl: 'https://www.asdf1234.com/abcdef.jpg',
+            // imageUrl: 'https://mock.httpstatus.io/200?delay=16000',
+            imageUrl: avatarUrl ?? '',
+            placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
+            errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
+            width: 48,
+            height: 48,
+          ),
 
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'title',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
-            ),
+          SizedBox(width: 12),
 
-            Row(
+          Expanded(
+            child: Column(
               children: [
-                Image.asset('assets/images/account_phmail.png'),
-                SizedBox(width: 4),
-                Text(
-                  'sub',
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray600),
+                Row(
+                  children: [
+                    Text(
+                      nickname ?? 'title',
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
+                    ),
+                    Spacer(),
+                    IconButton(
+                      onPressed: () => context.push(Routes.about),
+                      icon: Image.asset('assets/images/account_more.png'),
+                      style: IconButton.styleFrom(
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size.zero,
+                      ),
+                    ),
+                  ],
+                ),
+
+                Row(
+                  children: [
+                    Image.asset('assets/images/account_phomail.png'),
+                    SizedBox(width: 4),
+                    Text(
+                      email ?? 'subtitle',
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray600),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
