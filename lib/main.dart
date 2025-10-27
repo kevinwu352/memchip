@@ -6,7 +6,7 @@ import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/network/network.dart';
-// import '/theme/theme.dart';
+import '/theme/theme.dart';
 
 // import '/models/user_model.dart';
 import '/ui/router.dart';
@@ -58,7 +58,10 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: language,
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+      theme: ThemeData(
+        scaffoldBackgroundColor: Colors.white,
+        appBarTheme: AppBarThemeData(backgroundColor: MyColors.violet300, foregroundColor: Colors.white),
+      ),
       // theme: ThemeData(colorScheme: MySchemes.light),
       // darkTheme: ThemeData(colorScheme: MySchemes.dark),
       // themeMode: theme,
