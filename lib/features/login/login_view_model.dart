@@ -1,13 +1,19 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '/core/core.dart';
+import '/storage/storage.dart';
 import '/network/network.dart';
 import '/models/user_model.dart';
 import '/utils/api.dart';
 
 final class LoginViewModel extends ChangeNotifier {
-  LoginViewModel({required Networkable network}) : _network = network;
+  LoginViewModel({required Networkable network, required Secures secures, required Defaults defaults})
+    : _network = network,
+      _secures = secures,
+      _defaults = defaults;
   final Networkable _network;
+  final Secures _secures;
+  final Defaults _defaults;
 
   ValueNotifier<Localable?> snack = ValueNotifier(null);
 
@@ -116,7 +122,7 @@ final class LoginViewModel extends ChangeNotifier {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.accountCheckCode(email, code), UserModel.fromJson);
+      final result = await _network.reqRes(Api.accountCheckCode(email, code), UserModel.fromLogin);
       submiting = false;
 
       switch (result) {
@@ -125,6 +131,9 @@ final class LoginViewModel extends ChangeNotifier {
           if (res.success) {
             snack.value = LocaledStr(res.message);
             final user = res.getObject<UserModel>();
+            _secures.lastUsername = user?.email;
+            _secures.accessToken = user?.token;
+            _defaults.user = user;
           } else {
             throw HttpError.operation;
           }

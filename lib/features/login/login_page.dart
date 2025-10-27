@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import '/l10n/localizations.dart';
 import '/core/core.dart';
-import '/theme/theme.dart';
+import '/storage/storage.dart';
 import '/network/network.dart';
+import '/theme/theme.dart';
 import 'login_view_model.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,7 +11,8 @@ class LoginPage extends StatefulWidget {
 
   final LoginViewModel vm;
 
-  LoginPage.create({super.key, required Networkable network}) : vm = LoginViewModel(network: network);
+  LoginPage.create({super.key, required Networkable network, required Secures secures, required Defaults defaults})
+    : vm = LoginViewModel(network: network, secures: secures, defaults: defaults);
 
   @override
   State<LoginPage> createState() => _LoginPageState();

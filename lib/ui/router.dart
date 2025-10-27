@@ -17,7 +17,8 @@ GoRouter router() => GoRouter(
     GoRoute(path: Routes.home, builder: (context, state) => HomePage()),
     GoRoute(
       path: Routes.login,
-      builder: (context, state) => LoginPage.create(network: context.read()),
+      builder: (context, state) =>
+          LoginPage.create(network: context.read(), secures: context.read(), defaults: context.read()),
     ),
     GoRoute(path: Routes.about, builder: (context, state) => AboutPage()),
   ],

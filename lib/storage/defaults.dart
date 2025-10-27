@@ -2,9 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import '/core/core.dart';
+import '/models/user_model.dart';
 import 'hive_ext.dart';
 
-enum _DefaultsKeys { kThemeCodeKey, kLanguageCodeKey }
+enum _DefaultsKeys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey }
 
 final class Defaults extends ChangeNotifier {
   late Box<Object> _box;
@@ -24,6 +25,9 @@ final class Defaults extends ChangeNotifier {
 
     final languageVal = _box.getList(_DefaultsKeys.kLanguageCodeKey.name)?.whereType<String>().toList() ?? [];
     _language = languageVal.isNotEmpty ? Locale(languageVal[0], languageVal.elementAtOrNull(1)) : null;
+
+    final userVal = _box.getMap(_DefaultsKeys.kCurrentUserKey.name);
+    _user = userVal != null ? UserModel.fromJson(userVal) : null;
   }
 
   late ThemeMode _theme;
@@ -40,6 +44,14 @@ final class Defaults extends ChangeNotifier {
     _language = value;
     final list = value is Locale ? [value.languageCode, ?value.countryCode] : null;
     _box.setValue(_DefaultsKeys.kLanguageCodeKey.name, list);
+    notifyListeners();
+  }
+
+  UserModel? _user;
+  UserModel? get user => _user;
+  set user(UserModel? value) {
+    _user = value;
+    _box.setValue(_DefaultsKeys.kCurrentUserKey.name, value?.toJson());
     notifyListeners();
   }
 }
