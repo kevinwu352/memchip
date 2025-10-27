@@ -43,12 +43,6 @@ final class LoginViewModel extends ChangeNotifier {
     emailChanged('');
   }
 
-  void sendAction() {
-    FocusManager.instance.primaryFocus?.unfocus();
-    if (_sending) return;
-    sendCode(emailController.text);
-  }
-
   var _sending = false;
   bool get sending => _sending;
   set sending(bool value) {
@@ -56,9 +50,16 @@ final class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void sendAction() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (_sending) return;
+    sendCode(emailController.text);
+  }
+
   void sendCode(String email) async {
     try {
       sending = true;
+      // await Future.delayed(Duration(seconds: 60));
       final result = await _network.reqRes(Api.accountSendCode(email), null);
       sending = false;
 
@@ -97,9 +98,41 @@ final class LoginViewModel extends ChangeNotifier {
     });
   }
 
+  var _submiting = false;
+  bool get submiting => _submiting;
+  set submiting(bool value) {
+    _submiting = value;
+    notifyListeners();
+  }
+
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
-    print('qwerty');
+    if (_submiting) return;
+    checkCode(emailController.text, codeController.text);
+  }
+
+  void checkCode(String email, String code) async {
+    try {
+      submiting = true;
+      // await Future.delayed(Duration(seconds: 60));
+      final result = await _network.reqRes(Api.accountCheckCode(email, code), null);
+      submiting = false;
+
+      switch (result) {
+        case Ok():
+          final res = result.value;
+          if (res.success) {
+            snack.value = LocaledStr(res.message);
+          } else {
+            throw HttpError.operation;
+          }
+        case Error():
+          throw result.error;
+      }
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknown;
+      snack.value = err;
+    }
   }
 
   @override

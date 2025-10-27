@@ -129,10 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             onPressed: widget.vm.sendEnabled ? widget.vm.sendAction : null,
                             child: widget.vm.sending
-                                ? CircularProgressIndicator(
-                                    color: Colors.white,
-                                    constraints: BoxConstraints(minWidth: 16, minHeight: 16),
-                                  )
+                                ? CircularProgressIndicator.adaptive()
                                 : Text(AppLocalizations.of(context)!.login_code_send(widget.vm.countdown)),
                           ),
                         ),
@@ -149,7 +146,9 @@ class _LoginPageState extends State<LoginPage> {
                           textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                         onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
-                        child: Text(AppLocalizations.of(context)!.login_submit_caption),
+                        child: widget.vm.submiting
+                            ? CircularProgressIndicator.adaptive()
+                            : Text(AppLocalizations.of(context)!.login_submit_caption),
                       ),
                     ),
                   ],

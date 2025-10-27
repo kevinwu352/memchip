@@ -8,5 +8,12 @@ final class Api extends Endpoint {
         parameters: {'email': email},
         encoding: ReqEncoding.json,
       );
-  // Api.delete(int id) : super('/c/xxx', ReqMethod.get);
+
+  Api.accountCheckCode(String email, String code)
+    : super(
+        '/MeetAgain-user/emailLogin',
+        ReqMethod.post,
+        parameters: {'email': email, 'code': code},
+        encoding: ReqEncoding.json,
+      );
 }
