@@ -15,7 +15,9 @@ final class LoginViewModel extends ChangeNotifier {
   final Secures _secures;
   final Defaults _defaults;
 
-  ValueNotifier<Localable?> snack = ValueNotifier(null);
+  ValueNotifier<Localable?> snackPub = ValueNotifier(null);
+
+  ValueNotifier<bool> loginedPub = ValueNotifier(false);
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -74,7 +76,7 @@ final class LoginViewModel extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            snack.value = LocaledStr(res.message);
+            snackPub.value = LocaledStr(res.message);
             startCounting();
           } else {
             throw HttpError.operation;
@@ -84,7 +86,7 @@ final class LoginViewModel extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      snack.value = err;
+      snackPub.value = err;
     }
   }
 
@@ -129,11 +131,12 @@ final class LoginViewModel extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            snack.value = LocaledStr(res.message);
+            snackPub.value = LocaledStr(res.message);
             final user = res.getObject<UserModel>();
             _secures.lastUsername = user?.email;
             _secures.accessToken = user?.token;
             _defaults.user = user;
+            loginedPub.value = true;
           } else {
             throw HttpError.operation;
           }
@@ -142,7 +145,7 @@ final class LoginViewModel extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      snack.value = err;
+      snackPub.value = err;
     }
   }
 
@@ -151,7 +154,8 @@ final class LoginViewModel extends ChangeNotifier {
     emailController.dispose();
     codeController.dispose();
     timer?.cancel();
-    snack.dispose();
+    snackPub.dispose();
+    loginedPub.dispose();
     super.dispose();
   }
 }

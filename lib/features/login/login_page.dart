@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
+import '/ui/router.dart';
 import 'login_view_model.dart';
 
 class LoginPage extends StatefulWidget {
@@ -22,7 +24,8 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _onSnack();
+    _subscribeSnack();
+    _subscribeLogin();
   }
 
   @override
@@ -163,14 +166,22 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onSnack() {
-    widget.vm.snack.addListener(() {
-      final msg = widget.vm.snack.value?.localized(context);
+  void _subscribeSnack() {
+    widget.vm.snackPub.addListener(() {
+      final msg = widget.vm.snackPub.value?.localized(context);
       if (msg != null) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }
-      widget.vm.snack.value = null;
+      widget.vm.snackPub.value = null;
+    });
+  }
+
+  void _subscribeLogin() {
+    widget.vm.loginedPub.addListener(() {
+      if (widget.vm.loginedPub.value) {
+        Future.delayed(Duration(seconds: 1)).then((_) => mounted ? context.go(Routes.home) : null);
+      }
     });
   }
 }
