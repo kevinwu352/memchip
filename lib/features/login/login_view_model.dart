@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '/core/core.dart';
 import '/network/network.dart';
+import '/models/user_model.dart';
 import '/utils/api.dart';
 
 final class LoginViewModel extends ChangeNotifier {
@@ -115,7 +116,7 @@ final class LoginViewModel extends ChangeNotifier {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.accountCheckCode(email, code), null);
+      final result = await _network.reqRes(Api.accountCheckCode(email, code), UserModel.fromJson);
       submiting = false;
 
       switch (result) {
@@ -123,6 +124,7 @@ final class LoginViewModel extends ChangeNotifier {
           final res = result.value;
           if (res.success) {
             snack.value = LocaledStr(res.message);
+            final user = res.getObject<UserModel>();
           } else {
             throw HttpError.operation;
           }

@@ -8,7 +8,25 @@ class Res {
   String message;
   Object? data;
 
-  Res.fromJson(Map<String, dynamic> json) : code = json['code'] as int, message = json['message'] as String;
+  // Res.fromJson(Map<String, dynamic> json) : code = json['code'] as int, message = json['message'] as String;
+  factory Res.fromJson(Map<String, dynamic> json) {
+    final codeVal = json['code'];
+    final code = codeVal is int
+        ? codeVal
+        : codeVal is String
+        ? int.parse(codeVal)
+        : 0;
+
+    final message1 = json['message'];
+    final message2 = json['msg'];
+    final message = message1 is String
+        ? message1
+        : message2 is String
+        ? message2
+        : '';
+
+    return Res(code: code, message: message);
+  }
 
   bool get success => code == 200;
 
