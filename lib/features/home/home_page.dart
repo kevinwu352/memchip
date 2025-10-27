@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/theme/theme.dart';
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
             Selector<Defaults, UserModel?>(
               selector: (_, object) => object.user,
               builder: (context, value, child) =>
-                  _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, email: value?.email),
+                  _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.email),
             ),
 
             Selector<Secures, bool>(
@@ -64,11 +65,11 @@ class _HomePageState extends State<HomePage> {
 // }
 
 class _HeaderView extends StatelessWidget {
-  const _HeaderView({this.avatarUrl, this.nickname, this.email});
+  const _HeaderView({this.avatarUrl, this.nickname, this.phomail});
 
   final String? avatarUrl;
   final String? nickname;
-  final String? email;
+  final String? phomail;
 
   @override
   Widget build(BuildContext context) {
@@ -76,15 +77,18 @@ class _HeaderView extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(30, kSafeTop + 30, 30, 30),
       child: Row(
         children: [
-          CachedNetworkImage(
-            // imageUrl: 'https://picsum.photos/200',
-            // imageUrl: 'https://www.asdf1234.com/abcdef.jpg',
-            // imageUrl: 'https://mock.httpstatus.io/200?delay=16000',
-            imageUrl: avatarUrl ?? '',
-            placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
-            errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
-            width: 48,
-            height: 48,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: CachedNetworkImage(
+              // imageUrl: 'https://picsum.photos/200',
+              // imageUrl: 'https://www.asdf1234.com/abcdef.jpg',
+              // imageUrl: 'https://mock.httpstatus.io/200?delay=16000',
+              imageUrl: avatarUrl ?? '',
+              placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
+              errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
+              width: 48,
+              height: 48,
+            ),
           ),
 
           SizedBox(width: 12),
@@ -95,7 +99,7 @@ class _HeaderView extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      nickname ?? 'title',
+                      nickname ?? AppLocalizations.of(context)!.account_nickname_empty,
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
                     ),
                     Spacer(),
@@ -116,7 +120,7 @@ class _HeaderView extends StatelessWidget {
                     Image.asset('assets/images/account_phomail.png'),
                     SizedBox(width: 4),
                     Text(
-                      email ?? 'subtitle',
+                      phomail ?? AppLocalizations.of(context)!.account_phomail_empty,
                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray600),
                     ),
                   ],

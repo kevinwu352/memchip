@@ -11,5 +11,7 @@
   "login_email_caption": "Email",
   "login_code_caption": "Code",
   "login_code_send": "Send{seconds, plural, =0{} other{ ({seconds})}}",
-  "login_submit_caption": "Sign in"
+  "login_submit_caption": "Sign in",
+  "account_nickname_empty": "Nickname",
+  "account_phomail_empty": "N/A"
 }

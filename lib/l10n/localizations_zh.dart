@@ -51,4 +51,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get login_submit_caption => 'Sign in';
+
+  @override
+  String get account_nickname_empty => '用户昵称';
+
+  @override
+  String get account_phomail_empty => '暂无';
 }

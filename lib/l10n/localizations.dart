@@ -169,6 +169,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in'**
   String get login_submit_caption;
+
+  /// No description provided for @account_nickname_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nickname'**
+  String get account_nickname_empty;
+
+  /// No description provided for @account_phomail_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get account_phomail_empty;
 }
 
 class _AppLocalizationsDelegate
