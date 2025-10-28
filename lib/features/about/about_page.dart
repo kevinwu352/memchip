@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/theme/theme.dart';
+import '/ui/router.dart';
 
 enum _Kind {
   license,
@@ -20,6 +22,17 @@ enum _Kind {
         return AppLocalizations.of(context)!.about_line_term_title;
       case privacy:
         return AppLocalizations.of(context)!.about_line_privacy_title;
+    }
+  }
+
+  String get url {
+    switch (this) {
+      case license:
+        return 'https://www.baidu.com';
+      case term:
+        return 'https://www.qq.com';
+      case privacy:
+        return 'https://www.bing.com';
     }
   }
 }
@@ -44,7 +57,7 @@ class AboutPage extends StatelessWidget {
                 iconColor: MyColors.gray300,
                 dense: true,
                 contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                onTap: () => print('clicked: ${_Kind.fromIndex(index)}'),
+                onTap: () => context.push(Routes.web(_Kind.fromIndex(index).url)),
               ),
             ),
           ),
