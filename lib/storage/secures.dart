@@ -68,6 +68,7 @@ extension SecuresExt on Secures {
   }
 
   bool get showLogin => (lastUsername ?? '').isEmpty;
+  bool get logined => lastUsername?.isNotEmpty == true;
 }
 
 extension StringVersionExt on String {

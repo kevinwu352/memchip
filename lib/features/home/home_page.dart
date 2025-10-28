@@ -30,12 +30,12 @@ class _HomePageState extends State<HomePage> {
             ),
 
             Selector<Secures, bool>(
-              selector: (_, object) => object.showLogin,
+              selector: (_, object) => object.logined,
               builder: (context, value, child) {
                 if (value) {
-                  return Text('to login');
+                  return Text('logined');
                 } else {
-                  return Text('show data');
+                  return Text('to login');
                 }
               },
             ),
