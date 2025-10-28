@@ -12,16 +12,36 @@ class _WebPageState extends State<WebPage> {
   @override
   void initState() {
     super.initState();
-    webvc = WebViewController()..loadRequest(Uri.parse('https://www.baidu.com'));
+    webvc = WebViewController()
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (value) async {
+            final prog = value / 100;
+            final ttl = await webvc.getTitle();
+            setState(() {
+              progress = prog;
+              title = ttl ?? '';
+            });
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse('https://www.baidu.com'));
   }
 
   late WebViewController webvc;
+  String title = '';
+  double progress = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('--')),
-      body: WebViewWidget(controller: webvc),
+      appBar: AppBar(title: Text(title)),
+      body: Stack(
+        children: [
+          WebViewWidget(controller: webvc),
+          if (progress < 0.95) LinearProgressIndicator(value: progress),
+        ],
+      ),
     );
   }
 }
