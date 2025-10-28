@@ -6,12 +6,21 @@
   "http_error_decode": "Decode Error en",
   "http_error_operation": "Operation Failed en",
   "http_success": "Done en",
+
   "login_title": "Sign In",
   "login_subtitle": "Hi there! Nice to see you again.",
   "login_email_caption": "Email",
   "login_code_caption": "Code",
-  "login_code_send": "Send{seconds, plural, =0{} other{ ({seconds})}}",
-  "login_submit_caption": "Sign in",
+  "login_code_send_btn": "Send{seconds, plural, =0{} other{ ({seconds})}}",
+  "login_submit_btn": "Sign in",
+
   "account_nickname_empty": "Nickname",
-  "account_phomail_empty": "N/A"
+  "account_phomail_empty": "N/A",
+
+  "about_page_title": "About Us",
+  "about_line_license_title": "Open Source Licenses",
+  "about_line_term_title": "Terms of Service",
+  "about_line_privacy_title": "Privacy Policy",
+  "about_logout_btn": "Log out",
+  "about_version": "Version: {version}"
 }

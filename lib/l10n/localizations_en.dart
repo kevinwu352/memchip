@@ -39,7 +39,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_code_caption => 'Code';
 
   @override
-  String login_code_send(num seconds) {
+  String login_code_send_btn(num seconds) {
     String _temp0 = intl.Intl.pluralLogic(
       seconds,
       locale: localeName,
@@ -50,11 +50,31 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get login_submit_caption => 'Sign in';
+  String get login_submit_btn => 'Sign in';
 
   @override
   String get account_nickname_empty => 'Nickname';
 
   @override
   String get account_phomail_empty => 'N/A';
+
+  @override
+  String get about_page_title => 'About Us';
+
+  @override
+  String get about_line_license_title => 'Open Source Licenses';
+
+  @override
+  String get about_line_term_title => 'Terms of Service';
+
+  @override
+  String get about_line_privacy_title => 'Privacy Policy';
+
+  @override
+  String get about_logout_btn => 'Log out';
+
+  @override
+  String about_version(Object version) {
+    return 'Version: $version';
+  }
 }

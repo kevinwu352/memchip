@@ -158,17 +158,17 @@ abstract class AppLocalizations {
   /// **'Code'**
   String get login_code_caption;
 
-  /// No description provided for @login_code_send.
+  /// No description provided for @login_code_send_btn.
   ///
   /// In en, this message translates to:
   /// **'Send{seconds, plural, =0{} other{ ({seconds})}}'**
-  String login_code_send(num seconds);
+  String login_code_send_btn(num seconds);
 
-  /// No description provided for @login_submit_caption.
+  /// No description provided for @login_submit_btn.
   ///
   /// In en, this message translates to:
   /// **'Sign in'**
-  String get login_submit_caption;
+  String get login_submit_btn;
 
   /// No description provided for @account_nickname_empty.
   ///
@@ -181,6 +181,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'N/A'**
   String get account_phomail_empty;
+
+  /// No description provided for @about_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'About Us'**
+  String get about_page_title;
+
+  /// No description provided for @about_line_license_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Open Source Licenses'**
+  String get about_line_license_title;
+
+  /// No description provided for @about_line_term_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get about_line_term_title;
+
+  /// No description provided for @about_line_privacy_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get about_line_privacy_title;
+
+  /// No description provided for @about_logout_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get about_logout_btn;
+
+  /// No description provided for @about_version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version: {version}'**
+  String about_version(Object version);
 }
 
 class _AppLocalizationsDelegate
