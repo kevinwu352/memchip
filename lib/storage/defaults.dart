@@ -5,7 +5,7 @@ import '/core/core.dart';
 import '/models/user_model.dart';
 import 'hive_ext.dart';
 
-enum _DefaultsKeys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey }
+enum _Keys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey }
 
 final class Defaults extends ChangeNotifier {
   late Box<Object> _box;
@@ -16,17 +16,17 @@ final class Defaults extends ChangeNotifier {
   }
 
   Future<void> load() async {
-    // await _box.setValue(_DefaultsKeys.kThemeCodeKey.name, null);
-    // await _box.setValue(_DefaultsKeys.kLanguageCodeKey.name, null);
+    // await _box.setValue(_Keys.kThemeCodeKey.name, null);
+    // await _box.setValue(_Keys.kLanguageCodeKey.name, null);
     if (kDebugMode) debugPrint('${_box.toMap()}');
 
-    final themeVal = _box.getString(_DefaultsKeys.kThemeCodeKey.name);
+    final themeVal = _box.getString(_Keys.kThemeCodeKey.name);
     _theme = ThemeMode.values.firstWhere((e) => e.name == themeVal, orElse: () => ThemeMode.system);
 
-    final languageVal = _box.getList(_DefaultsKeys.kLanguageCodeKey.name)?.whereType<String>().toList() ?? [];
+    final languageVal = _box.getList(_Keys.kLanguageCodeKey.name)?.whereType<String>().toList() ?? [];
     _language = languageVal.isNotEmpty ? Locale(languageVal[0], languageVal.elementAtOrNull(1)) : null;
 
-    final userVal = _box.getMap(_DefaultsKeys.kCurrentUserKey.name);
+    final userVal = _box.getMap(_Keys.kCurrentUserKey.name);
     _user = userVal != null ? UserModel.fromJson(userVal) : null;
   }
 
@@ -34,7 +34,7 @@ final class Defaults extends ChangeNotifier {
   ThemeMode get theme => _theme;
   set theme(ThemeMode value) {
     _theme = value;
-    _box.setValue(_DefaultsKeys.kThemeCodeKey.name, value.name);
+    _box.setValue(_Keys.kThemeCodeKey.name, value.name);
     notifyListeners();
   }
 
@@ -43,7 +43,7 @@ final class Defaults extends ChangeNotifier {
   set language(Locale? value) {
     _language = value;
     final list = value is Locale ? [value.languageCode, ?value.countryCode] : null;
-    _box.setValue(_DefaultsKeys.kLanguageCodeKey.name, list);
+    _box.setValue(_Keys.kLanguageCodeKey.name, list);
     notifyListeners();
   }
 
@@ -51,7 +51,7 @@ final class Defaults extends ChangeNotifier {
   UserModel? get user => _user;
   set user(UserModel? value) {
     _user = value;
-    _box.setValue(_DefaultsKeys.kCurrentUserKey.name, value?.toJson());
+    _box.setValue(_Keys.kCurrentUserKey.name, value?.toJson());
     notifyListeners();
   }
 }
