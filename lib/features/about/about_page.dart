@@ -5,7 +5,7 @@ import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/theme/theme.dart';
-import '/ui/router.dart';
+import '/utils/router.dart';
 
 enum _Kind {
   license,

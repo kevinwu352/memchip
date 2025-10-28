@@ -5,7 +5,7 @@ import '/core/core.dart';
 import '/storage/storage.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
-import '/ui/router.dart';
+import '/utils/router.dart';
 import 'login_view_model.dart';
 
 class LoginPage extends StatefulWidget {

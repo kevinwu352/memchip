@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '/core/core.dart';
 
-import 'web_page.dart';
+import '/ui/web_page.dart';
 
 import '/features/home/home_page.dart';
 import '/features/login/login_page.dart';
