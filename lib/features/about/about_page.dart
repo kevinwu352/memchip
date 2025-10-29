@@ -71,7 +71,6 @@ class AboutPage extends StatelessWidget {
                     width: double.infinity,
                     child: FilledButton(
                       style: FilledButton.styleFrom(
-                        shape: StadiumBorder(),
                         backgroundColor: MyColors.violet300,
                         textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                       ),

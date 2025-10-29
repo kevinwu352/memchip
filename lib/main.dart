@@ -60,7 +60,11 @@ class MyApp extends StatelessWidget {
       locale: language,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        appBarTheme: AppBarThemeData(backgroundColor: MyColors.violet300, foregroundColor: Colors.white),
+        appBarTheme: AppBarThemeData(
+          backgroundColor: MyColors.violet300,
+          foregroundColor: Colors.white,
+          titleTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        ),
       ),
       // theme: ThemeData(colorScheme: MySchemes.light),
       // darkTheme: ThemeData(colorScheme: MySchemes.dark),

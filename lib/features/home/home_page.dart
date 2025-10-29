@@ -35,12 +35,14 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Selector<Defaults, UserModel?>(
                   selector: (_, object) => object.user,
-                  builder: (context, value, child) =>
-                      _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.email),
+                  builder: (context, value, child) => Padding(
+                    padding: EdgeInsets.fromLTRB(30, kSafeTop + 30, 30, 30),
+                    child: _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.email),
+                  ),
                 ),
 
                 Container(
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
                   width: double.infinity,
                   child: Text(
                     AppLocalizations.of(context)!.home_section_title,
@@ -50,12 +52,12 @@ class _HomePageState extends State<HomePage> {
 
                 if (widget.vm.chips.isEmpty)
                   Expanded(
-                    child: Padding(padding: const EdgeInsets.only(top: 30), child: _EmptyView()),
+                    child: Padding(padding: const EdgeInsets.only(top: 50), child: _EmptyView()),
                   )
                 else
                   Expanded(
                     child: GridView.builder(
-                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 20,
@@ -102,65 +104,62 @@ class _HeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(30, kSafeTop + 30, 30, 30),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(24),
-            child: CachedNetworkImage(
-              imageUrl: avatarUrl ?? '',
-              placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
-              errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
-              width: 48,
-              height: 48,
-            ),
+    return Row(
+      children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: CachedNetworkImage(
+            imageUrl: avatarUrl ?? '',
+            placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
+            errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
+            width: 48,
+            height: 48,
           ),
+        ),
 
-          SizedBox(width: 12),
+        SizedBox(width: 12),
 
-          Expanded(
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        nickname ?? AppLocalizations.of(context)!.account_nickname_empty,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
-                      ),
+        Expanded(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      nickname ?? AppLocalizations.of(context)!.account_nickname_empty,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
                     ),
-                    IconButton(
-                      onPressed: () => context.push(Routes.about),
-                      icon: Image.asset('assets/images/account_more.png'),
-                      style: IconButton.styleFrom(
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        padding: EdgeInsets.zero,
-                        minimumSize: Size.zero,
-                      ),
+                  ),
+                  IconButton(
+                    onPressed: () => context.push(Routes.about),
+                    icon: Image.asset('assets/images/account_more.png'),
+                    style: IconButton.styleFrom(
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      padding: EdgeInsets.zero,
+                      minimumSize: Size.zero,
                     ),
-                  ],
-                ),
+                  ),
+                ],
+              ),
 
-                Row(
-                  children: [
-                    Image.asset('assets/images/account_phomail.png'),
-                    SizedBox(width: 4),
-                    Expanded(
-                      child: Text(
-                        phomail ?? AppLocalizations.of(context)!.account_phomail_empty,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray600),
-                      ),
+              Row(
+                children: [
+                  Image.asset('assets/images/account_phomail.png'),
+                  SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      phomail ?? AppLocalizations.of(context)!.account_phomail_empty,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray600),
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
