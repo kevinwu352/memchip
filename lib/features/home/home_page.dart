@@ -62,7 +62,11 @@ class _HomePageState extends State<HomePage> {
                         childAspectRatio: 139 / 247,
                       ),
                       itemCount: widget.vm.chips.length,
-                      itemBuilder: (context, index) => _EntryView(),
+                      itemBuilder: (context, index) => _EntryView(
+                        coverUrl: 'https://picsum.photos/200/300',
+                        title: 'The widget below this widget in the tree.',
+                        date: null,
+                      ),
                     ),
                   ),
 
@@ -177,7 +181,11 @@ class _EmptyView extends StatelessWidget {
 }
 
 class _EntryView extends StatelessWidget {
-  // const _EntryView({super.key});
+  const _EntryView({super.key, this.coverUrl, this.title, this.date});
+
+  final String? coverUrl;
+  final String? title;
+  final DateTime? date;
 
   @override
   Widget build(BuildContext context) {
@@ -185,10 +193,17 @@ class _EntryView extends StatelessWidget {
       color: Colors.white,
       shadowColor: Colors.black.withValues(alpha: 0.3),
       elevation: 4,
+      clipBehavior: Clip.hardEdge,
       child: Column(
         children: [
-          //
-          Expanded(child: Container(color: Colors.amber)),
+          Expanded(
+            child: CachedNetworkImage(
+              imageUrl: coverUrl ?? '',
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Container(color: Colors.white),
+              errorWidget: (context, url, error) => Container(color: Colors.white),
+            ),
+          ),
           Container(
             height: 60,
             width: double.infinity,
@@ -203,7 +218,7 @@ class _EntryView extends StatelessWidget {
                     Image.asset('assets/images/home_entry_paw.png'),
                     Expanded(
                       child: Text(
-                        'The widget below this widget in the tree.',
+                        title ?? '',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: MyColors.gray700),
                       ),
@@ -216,7 +231,7 @@ class _EntryView extends StatelessWidget {
                     Image.asset('assets/images/home_entry_time.png'),
                     Expanded(
                       child: Text(
-                        'The widget below this widget in the tree.',
+                        '',
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray500),
                       ),
