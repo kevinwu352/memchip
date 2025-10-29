@@ -81,7 +81,7 @@ class AboutPage extends StatelessWidget {
                         secures.accessToken = null;
                         final defaults = context.read<Defaults>();
                         defaults.user = null;
-                        context.pop();
+                        context.go(Routes.home);
                       },
                       child: Text(AppLocalizations.of(context)!.about_logout_btn),
                     ),

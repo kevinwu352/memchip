@@ -72,9 +72,7 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: MyColors.violet300,
                       textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
-                    onPressed: () {
-                      //
-                    },
+                    onPressed: () => context.push(context.read<Secures>().logined ? Routes.chipCreate : Routes.login),
                     label: Text(AppLocalizations.of(context)!.home_new_btn),
                     icon: Image.asset('assets/images/home_new.png'),
                   ),
@@ -122,9 +120,6 @@ class _HeaderView extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(24),
             child: CachedNetworkImage(
-              // imageUrl: 'https://picsum.photos/200',
-              // imageUrl: 'https://www.asdf1234.com/abcdef.jpg',
-              // imageUrl: 'https://mock.httpstatus.io/200?delay=16000',
               imageUrl: avatarUrl ?? '',
               placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
               errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
