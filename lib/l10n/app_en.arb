@@ -14,6 +14,8 @@
   "login_code_send_btn": "Send{seconds, plural, =0{} other{ ({seconds})}}",
   "login_submit_btn": "Sign in",
 
+  "home_empty_info": "No chips yet",
+
   "account_nickname_empty": "Nickname",
   "account_phomail_empty": "N/A",
 

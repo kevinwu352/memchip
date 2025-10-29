@@ -53,6 +53,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_submit_btn => 'Sign in';
 
   @override
+  String get home_empty_info => 'No chips yet';
+
+  @override
   String get account_nickname_empty => 'Nickname';
 
   @override

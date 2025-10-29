@@ -24,7 +24,10 @@ GoRouter router() => GoRouter(
       builder: (context, state) => WebPage(url: state.pathParameters['url']?.decodeComponent),
     ),
 
-    GoRoute(path: Routes.home, builder: (context, state) => HomePage()),
+    GoRoute(
+      path: Routes.home,
+      builder: (context, state) => HomePage.create(network: context.read()),
+    ),
     GoRoute(
       path: Routes.login,
       builder: (context, state) =>

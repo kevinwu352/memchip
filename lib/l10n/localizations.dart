@@ -170,6 +170,12 @@ abstract class AppLocalizations {
   /// **'Sign in'**
   String get login_submit_btn;
 
+  /// No description provided for @home_empty_info.
+  ///
+  /// In en, this message translates to:
+  /// **'No chips yet'**
+  String get home_empty_info;
+
   /// No description provided for @account_nickname_empty.
   ///
   /// In en, this message translates to:

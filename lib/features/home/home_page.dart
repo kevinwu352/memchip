@@ -5,12 +5,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
+import '/network/network.dart';
 import '/theme/theme.dart';
 import '/utils/router.dart';
 import '/models/user_model.dart';
+import 'home_view_model.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, required this.vm});
+
+  final HomeViewModel vm;
+
+  HomePage.create({super.key, required Networkable network}) : vm = HomeViewModel(network: network);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -20,27 +26,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        child: Column(
-          children: [
-            Selector<Defaults, UserModel?>(
-              selector: (_, object) => object.user,
-              builder: (context, value, child) =>
-                  _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.email),
-            ),
+      body: ListenableBuilder(
+        listenable: widget.vm,
+        builder: (context, child) {
+          return SizedBox.expand(
+            child: Column(
+              children: [
+                Selector<Defaults, UserModel?>(
+                  selector: (_, object) => object.user,
+                  builder: (context, value, child) =>
+                      _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.email),
+                ),
 
-            Selector<Secures, bool>(
-              selector: (_, object) => object.logined,
-              builder: (context, value, child) {
-                if (value) {
-                  return Text('logined');
-                } else {
-                  return Text('to login');
-                }
-              },
+                Selector<Secures, bool>(
+                  selector: (_, object) => object.logined,
+                  builder: (context, value, child) {
+                    if (value) {
+                      return Text('logined');
+                    } else {
+                      return Text('to login');
+                    }
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -130,6 +141,22 @@ class _HeaderView extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class _EmptyView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      spacing: 18,
+      children: [
+        Image.asset('assets/images/home_empty.png'),
+        Text(
+          AppLocalizations.of(context)!.home_empty_info,
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.violet100),
+        ),
+      ],
     );
   }
 }
