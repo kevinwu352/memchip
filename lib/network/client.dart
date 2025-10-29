@@ -5,6 +5,8 @@ import 'endpoint.dart';
 import 'error.dart';
 import 'response.dart';
 
+final kCurrentHost = 'apiuniapp.paoxiaokeji.com';
+
 abstract class Networkable {
   Future<Result<Response>> reqRaw(Endpoint api);
   Future<Result<Res>> reqRes<T>(Endpoint api, [T Function(Map<String, dynamic>)? init]);
@@ -16,7 +18,7 @@ final class HttpClient implements Networkable {
   final String host;
   final Map<String, String> headers;
 
-  HttpClient.token(String? token) : host = 'apiuniapp.paoxiaokeji.com', headers = {'token': ?token};
+  HttpClient.token(String? token) : host = kCurrentHost, headers = {'token': ?token};
 
   void setToken(String? token) {
     if (token is String) {

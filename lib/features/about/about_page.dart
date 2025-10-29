@@ -75,7 +75,14 @@ class AboutPage extends StatelessWidget {
                         backgroundColor: MyColors.violet300,
                         textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        final secures = context.read<Secures>();
+                        secures.lastUsername = null;
+                        secures.accessToken = null;
+                        final defaults = context.read<Defaults>();
+                        defaults.user = null;
+                        context.pop();
+                      },
                       child: Text(AppLocalizations.of(context)!.about_logout_btn),
                     ),
                   ),
