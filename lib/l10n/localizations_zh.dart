@@ -59,6 +59,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get home_empty_info => 'No chips yet zh';
 
   @override
+  String get home_new_btn => 'New Chip zh';
+
+  @override
   String get account_nickname_empty => '用户昵称';
 
   @override

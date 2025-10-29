@@ -182,6 +182,12 @@ abstract class AppLocalizations {
   /// **'No chips yet'**
   String get home_empty_info;
 
+  /// No description provided for @home_new_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'New Chip'**
+  String get home_new_btn;
+
   /// No description provided for @account_nickname_empty.
   ///
   /// In en, this message translates to:

@@ -49,12 +49,7 @@ class _HomePageState extends State<HomePage> {
 
                 if (widget.vm.chips.isEmpty)
                   Expanded(
-                    child: Column(
-                      children: [
-                        Padding(padding: const EdgeInsets.only(top: 30), child: _EmptyView()),
-                        Spacer(),
-                      ],
-                    ),
+                    child: Padding(padding: const EdgeInsets.only(top: 30), child: _EmptyView()),
                   )
                 else
                   Expanded(
@@ -80,8 +75,8 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       //
                     },
-                    label: Text('new chip'),
-                    icon: Icon(Icons.run_circle),
+                    label: Text(AppLocalizations.of(context)!.home_new_btn),
+                    icon: Image.asset('assets/images/home_new.png'),
                   ),
                 ),
               ],
