@@ -9,11 +9,12 @@
 
   "login_title": "Sign In",
   "login_subtitle": "Hi there! Nice to see you again.",
-  "login_email_caption": "Email",
-  "login_code_caption": "Code",
+  "login_email_title": "Email",
+  "login_code_title": "Code",
   "login_code_send_btn": "Send{seconds, plural, =0{} other{ ({seconds})}}",
   "login_submit_btn": "Sign in",
 
+  "home_section_title": "My Chips",
   "home_empty_info": "No chips yet",
 
   "account_nickname_empty": "Nickname",

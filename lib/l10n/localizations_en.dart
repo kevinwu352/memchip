@@ -33,10 +33,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_subtitle => 'Hi there! Nice to see you again.';
 
   @override
-  String get login_email_caption => 'Email';
+  String get login_email_title => 'Email';
 
   @override
-  String get login_code_caption => 'Code';
+  String get login_code_title => 'Code';
 
   @override
   String login_code_send_btn(num seconds) {
@@ -51,6 +51,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get login_submit_btn => 'Sign in';
+
+  @override
+  String get home_section_title => 'My Chips';
 
   @override
   String get home_empty_info => 'No chips yet';

@@ -38,16 +38,26 @@ class _HomePageState extends State<HomePage> {
                       _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.email),
                 ),
 
-                Selector<Secures, bool>(
-                  selector: (_, object) => object.logined,
-                  builder: (context, value, child) {
-                    if (value) {
-                      return Text('logined');
-                    } else {
-                      return Text('to login');
-                    }
-                  },
+                Container(
+                  padding: EdgeInsets.all(30),
+                  width: double.infinity,
+                  child: Text(
+                    AppLocalizations.of(context)!.home_section_title,
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: MyColors.gray800),
+                  ),
                 ),
+
+                // Selector<Secures, bool>(
+                //   selector: (_, object) => object.logined,
+                //   builder: (context, value, child) {
+                //     if (value) {
+                //       return Text('logined');
+                //     } else {
+                //       return Text('to login');
+                //     }
+                //   },
+                // ),
+                if (widget.vm.chips.isEmpty) Padding(padding: const EdgeInsets.only(top: 30), child: _EmptyView()),
               ],
             ),
           );

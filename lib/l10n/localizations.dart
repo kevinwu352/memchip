@@ -146,17 +146,17 @@ abstract class AppLocalizations {
   /// **'Hi there! Nice to see you again.'**
   String get login_subtitle;
 
-  /// No description provided for @login_email_caption.
+  /// No description provided for @login_email_title.
   ///
   /// In en, this message translates to:
   /// **'Email'**
-  String get login_email_caption;
+  String get login_email_title;
 
-  /// No description provided for @login_code_caption.
+  /// No description provided for @login_code_title.
   ///
   /// In en, this message translates to:
   /// **'Code'**
-  String get login_code_caption;
+  String get login_code_title;
 
   /// No description provided for @login_code_send_btn.
   ///
@@ -169,6 +169,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in'**
   String get login_submit_btn;
+
+  /// No description provided for @home_section_title.
+  ///
+  /// In en, this message translates to:
+  /// **'My Chips'**
+  String get home_section_title;
 
   /// No description provided for @home_empty_info.
   ///

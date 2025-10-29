@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: AppLocalizations.of(context)!.login_email_caption,
+                        labelText: AppLocalizations.of(context)!.login_email_title,
                         labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
                         hintText: 'example@email.com',
                         hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
@@ -115,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                       onFieldSubmitted: (value) => FocusManager.instance.primaryFocus?.unfocus(),
                       decoration: InputDecoration(
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: AppLocalizations.of(context)!.login_code_caption,
+                        labelText: AppLocalizations.of(context)!.login_code_title,
                         labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
                         hintText: '123456',
                         hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
