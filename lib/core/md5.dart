@@ -1,20 +1,312 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-const int _mask_5 = 0x1F;
-const int _mask_32 = 0xFFFFFFFF;
+/// A bitmask that limits an integer to 32 bits.
+const _mask32 = 0xFFFFFFFF;
 
-final List<int> _mask32_hi_bits = [
-  0xFFFFFFFF, 0x7FFFFFFF, 0x3FFFFFFF, 0x1FFFFFFF, 0x0FFFFFFF, //
-  0x07FFFFFF, 0x03FFFFFF, 0x01FFFFFF, 0x00FFFFFF, 0x007FFFFF,
-  0x003FFFFF, 0x001FFFFF, 0x000FFFFF, 0x0007FFFF, 0x0003FFFF,
-  0x0001FFFF, 0x0000FFFF, 0x00007FFF, 0x00003FFF, 0x00001FFF,
-  0x00000FFF, 0x000007FF, 0x000003FF, 0x000001FF, 0x000000FF,
-  0x0000007F, 0x0000003F, 0x0000001F, 0x0000000F, 0x00000007,
-  0x00000003, 0x00000001, 0x00000000,
-];
+/// The number of bits in a byte.
+const _bitsPerByte = 8;
 
-List<int> _n = [
+/// The number of bytes in a 32-bit word.
+const _bytesPerWord = 4;
+
+/// Adds [x] and [y] with 32-bit overflow semantics.
+int _add32(int x, int y) => (x + y) & _mask32;
+
+/// Bitwise rotates [val] to the left by [shift], obeying 32-bit overflow
+/// semantics.
+int _rotl32(int val, int shift) {
+  var modShift = shift & 31;
+  return ((val << modShift) & _mask32) | ((val & _mask32) >> (32 - modShift));
+}
+
+/// A message digest as computed by a `Hash` or `HMAC` function.
+class _Digest {
+  /// The message digest as an array of bytes.
+  final List<int> bytes;
+
+  _Digest(this.bytes);
+
+  /// Returns whether this is equal to another digest.
+  ///
+  /// This should be used instead of manual comparisons to avoid leaking
+  /// information via timing.
+  @override
+  bool operator ==(Object other) {
+    if (other is _Digest) {
+      final a = bytes;
+      final b = other.bytes;
+      final n = a.length;
+      if (n != b.length) {
+        return false;
+      }
+      var mismatch = 0;
+      for (var i = 0; i < n; i++) {
+        mismatch |= a[i] ^ b[i];
+      }
+      return mismatch == 0;
+    }
+    return false;
+  }
+
+  @override
+  int get hashCode => Object.hashAll(bytes);
+
+  /// The message digest as a string of hexadecimal digits.
+  @override
+  String toString() => _hexEncode(bytes);
+}
+
+String _hexEncode(List<int> bytes) {
+  const hexDigits = '0123456789abcdef';
+  var charCodes = Uint8List(bytes.length * 2);
+  for (var i = 0, j = 0; i < bytes.length; i++) {
+    var byte = bytes[i];
+    charCodes[j++] = hexDigits.codeUnitAt((byte >> 4) & 0xF);
+    charCodes[j++] = hexDigits.codeUnitAt(byte & 0xF);
+  }
+  return String.fromCharCodes(charCodes);
+}
+
+/// A sink used to get a digest value out of `Hash.startChunkedConversion`.
+class _DigestSink implements Sink<_Digest> {
+  /// The value added to the sink.
+  ///
+  /// A value must have been added using [add] before reading the `value`.
+  _Digest get value => _value!;
+
+  _Digest? _value;
+
+  /// Adds [value] to the sink.
+  ///
+  /// Unlike most sinks, this may only be called once.
+  @override
+  void add(_Digest value) {
+    if (_value != null) throw StateError('add may only be called once.');
+    _value = value;
+  }
+
+  @override
+  void close() {
+    if (_value == null) throw StateError('add must be called once.');
+  }
+}
+
+/// An interface for cryptographic hash functions.
+///
+/// Every hash is a converter that takes a list of ints and returns a single
+/// digest. When used in chunked mode, it will only ever add one digest to the
+/// inner [Sink].
+abstract class _Hash extends Converter<List<int>, _Digest> {
+  /// The internal block size of the hash in bytes.
+  ///
+  /// This is exposed for use by the `Hmac` class,
+  /// which needs to know the block size for the [Hash] it uses.
+  int get blockSize;
+
+  const _Hash();
+
+  @override
+  _Digest convert(List<int> input) {
+    var innerSink = _DigestSink();
+    var outerSink = startChunkedConversion(innerSink);
+    outerSink.add(input);
+    outerSink.close();
+    return innerSink.value;
+  }
+
+  @override
+  ByteConversionSink startChunkedConversion(Sink<_Digest> sink);
+}
+
+/// A base class for [Sink] implementations for hash algorithms.
+///
+/// Subclasses should override [updateHash] and [digest].
+abstract class _HashSink implements Sink<List<int>> {
+  /// The inner sink that this should forward to.
+  final Sink<_Digest> _sink;
+
+  /// Whether the hash function operates on big-endian words.
+  final Endian _endian;
+
+  /// A [ByteData] view of the current chunk of data.
+  ///
+  /// This is an instance variable to avoid re-allocating.
+  ByteData? _byteDataView;
+
+  /// The actual chunk of bytes currently accumulating.
+  ///
+  /// The same allocation will be reused over and over again; once full it is
+  /// passed to the underlying hashing algorithm for processing.
+  final Uint8List _chunk;
+
+  /// The index of the next insertion into the chunk.
+  int _chunkNextIndex;
+
+  /// A [Uint32List] (in specified endian) copy of the chunk.
+  ///
+  /// This is an instance variable to avoid re-allocating.
+  final Uint32List _chunk32;
+
+  /// Messages with more than 2^53-1 bits are not supported.
+  ///
+  /// This is the largest value that is precisely representable
+  /// on both JS and the Dart VM.
+  /// So the maximum length in bytes is (2^53-1)/8.
+  static const _maxMessageLengthInBytes = 0x0003ffffffffffff;
+
+  /// The length of the input data so far, in bytes.
+  int _lengthInBytes = 0;
+
+  /// Whether [close] has been called.
+  bool _isClosed = false;
+
+  /// The words in the current digest.
+  ///
+  /// This should be updated each time [updateHash] is called.
+  Uint32List get digest;
+
+  /// The number of signature bytes emitted at the end of the message.
+  ///
+  /// An encrypted message is followed by a signature which depends
+  /// on the encryption algorithm used. This value specifies the
+  /// number of bytes used by this signature. It must always be
+  /// a power of 2 and no less than 8.
+  final int _signatureBytes;
+
+  /// Creates a new hash.
+  ///
+  /// [chunkSizeInWords] represents the size of the input chunks processed by
+  /// the algorithm, in terms of 32-bit words.
+  _HashSink(this._sink, int chunkSizeInWords, {Endian endian = Endian.big, int signatureBytes = 8})
+    : _endian = endian,
+      assert(signatureBytes >= 8),
+      _signatureBytes = signatureBytes,
+      _chunk = Uint8List(chunkSizeInWords * _bytesPerWord),
+      _chunkNextIndex = 0,
+      _chunk32 = Uint32List(chunkSizeInWords);
+
+  /// Runs a single iteration of the hash computation, updating [digest] with
+  /// the result.
+  ///
+  /// [chunk] is the current chunk, whose size is given by the
+  /// `chunkSizeInWords` parameter passed to the constructor.
+  void updateHash(Uint32List chunk);
+
+  @override
+  void add(List<int> data) {
+    if (_isClosed) throw StateError('Hash.add() called after close().');
+    _lengthInBytes += data.length;
+    _addData(data);
+  }
+
+  void _addData(List<int> data) {
+    var dataIndex = 0;
+    var chunkNextIndex = _chunkNextIndex;
+    final size = _chunk.length;
+    _byteDataView ??= _chunk.buffer.asByteData();
+    while (true) {
+      // Check if there is enough data left in [data] for a full chunk.
+      var restEnd = chunkNextIndex + data.length - dataIndex;
+      if (restEnd < size) {
+        // There is not enough data, so just add into [_chunk].
+        _chunk.setRange(chunkNextIndex, restEnd, data, dataIndex);
+        _chunkNextIndex = restEnd;
+        return;
+      }
+
+      // There is enough data to fill the chunk. Fill it and process it.
+      _chunk.setRange(chunkNextIndex, size, data, dataIndex);
+      dataIndex += size - chunkNextIndex;
+
+      // Now do endian conversion to words.
+      var j = 0;
+      do {
+        _chunk32[j] = _byteDataView!.getUint32(j * _bytesPerWord, _endian);
+        j++;
+      } while (j < _chunk32.length);
+
+      updateHash(_chunk32);
+      chunkNextIndex = 0;
+    }
+  }
+
+  @override
+  void close() {
+    if (_isClosed) return;
+    _isClosed = true;
+
+    _finalizeAndProcessData();
+    assert(_chunkNextIndex == 0);
+    _sink.add(_Digest(_byteDigest()));
+    _sink.close();
+  }
+
+  Uint8List _byteDigest() {
+    if (_endian == Endian.host) return digest.buffer.asUint8List();
+
+    // Cache the digest locally as `get` could be expensive.
+    final cachedDigest = digest;
+    final byteDigest = Uint8List(cachedDigest.lengthInBytes);
+    final byteData = byteDigest.buffer.asByteData();
+    for (var i = 0; i < cachedDigest.length; i++) {
+      byteData.setUint32(i * _bytesPerWord, cachedDigest[i]);
+    }
+    return byteDigest;
+  }
+
+  /// Finalizes the data and finishes the hash.
+  ///
+  /// This adds a 1 bit to the end of the message, and expands it with 0 bits to
+  /// pad it out.
+  void _finalizeAndProcessData() {
+    if (_lengthInBytes > _maxMessageLengthInBytes) {
+      throw UnsupportedError('Hashing is unsupported for messages with more than 2^53 bits.');
+    }
+
+    final contentsLength = _lengthInBytes + 1 /* 0x80 */ + _signatureBytes;
+    final finalizedLength = _roundUp(contentsLength, _chunk.lengthInBytes);
+
+    // Prepare the finalization data.
+    var padding = Uint8List(finalizedLength - _lengthInBytes);
+    // Pad out the data with 0x80, eight or sixteen 0s, and as many more 0s
+    // as we need to land cleanly on a chunk boundary.
+    padding[0] = 0x80;
+
+    // The rest is already 0-bytes.
+
+    var lengthInBits = _lengthInBytes * _bitsPerByte;
+
+    // Add the full length of the input data as a 64-bit value at the end of the
+    // hash. Note: we're only writing out 64 bits, so skip ahead 8 if the
+    // signature is 128-bit.
+    final offset = padding.length - 8;
+    var byteData = padding.buffer.asByteData();
+
+    // We're essentially doing byteData.setUint64(offset, lengthInBits, _endian)
+    // here, but that method isn't supported on dart2js so we implement it
+    // manually instead.
+    var highBits = lengthInBits ~/ 0x100000000; // >> 32
+    var lowBits = lengthInBits & _mask32;
+    if (_endian == Endian.big) {
+      byteData.setUint32(offset, highBits, _endian);
+      byteData.setUint32(offset + _bytesPerWord, lowBits, _endian);
+    } else {
+      byteData.setUint32(offset, lowBits, _endian);
+      byteData.setUint32(offset + _bytesPerWord, highBits, _endian);
+    }
+
+    _addData(padding);
+  }
+
+  /// Rounds [val] up to the next multiple of [n], as long as [n] is a power of
+  /// two.
+  int _roundUp(int val, int n) => (val + n - 1) & -n;
+}
+
+/// Data from a non-linear mathematical function that functions as
+/// reproducible noise.
+const _noise = [
   0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a, //
   0xa8304613, 0xfd469501, 0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,
   0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821, 0xf61e2562, 0xc040b340,
@@ -28,217 +320,116 @@ List<int> _n = [
   0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391,
 ];
 
-List<int> _sa = <int>[
+/// Per-round shift amounts.
+const _shiftAmounts = [
   07, 12, 17, 22, 07, 12, 17, 22, 07, 12, 17, 22, 07, 12, 17, 22, 05, 09, 14, //
   20, 05, 09, 14, 20, 05, 09, 14, 20, 05, 09, 14, 20, 04, 11, 16, 23, 04, 11,
   16, 23, 04, 11, 16, 23, 04, 11, 16, 23, 06, 10, 15, 21, 06, 10, 15, 21, 06,
   10, 15, 21, 06, 10, 15, 21,
 ];
 
-List<int> _join32(List<int> msg, int start, int end, Endian endian) {
-  var len = end - start;
-  assert(len % 4 == 0);
-  var res = List.filled((len ~/ 4), 0);
-  for (var i = 0, k = start; i < res.length; i++, k += 4) {
-    int w;
-    if (endian == Endian.big) {
-      w = (msg[k] << 24) | (msg[k + 1] << 16) | (msg[k + 2] << 8) | msg[k + 3];
-    } else {
-      w = (msg[k + 3] << 24) | (msg[k + 2] << 16) | (msg[k + 1] << 8) | msg[k];
-    }
-    res[i] = w;
-  }
-  return res;
-}
-
-int _shiftl32(int x, int n) {
-  n &= _mask_5;
-  x &= _mask32_hi_bits[n];
-  return (x << n) & _mask_32;
-}
-
-int _rotl32(int x, int n) {
-  return (_shiftl32(x, n)) | (x >> (32 - n) & _mask_32);
-}
-
-int _sum32(int a, [int b = 0, int c = 0, int d = 0, int e = 0]) {
-  return (a + b + c + d + e) & _mask_32;
-}
-
-Uint8List _split32(List<int> msg, Endian endian) {
-  var res = ByteData(msg.length * 4);
-  for (var i = 0, k = 0; i < msg.length; i++, k += 4) {
-    var m = msg[i];
-    res.setUint32(k, m, endian);
-  }
-  return res.buffer.asUint8List();
-}
-
-class _Hash {
-  late List<int>? pending;
-  int pendingTotal = 0;
-  int blockSize;
-  int padLength;
-  int outSize;
-  Endian endian = Endian.big;
-
-  late int _delta8;
-  late int _delta32;
-  _Hash({required this.blockSize, required this.padLength, required this.outSize, required this.endian}) {
-    padLength = padLength ~/ 8;
-    _delta8 = blockSize ~/ 8;
-    _delta32 = blockSize ~/ 32;
-    reset();
-  }
-
-  void reset() {
-    pendingTotal = 0;
-    pending = null;
-  }
-
-  void _update(List<int> msg, int start) {}
-
-  _Hash update(List<int> msg) {
-    if (pending?.isEmpty ?? true) {
-      pending = List.from(msg);
-    } else {
-      pending!.addAll(msg);
-    }
-    pendingTotal += msg.length;
-
-    if (pending!.length >= _delta8) {
-      msg = pending!;
-
-      var r = msg.length % _delta8;
-      pending = msg.sublist(msg.length - r, msg.length);
-      if (pending?.isEmpty ?? true) {
-        pending = null;
-      }
-      msg = _join32(msg, 0, msg.length - r, endian);
-      for (var i = 0; i < msg.length; i += _delta32) {
-        _update(msg, i);
-      }
-    }
-
-    return this;
-  }
-
-  Uint8List _pad() {
-    var len = pendingTotal;
-    var k = _delta8 - ((len + padLength) % _delta8);
-    var res = ByteData(k + padLength);
-    res.setUint8(0, 0x80);
-    int i;
-    for (i = 1; i < k; i++) {
-      res.setUint8(i, 0);
-    }
-
-    len <<= 3;
-    if (endian == Endian.big) {
-      for (var t = 8; t < padLength; t++) {
-        res.setUint8(i++, 0);
-      }
-      res.setUint32(i, 0);
-      i += 4;
-      res.setUint32(i, len);
-      i += 4;
-    } else {
-      res.setUint32(i, len, Endian.little);
-      i += 4;
-      res.setUint32(i, 0);
-
-      for (var t = 8; t < padLength; t++) {
-        res.setUint8(i++, 0);
-      }
-    }
-
-    return res.buffer.asUint8List();
-  }
-
-  Uint8List _digest() {
-    return Uint8List(0);
-  }
-
-  Uint8List digest() {
-    update(_pad());
-
-    assert(pending == null);
-
-    return _digest();
-  }
-}
-
-class _MD5 extends _Hash {
-  _MD5() : super(blockSize: 512, padLength: 64, outSize: 16, endian: Endian.little);
-
-  final List<int> _h = List.filled(4, 0);
-
+/// The concrete implementation of `MD5`.
+///
+/// This is separate so that it can extend [HashSink] without leaking additional
+/// public members.
+class _MD5Sink extends _HashSink {
   @override
-  void reset() {
-    super.reset();
-    _h[0] = 0x67452301;
-    _h[1] = 0xefcdab89;
-    _h[2] = 0x98badcfe;
-    _h[3] = 0x10325476;
+  final digest = Uint32List(4);
+
+  _MD5Sink(Sink<_Digest> sink) : super(sink, 16, endian: Endian.little) {
+    digest[0] = 0x67452301;
+    digest[1] = 0xefcdab89;
+    digest[2] = 0x98badcfe;
+    digest[3] = 0x10325476;
   }
 
   @override
-  void _update(List<int> msg, int start) {
-    var a = _h[0];
-    var b = _h[1];
-    var c = _h[2];
-    var d = _h[3];
-    int e;
-    int f;
+  void updateHash(Uint32List chunk) {
+    // This makes the VM get rid of some "GenericCheckBound" calls.
+    // See also https://github.com/dart-lang/sdk/issues/60753.
+    // ignore: unnecessary_statements
+    chunk[15];
 
-    for (var i = 0; i < 64; i++) {
-      if (i < 16) {
-        e = (b & c) | ((~b & _mask_32) & d);
-        f = i;
-      } else if (i < 32) {
-        e = (d & b) | ((~d & _mask_32) & c);
-        f = ((5 * i) + 1) % 16;
-      } else if (i < 48) {
-        e = b ^ c ^ d;
-        f = ((3 * i) + 5) % 16;
-      } else {
-        e = c ^ (b | (~d & _mask_32));
-        f = (7 * i) % 16;
-      }
+    // Access [3] first to get rid of some "GenericCheckBound" calls.
+    var d = digest[3];
+    var c = digest[2];
+    var b = digest[1];
+    var a = digest[0];
+
+    var e = 0;
+    var f = 0;
+
+    @pragma('vm:prefer-inline')
+    void round(int i) {
       var temp = d;
       d = c;
       c = b;
-      b = _sum32(b, _rotl32(_sum32(_sum32(a, e), _sum32(_n[i], msg[f])), _sa[i]));
+
+      b = _add32(b, _rotl32(_add32(_add32(a, e), _add32(_noise[i], chunk[f])), _shiftAmounts[i]));
+
       a = temp;
     }
 
-    _h[0] = _sum32(a, _h[0]);
-    _h[1] = _sum32(b, _h[1]);
-    _h[2] = _sum32(c, _h[2]);
-    _h[3] = _sum32(d, _h[3]);
+    for (var i = 0; i < 16; i++) {
+      e = (b & c) | ((~b & _mask32) & d);
+      // Doing `i % 16` would get rid of a "GenericCheckBound" call in the VM,
+      // but is slightly slower anyway.
+      // See also https://github.com/dart-lang/sdk/issues/60753.
+      f = i;
+      round(i);
+    }
+
+    for (var i = 16; i < 32; i++) {
+      e = (d & b) | ((~d & _mask32) & c);
+      f = ((5 * i) + 1) % 16;
+      round(i);
+    }
+
+    for (var i = 32; i < 48; i++) {
+      e = b ^ c ^ d;
+      f = ((3 * i) + 5) % 16;
+      round(i);
+    }
+
+    for (var i = 48; i < 64; i++) {
+      e = c ^ (b | (~d & _mask32));
+      f = (7 * i) % 16;
+      round(i);
+    }
+
+    digest[0] = _add32(a, digest[0]);
+    digest[1] = _add32(b, digest[1]);
+    digest[2] = _add32(c, digest[2]);
+    digest[3] = _add32(d, digest[3]);
   }
+}
+
+/// An implementation of the [MD5][rfc] hash function.
+///
+/// [rfc]: https://tools.ietf.org/html/rfc1321
+///
+/// **Warning**: MD5 has known collisions and should only be used when required
+/// for backwards compatibility.
+///
+/// Use the [md5] object to perform MD5 hashing.
+class _MD5 extends _Hash {
+  @override
+  final int blockSize = 16 * _bytesPerWord;
+
+  const _MD5._();
 
   @override
-  Uint8List _digest() {
-    return _split32(_h, endian);
-  }
+  ByteConversionSink startChunkedConversion(Sink<_Digest> sink) => ByteConversionSink.from(_MD5Sink(sink));
 }
 
-String md5str(String input) {
-  if (input.isEmpty) return '';
-
-  var md5 = _MD5();
-  final bytes = utf8.encode(input);
-  final digest = md5.update(bytes).digest();
-
-  var str = '';
-  for (var i = 0; i < digest.length; i++) {
-    var s = digest[i].toRadixString(16);
-    str += s.padLeft(2, '0');
-  }
-  return str;
-}
+/// An implementation of the [MD5][rfc] hash function.
+///
+/// [rfc]: https://tools.ietf.org/html/rfc1321
+///
+/// **Warning**: MD5 has known collisions and should only be used when required
+/// for backwards compatibility.
+const _Hash _md5 = _MD5._();
 
 extension StringMd5Ext on String {
-  String get md5 => md5str(this);
+  String get md5 => _md5.convert(utf8.encode(this)).toString();
 }
