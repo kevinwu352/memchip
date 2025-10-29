@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                         childAspectRatio: 139 / 247,
                       ),
                       itemCount: widget.vm.chips.length,
-                      itemBuilder: (context, index) => Container(color: Colors.amber),
+                      itemBuilder: (context, index) => _EntryView(),
                     ),
                   ),
 
@@ -87,24 +87,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
-// return Expanded(child: MediaQuery.removePadding(removeTop: true, context: context, child: _HomeGridView()));
-// class _HomeGridView extends StatelessWidget {
-//   const _HomeGridView();
-//   @override
-//   Widget build(BuildContext context) {
-//     return GridView.builder(
-//       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//         crossAxisCount: 2,
-//         crossAxisSpacing: 20,
-//         mainAxisSpacing: 40,
-//         childAspectRatio: 0.7,
-//       ),
-//       itemCount: 20,
-//       itemBuilder: (context, index) => Container(color: Colors.red),
-//     );
-//   }
-// }
 
 class _HeaderView extends StatelessWidget {
   const _HeaderView({this.avatarUrl, this.nickname, this.phomail});
@@ -137,11 +119,13 @@ class _HeaderView extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(
-                      nickname ?? AppLocalizations.of(context)!.account_nickname_empty,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
+                    Expanded(
+                      child: Text(
+                        nickname ?? AppLocalizations.of(context)!.account_nickname_empty,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
+                      ),
                     ),
-                    Spacer(),
                     IconButton(
                       onPressed: () => context.push(Routes.about),
                       icon: Image.asset('assets/images/account_more.png'),
@@ -158,9 +142,12 @@ class _HeaderView extends StatelessWidget {
                   children: [
                     Image.asset('assets/images/account_phomail.png'),
                     SizedBox(width: 4),
-                    Text(
-                      phomail ?? AppLocalizations.of(context)!.account_phomail_empty,
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray600),
+                    Expanded(
+                      child: Text(
+                        phomail ?? AppLocalizations.of(context)!.account_phomail_empty,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray600),
+                      ),
                     ),
                   ],
                 ),
@@ -185,6 +172,62 @@ class _EmptyView extends StatelessWidget {
           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.violet100),
         ),
       ],
+    );
+  }
+}
+
+class _EntryView extends StatelessWidget {
+  // const _EntryView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.white,
+      shadowColor: Colors.black.withValues(alpha: 0.3),
+      elevation: 4,
+      child: Column(
+        children: [
+          //
+          Expanded(child: Container(color: Colors.amber)),
+          Container(
+            height: 60,
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  spacing: 5,
+                  children: [
+                    Image.asset('assets/images/home_entry_paw.png'),
+                    Expanded(
+                      child: Text(
+                        'The widget below this widget in the tree.',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: MyColors.gray700),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  spacing: 5,
+                  children: [
+                    Image.asset('assets/images/home_entry_time.png'),
+                    Expanded(
+                      child: Text(
+                        'The widget below this widget in the tree.',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray500),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
