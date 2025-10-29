@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get_time_ago/get_time_ago.dart';
 import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
@@ -65,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) => _EntryView(
                         coverUrl: 'https://picsum.photos/200/300',
                         title: 'The widget below this widget in the tree.',
-                        date: null,
+                        date: DateTime.now().subtract(Duration(minutes: 10)),
                       ),
                     ),
                   ),
@@ -181,11 +182,11 @@ class _EmptyView extends StatelessWidget {
 }
 
 class _EntryView extends StatelessWidget {
-  const _EntryView({super.key, this.coverUrl, this.title, this.date});
+  const _EntryView({required this.coverUrl, required this.title, required this.date});
 
-  final String? coverUrl;
-  final String? title;
-  final DateTime? date;
+  final String coverUrl;
+  final String title;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +199,7 @@ class _EntryView extends StatelessWidget {
         children: [
           Expanded(
             child: CachedNetworkImage(
-              imageUrl: coverUrl ?? '',
+              imageUrl: coverUrl,
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(color: Colors.white),
               errorWidget: (context, url, error) => Container(color: Colors.white),
@@ -218,7 +219,7 @@ class _EntryView extends StatelessWidget {
                     Image.asset('assets/images/home_entry_paw.png'),
                     Expanded(
                       child: Text(
-                        title ?? '',
+                        title,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: MyColors.gray700),
                       ),
@@ -231,7 +232,7 @@ class _EntryView extends StatelessWidget {
                     Image.asset('assets/images/home_entry_time.png'),
                     Expanded(
                       child: Text(
-                        '',
+                        GetTimeAgo.parse(date, locale: AppLocalizations.of(context)!.localeName),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray500),
                       ),
