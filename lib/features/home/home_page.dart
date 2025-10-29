@@ -47,17 +47,43 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                // Selector<Secures, bool>(
-                //   selector: (_, object) => object.logined,
-                //   builder: (context, value, child) {
-                //     if (value) {
-                //       return Text('logined');
-                //     } else {
-                //       return Text('to login');
-                //     }
-                //   },
-                // ),
-                if (widget.vm.chips.isEmpty) Padding(padding: const EdgeInsets.only(top: 30), child: _EmptyView()),
+                if (widget.vm.chips.isEmpty)
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Padding(padding: const EdgeInsets.only(top: 30), child: _EmptyView()),
+                        Spacer(),
+                      ],
+                    ),
+                  )
+                else
+                  Expanded(
+                    child: MediaQuery.removePadding(
+                      context: context,
+                      removeTop: true,
+                      removeBottom: true,
+                      child: ListView.builder(
+                        itemCount: 20,
+                        itemBuilder: (context, index) => ListTile(title: Text('data $index'), tileColor: Colors.amber),
+                      ),
+                    ),
+                  ),
+
+                Container(
+                  padding: EdgeInsets.fromLTRB(30, 0, 30, kSafeBot + 24),
+                  width: double.infinity,
+                  child: FilledButton.icon(
+                    style: FilledButton.styleFrom(
+                      backgroundColor: MyColors.violet300,
+                      textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
+                    onPressed: () {
+                      //
+                    },
+                    label: Text('new chip'),
+                    icon: Icon(Icons.run_circle),
+                  ),
+                ),
               ],
             ),
           );
