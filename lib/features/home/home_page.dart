@@ -53,14 +53,16 @@ class _HomePageState extends State<HomePage> {
                   )
                 else
                   Expanded(
-                    child: MediaQuery.removePadding(
-                      context: context,
-                      removeTop: true,
-                      removeBottom: true,
-                      child: ListView.builder(
-                        itemCount: 20,
-                        itemBuilder: (context, index) => ListTile(title: Text('data $index'), tileColor: Colors.amber),
+                    child: GridView.builder(
+                      padding: EdgeInsets.symmetric(horizontal: 30),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                        childAspectRatio: 139 / 247,
                       ),
+                      itemCount: widget.vm.chips.length,
+                      itemBuilder: (context, index) => Container(color: Colors.amber),
                     ),
                   ),
 
