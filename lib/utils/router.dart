@@ -42,7 +42,10 @@ GoRouter router() => GoRouter(
     GoRoute(path: Routes.about, builder: (context, state) => AboutPage()),
 
     GoRoute(path: Routes.chipCategory, builder: (context, state) => ChipCategoryPage()),
-    GoRoute(path: Routes.chipCreateHuman, builder: (context, state) => ChipCreateHumanPage()),
+    GoRoute(
+      path: Routes.chipCreateHuman,
+      builder: (context, state) => ChipCreateHumanPage.create(network: context.read()),
+    ),
     GoRoute(path: Routes.chipCreatePet, builder: (context, state) => ChipCreatePetPage()),
   ],
 );

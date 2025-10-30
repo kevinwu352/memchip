@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '/network/network.dart';
 import 'chip_create_views.dart';
+import 'chip_create_human_view_model.dart';
 
 class ChipCreateHumanPage extends StatefulWidget {
-  const ChipCreateHumanPage({super.key});
+  const ChipCreateHumanPage({super.key, required this.vm});
+
+  final ChipCreateHumanViewModel vm;
+
+  ChipCreateHumanPage.create({super.key, required Networkable network})
+    : vm = ChipCreateHumanViewModel(network: network);
 
   @override
   State<ChipCreateHumanPage> createState() => _ChipCreateHumanPageState();
