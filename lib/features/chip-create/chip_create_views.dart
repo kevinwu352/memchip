@@ -4,6 +4,7 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:image_picker/image_picker.dart';
 import '/l10n/localizations.dart';
 import '/theme/theme.dart';
+import 'chip_create_human_view_model.dart';
 
 class SectionView extends StatelessWidget {
   const SectionView({super.key, required this.title});
@@ -19,7 +20,7 @@ class SectionView extends StatelessWidget {
 
 class UploadView extends StatelessWidget {
   const UploadView({super.key, required this.images, required this.chooseAction});
-  final List<String?> images;
+  final List<UploadImage> images;
   final void Function(int index, ImageSource source) chooseAction;
   @override
   Widget build(BuildContext context) {
@@ -33,8 +34,8 @@ class UploadView extends StatelessWidget {
             ...images.indexed.map(
               (e) => GestureDetector(
                 onTap: () => _showImageSources(e.$1, context),
-                child: e.$2 is String
-                    ? Image.file(width: 93, height: 108, File(e.$2!), fit: BoxFit.cover)
+                child: e.$2.path is String
+                    ? Image.file(width: 93, height: 108, File(e.$2.path!), fit: BoxFit.cover)
                     : Image.asset(width: 93, height: 108, 'assets/images/create_addimg.png'),
               ),
             ),

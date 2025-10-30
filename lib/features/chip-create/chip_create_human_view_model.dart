@@ -6,4 +6,15 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
   final Networkable _network;
 
   // ValueNotifier<Localable?> snackPub = ValueNotifier(null);
+
+  List<UploadImage> uploads = [UploadImage()];
+  void didChooseImage(int index, String path) {
+    uploads[index].path = path;
+    notifyListeners();
+  }
+}
+
+class UploadImage {
+  String? path;
+  String? url;
 }
