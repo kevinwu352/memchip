@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:dotted_border/dotted_border.dart';
 import '/l10n/localizations.dart';
 import '/theme/theme.dart';
 import 'chip_create_human_view_model.dart';
@@ -31,12 +32,28 @@ class UploadView extends StatelessWidget {
         Row(
           spacing: 8,
           children: [
-            ...images.indexed.map(
-              (e) => GestureDetector(
-                onTap: () => _showImageSources(e.$1, context),
-                child: e.$2.path is String
-                    ? Image.file(width: 93, height: 108, File(e.$2.path!), fit: BoxFit.cover)
-                    : Image.asset(width: 93, height: 108, 'assets/images/create_addimg.png'),
+            // ...images.indexed.map(
+            //   (e) => GestureDetector(
+            //     onTap: () => _showImageSources(e.$1, context),
+            //     child: e.$2.path is String
+            //         ? Image.file(width: 93, height: 108, File(e.$2.path!), fit: BoxFit.cover)
+            //         : Image.asset(width: 93, height: 108, 'assets/images/create_addimg.png'),
+            //   ),
+            // ),
+            DottedBorder(
+              options: RoundedRectDottedBorderOptions(
+                radius: Radius.circular(3),
+                padding: EdgeInsets.all(1),
+                color: MyColors.violet200,
+                dashPattern: [3, 3],
+              ),
+              child: Container(
+                width: 91,
+                height: 106,
+                color: MyColors.violet00,
+                foregroundDecoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage('assets/images/create_add.png')),
+                ),
               ),
             ),
           ],
