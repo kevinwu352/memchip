@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '/network/network.dart';
-import 'chip_create_views.dart';
+import 'views/section_view.dart';
+import 'views/upload_view.dart';
 import 'chip_create_human_view_model.dart';
 
 class ChipCreateHumanPage extends StatefulWidget {

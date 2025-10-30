@@ -5,19 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '/l10n/localizations.dart';
 import '/theme/theme.dart';
-import 'chip_create_human_view_model.dart';
-
-class SectionView extends StatelessWidget {
-  const SectionView({super.key, required this.title});
-  final String title;
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: MyColors.gray700),
-    );
-  }
-}
+import '../chip_create_human_view_model.dart';
 
 class UploadView extends StatelessWidget {
   const UploadView({super.key, required this.images, required this.chooseAction});
