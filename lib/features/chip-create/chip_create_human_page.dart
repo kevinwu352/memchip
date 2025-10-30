@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'chip_create_views.dart';
 
-class ChipCreateHumanPage extends StatelessWidget {
+class ChipCreateHumanPage extends StatefulWidget {
   const ChipCreateHumanPage({super.key});
 
+  @override
+  State<ChipCreateHumanPage> createState() => _ChipCreateHumanPageState();
+}
+
+class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
+  final List<String?> images = [null, null];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +22,14 @@ class ChipCreateHumanPage extends StatelessWidget {
           ),
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
-            sliver: SliverToBoxAdapter(child: UploadView(images: [null, null])),
+            sliver: SliverToBoxAdapter(
+              child: UploadView(
+                images: images,
+                imageChanged: (index, path) {
+                  setState(() => images[index] = path);
+                },
+              ),
+            ),
           ),
 
           // SliverGrid.builder(
