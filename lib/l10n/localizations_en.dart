@@ -9,6 +9,12 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get confirm => 'Confirm';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
   String get http_error_unknown => 'Unknown Error en';
 
   @override
@@ -102,4 +108,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chip_category_pet_btn => 'Create Pet Character';
+
+  @override
+  String get chip_create_image_library => 'Photo library';
+
+  @override
+  String get chip_create_image_camera => 'Camera';
 }

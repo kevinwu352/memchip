@@ -1,5 +1,9 @@
 {
   "@@locale": "zh",
+
+  "confirm": "确定",
+  "cancel": "取消",
+
   "http_error_unknown": "Unknown Error zh",
   "http_error_network": "Network Error zh",
   "http_error_status": "Status Error zh",
@@ -32,5 +36,8 @@
   "chip_category_human_info": "Please add a clear character image. zh",
   "chip_category_human_btn": "Create Human Character zh",
   "chip_category_pet_info": "Please upload one clear front photo and one side photo of your pet. zh",
-  "chip_category_pet_btn": "Create Pet Character zh"
+  "chip_category_pet_btn": "Create Pet Character zh",
+
+  "chip_create_image_library": "Photo library zh",
+  "chip_create_image_camera": "Camera zh"
 }

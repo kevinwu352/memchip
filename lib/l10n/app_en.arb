@@ -1,5 +1,9 @@
 {
   "@@locale": "en",
+
+  "confirm": "Confirm",
+  "cancel": "Cancel",
+
   "http_error_unknown": "Unknown Error en",
   "http_error_network": "Network Error en",
   "http_error_status": "Status Error en",
@@ -32,5 +36,8 @@
   "chip_category_human_info": "Please add a clear character image.",
   "chip_category_human_btn": "Create Human Character",
   "chip_category_pet_info": "Please upload one clear front photo and one side photo of your pet.",
-  "chip_category_pet_btn": "Create Pet Character"
+  "chip_category_pet_btn": "Create Pet Character",
+
+  "chip_create_image_library": "Photo library",
+  "chip_create_image_camera": "Camera"
 }

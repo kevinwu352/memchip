@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:image_picker/image_picker.dart';
+import '/l10n/localizations.dart';
 import '/theme/theme.dart';
 
 class SectionView extends StatelessWidget {
@@ -16,9 +18,9 @@ class SectionView extends StatelessWidget {
 }
 
 class UploadView extends StatelessWidget {
-  const UploadView({super.key, required this.images, required this.imageChanged});
+  const UploadView({super.key, required this.images, required this.chooseAction});
   final List<String?> images;
-  final void Function(int index, String? path) imageChanged;
+  final void Function(int index, ImageSource source) chooseAction;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,18 +30,9 @@ class UploadView extends StatelessWidget {
         Row(
           spacing: 8,
           children: [
-            //
             ...images.indexed.map(
               (e) => GestureDetector(
-                onTap: () async {
-                  final picker = ImagePicker();
-                  final file = await picker.pickImage(source: ImageSource.gallery);
-                  // print('path:${file?.path}, name:${file?.name}, mime:${file?.mimeType}, length:${file?.length()}');
-                  final path = file?.path;
-                  if (path != null) {
-                    imageChanged(e.$1, path);
-                  }
-                },
+                onTap: () => _showImageSources(e.$1, context),
                 child: e.$2 is String
                     ? Image.file(width: 93, height: 108, File(e.$2!), fit: BoxFit.cover)
                     : Image.asset(width: 93, height: 108, 'assets/images/create_addimg.png'),
@@ -52,6 +45,23 @@ class UploadView extends StatelessWidget {
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
         ),
       ],
+    );
+  }
+
+  void _showImageSources(int index, BuildContext context) {
+    showAdaptiveActionSheet(
+      context: context,
+      actions: [
+        BottomSheetAction(
+          title: Text(AppLocalizations.of(context)!.chip_create_image_library),
+          onPressed: (context) => chooseAction(index, ImageSource.gallery),
+        ),
+        BottomSheetAction(
+          title: Text(AppLocalizations.of(context)!.chip_create_image_camera),
+          onPressed: (context) => chooseAction(index, ImageSource.camera),
+        ),
+      ],
+      cancelAction: CancelAction(title: Text(AppLocalizations.of(context)!.cancel)),
     );
   }
 }

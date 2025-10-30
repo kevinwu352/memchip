@@ -98,6 +98,18 @@ abstract class AppLocalizations {
     Locale('zh'),
   ];
 
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
   /// No description provided for @http_error_unknown.
   ///
   /// In en, this message translates to:
@@ -265,6 +277,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create Pet Character'**
   String get chip_category_pet_btn;
+
+  /// No description provided for @chip_create_image_library.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo library'**
+  String get chip_create_image_library;
+
+  /// No description provided for @chip_create_image_camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get chip_create_image_camera;
 }
 
 class _AppLocalizationsDelegate

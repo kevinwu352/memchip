@@ -9,6 +9,12 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
+  String get confirm => '确定';
+
+  @override
+  String get cancel => '取消';
+
+  @override
   String get http_error_unknown => 'Unknown Error zh';
 
   @override
@@ -103,4 +109,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get chip_category_pet_btn => 'Create Pet Character zh';
+
+  @override
+  String get chip_create_image_library => 'Photo library zh';
+
+  @override
+  String get chip_create_image_camera => 'Camera zh';
 }

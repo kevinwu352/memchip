@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'chip_create_views.dart';
 
 class ChipCreateHumanPage extends StatefulWidget {
@@ -23,12 +24,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 50),
             sliver: SliverToBoxAdapter(
-              child: UploadView(
-                images: images,
-                imageChanged: (index, path) {
-                  setState(() => images[index] = path);
-                },
-              ),
+              child: UploadView(images: images, chooseAction: _chooseImage),
             ),
           ),
 
@@ -42,18 +38,20 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
           //   itemCount: 5,
           //   itemBuilder: (context, index) => Container(color: Colors.amber),
           // ),
-          // SliverGrid.builder(
-          //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          //     crossAxisCount: 2,
-          //     crossAxisSpacing: 20,
-          //     mainAxisSpacing: 20,
-          //     childAspectRatio: 1,
-          //   ),
-          //   itemCount: 5,
-          //   itemBuilder: (context, index) => Container(color: Colors.green),
-          // ),
         ],
       ),
     );
+  }
+
+  void _chooseImage(int index, ImageSource source) async {
+    Navigator.pop(context);
+
+    final picker = ImagePicker();
+    final file = await picker.pickImage(source: source);
+    // print('path:${file?.path}, name:${file?.name}, mime:${file?.mimeType}, length:${file?.length()}');
+    final path = file?.path;
+    if (path != null) {
+      setState(() => images[index] = path);
+    }
   }
 }
