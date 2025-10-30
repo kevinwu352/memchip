@@ -86,4 +86,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String about_version(Object version) {
     return 'Version: $version';
   }
+
+  @override
+  String get chip_category_page_title => 'Create Character';
+
+  @override
+  String get chip_category_human_info => 'Please add a clear character image.';
+
+  @override
+  String get chip_category_human_btn => 'Create Human Character';
+
+  @override
+  String get chip_category_pet_info =>
+      'Please upload one clear front photo and one side photo of your pet.';
+
+  @override
+  String get chip_category_pet_btn => 'Create Pet Character';
 }

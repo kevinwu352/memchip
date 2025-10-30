@@ -235,6 +235,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Version: {version}'**
   String about_version(Object version);
+
+  /// No description provided for @chip_category_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Character'**
+  String get chip_category_page_title;
+
+  /// No description provided for @chip_category_human_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add a clear character image.'**
+  String get chip_category_human_info;
+
+  /// No description provided for @chip_category_human_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Human Character'**
+  String get chip_category_human_btn;
+
+  /// No description provided for @chip_category_pet_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload one clear front photo and one side photo of your pet.'**
+  String get chip_category_pet_info;
+
+  /// No description provided for @chip_category_pet_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Pet Character'**
+  String get chip_category_pet_btn;
 }
 
 class _AppLocalizationsDelegate

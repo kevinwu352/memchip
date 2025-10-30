@@ -7,15 +7,36 @@ class ChipCategoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('category')),
-      backgroundColor: Colors.teal,
-      body: Column(
-        children: [
-          //
-          // Text('data'),
-          _EntryView(),
-        ],
+      body: SizedBox.expand(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              //
+              // Text('data'),
+              _EntryView(),
+            ],
+          ),
+        ),
       ),
     );
+  }
+}
+
+enum _Entry {
+  human,
+  pet;
+
+  factory _Entry.fromIndex(int i) => _Entry.values[i];
+
+  String get title {
+    switch (this) {
+      case human:
+        return 'aaa';
+      case pet:
+        return 'bbb';
+    }
   }
 }
 
@@ -24,6 +45,17 @@ class _EntryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [Image.asset('assets/images/create_human.png'), Text('data')]);
+    return AspectRatio(
+      aspectRatio: 280 / 202,
+      child: Container(
+        decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/category_human.png'))),
+        child: Column(
+          children: [
+            //
+            Text('data'),
+          ],
+        ),
+      ),
+    );
   }
 }

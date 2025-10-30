@@ -26,5 +26,11 @@
   "about_line_term_title": "Terms of Service",
   "about_line_privacy_title": "Privacy Policy",
   "about_logout_btn": "Log out",
-  "about_version": "Version: {version}"
+  "about_version": "Version: {version}",
+
+  "chip_category_page_title": "Create Character",
+  "chip_category_human_info": "Please add a clear character image.",
+  "chip_category_human_btn": "Create Human Character",
+  "chip_category_pet_info": "Please upload one clear front photo and one side photo of your pet.",
+  "chip_category_pet_btn": "Create Pet Character"
 }
