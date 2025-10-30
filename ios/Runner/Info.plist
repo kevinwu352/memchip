@@ -14,6 +14,10 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to your photo library to allow you to select photos for your chips.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app uses the camera to allow you to take photos for your chips.</string>
 	<key>CFBundleName</key>
 	<string>memchip</string>
 	<key>CFBundlePackageType</key>
