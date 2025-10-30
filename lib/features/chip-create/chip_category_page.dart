@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '/l10n/localizations.dart';
 import '/theme/theme.dart';
+import '/utils/router.dart';
 
 class ChipCategoryPage extends StatelessWidget {
   const ChipCategoryPage({super.key});
@@ -21,7 +23,7 @@ class ChipCategoryPage extends StatelessWidget {
                   cover: it.cover,
                   info: it.info(context),
                   button: it.button(context),
-                  action: () => print(it),
+                  action: () => context.push(it.route),
                 ),
               ),
             ],
@@ -60,6 +62,15 @@ enum _Entry {
         return AppLocalizations.of(context)!.chip_category_human_btn;
       case pet:
         return AppLocalizations.of(context)!.chip_category_pet_btn;
+    }
+  }
+
+  String get route {
+    switch (this) {
+      case human:
+        return Routes.chipCreateHuman;
+      case pet:
+        return Routes.chipCreatePet;
     }
   }
 }
