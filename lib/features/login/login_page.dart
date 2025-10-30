@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             onPressed: widget.vm.sendEnabled ? widget.vm.sendAction : null,
                             child: widget.vm.sending
-                                ? CircularProgressIndicator.adaptive()
+                                ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
                                 : Text(AppLocalizations.of(context)!.login_code_send_btn(widget.vm.countdown)),
                           ),
                         ),
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
                         child: widget.vm.submiting
-                            ? CircularProgressIndicator.adaptive()
+                            ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
                             : Text(AppLocalizations.of(context)!.login_submit_btn),
                       ),
                     ),

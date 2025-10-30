@@ -23,6 +23,7 @@ class UploadView extends StatelessWidget {
   const UploadView({super.key, required this.images, required this.chooseAction});
   final List<UploadImage> images;
   final void Function(int index, ImageSource source) chooseAction;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,27 +33,35 @@ class UploadView extends StatelessWidget {
         Row(
           spacing: 8,
           children: [
-            // ...images.indexed.map(
-            //   (e) => GestureDetector(
-            //     onTap: () => _showImageSources(e.$1, context),
-            //     child: e.$2.path is String
-            //         ? Image.file(width: 93, height: 108, File(e.$2.path!), fit: BoxFit.cover)
-            //         : Image.asset(width: 93, height: 108, 'assets/images/create_addimg.png'),
-            //   ),
-            // ),
-            DottedBorder(
-              options: RoundedRectDottedBorderOptions(
-                radius: Radius.circular(3),
-                padding: EdgeInsets.all(1),
-                color: MyColors.violet200,
-                dashPattern: [3, 3],
-              ),
-              child: Container(
-                width: 91,
-                height: 106,
-                color: MyColors.violet00,
-                foregroundDecoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage('assets/images/create_add.png')),
+            ...images.indexed.map(
+              (e) => DottedBorder(
+                options: RoundedRectDottedBorderOptions(
+                  radius: Radius.circular(3),
+                  padding: EdgeInsets.all(1),
+                  color: MyColors.violet200,
+                  dashPattern: [3, 3],
+                ),
+                child: GestureDetector(
+                  onTap: () => _showImageSources(e.$1, context),
+                  child: Container(
+                    width: 91,
+                    height: 106,
+                    color: MyColors.violet00,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset('assets/images/create_add.png'),
+                        if (e.$2.path != null)
+                          Positioned.fill(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(3),
+                              child: Image.file(File(e.$2.path!), fit: BoxFit.cover),
+                            ),
+                          ),
+                        CircularProgressIndicator.adaptive(backgroundColor: Colors.white),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
