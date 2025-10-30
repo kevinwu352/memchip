@@ -7,7 +7,7 @@ import '/ui/web_page.dart';
 import '/features/home/home_page.dart';
 import '/features/login/login_page.dart';
 import '/features/about/about_page.dart';
-import '/features/chip-create/chip_create_page.dart';
+import '/features/chip-create/chip_category_page.dart';
 
 abstract final class Routes {
   static String web(String url) => '/web/${url.encodeComponent}';
@@ -15,7 +15,7 @@ abstract final class Routes {
   static const home = '/home';
   static const login = '/login';
   static const about = '/about';
-  static const chipCreate = '/chip-create';
+  static const chipCategory = '/chip-category';
 }
 
 GoRouter router() => GoRouter(
@@ -37,6 +37,6 @@ GoRouter router() => GoRouter(
     ),
     GoRoute(path: Routes.about, builder: (context, state) => AboutPage()),
 
-    GoRoute(path: Routes.chipCreate, builder: (context, state) => ChipCreatePage()),
+    GoRoute(path: Routes.chipCategory, builder: (context, state) => ChipCategoryPage()),
   ],
 );

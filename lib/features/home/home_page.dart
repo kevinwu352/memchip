@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                       backgroundColor: MyColors.violet300,
                       textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                     ),
-                    onPressed: () => context.push(context.read<Secures>().logined ? Routes.chipCreate : Routes.login),
+                    onPressed: () => context.push(context.read<Secures>().logined ? Routes.chipCategory : Routes.login),
                     label: Text(AppLocalizations.of(context)!.home_new_btn),
                     icon: Image.asset('assets/images/home_new.png'),
                   ),
