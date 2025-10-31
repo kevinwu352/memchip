@@ -43,7 +43,7 @@ Res parse<T>(String str, [T Function(Map<String, dynamic>)? init]) {
   try {
     Map<String, Object?> json = jsonDecode(str);
     final res = Res.fromJson(json);
-    final data = json['data'];
+    final data = json['data'] ?? json;
     if (data is List) {
       if (data.isEmpty) {
         res.data = data;

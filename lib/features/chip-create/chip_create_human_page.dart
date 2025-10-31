@@ -19,6 +19,18 @@ class ChipCreateHumanPage extends StatefulWidget {
 
 class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
   @override
+  void initState() {
+    super.initState();
+    _subscribeSnack();
+  }
+
+  @override
+  void dispose() {
+    widget.vm.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Create Human')),
@@ -61,8 +73,19 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
     final file = await picker.pickImage(source: source);
     // print('path:${file?.path}, name:${file?.name}, mime:${file?.mimeType}, length:${file?.length()}');
     final path = file?.path;
-    if (path != null) {
+    if (path != null && path.isNotEmpty) {
       widget.vm.didChooseImage(index, path);
     }
+  }
+
+  void _subscribeSnack() {
+    widget.vm.snackPub.addListener(() {
+      final msg = widget.vm.snackPub.value?.localized(context);
+      if (msg != null && msg.isNotEmpty) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
+      }
+      widget.vm.snackPub.value = null;
+    });
   }
 }

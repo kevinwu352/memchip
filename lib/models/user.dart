@@ -1,4 +1,4 @@
-class UserModel {
+class User {
   String token;
   String id;
   String email;
@@ -9,7 +9,7 @@ class UserModel {
   DateTime createTime;
   DateTime lastLoginTime;
 
-  UserModel({
+  User({
     required this.token,
     required this.id,
     required this.email,
@@ -21,7 +21,7 @@ class UserModel {
     required this.lastLoginTime,
   });
 
-  factory UserModel.fromLogin(Map<String, dynamic> json) {
+  factory User.fromApi(Map<String, dynamic> json) {
     final token = json['token'] as String;
     final userInfo = json['userInfo'] as Map;
     final id = userInfo['_id'] as String;
@@ -32,7 +32,7 @@ class UserModel {
     final systemInfo = userInfo['systemInfo'] as String;
     final createTime = DateTime.parse(userInfo['createTime'] as String);
     final lastLoginTime = DateTime.parse(userInfo['lastLoginTime'] as String);
-    return UserModel(
+    return User(
       token: token,
       id: id,
       email: email,
@@ -45,7 +45,7 @@ class UserModel {
     );
   }
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory User.fromJson(Map<String, dynamic> json) {
     final token = json['token'] as String;
     final id = json['id'] as String;
     final email = json['email'] as String;
@@ -55,7 +55,7 @@ class UserModel {
     final systemInfo = json['systemInfo'] as String;
     final createTime = DateTime.parse(json['createTime'] as String);
     final lastLoginTime = DateTime.parse(json['lastLoginTime'] as String);
-    return UserModel(
+    return User(
       token: token,
       id: id,
       email: email,

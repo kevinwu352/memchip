@@ -169,7 +169,7 @@ class _LoginPageState extends State<LoginPage> {
   void _subscribeSnack() {
     widget.vm.snackPub.addListener(() {
       final msg = widget.vm.snackPub.value?.localized(context);
-      if (msg != null) {
+      if (msg != null && msg.isNotEmpty) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }

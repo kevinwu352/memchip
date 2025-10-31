@@ -16,4 +16,7 @@ final class Api extends Endpoint {
         parameters: {'email': email, 'code': code},
         encoding: ReqEncoding.json,
       );
+
+  Api.createGetUploadParas(String name)
+    : super('/http/ext-storage-co/getUploadFileOptions', ReqMethod.get, parameters: {'cloudPath': name});
 }

@@ -9,7 +9,7 @@ import '/storage/storage.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
 import '/utils/router.dart';
-import '/models/user_model.dart';
+import '/models/user.dart';
 import 'home_view_model.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           return SizedBox.expand(
             child: Column(
               children: [
-                Selector<Defaults, UserModel?>(
+                Selector<Defaults, User?>(
                   selector: (_, object) => object.user,
                   builder: (context, value, child) => Padding(
                     padding: EdgeInsets.fromLTRB(30, kSafeTop + 30, 30, 30),

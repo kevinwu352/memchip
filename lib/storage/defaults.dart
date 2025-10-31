@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import '/core/core.dart';
-import '/models/user_model.dart';
+import '/models/user.dart';
 import 'hive_ext.dart';
 
 enum _Keys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey }
@@ -27,7 +27,7 @@ final class Defaults extends ChangeNotifier {
     _language = languageVal.isNotEmpty ? Locale(languageVal[0], languageVal.elementAtOrNull(1)) : null;
 
     final userVal = _box.getMap(_Keys.kCurrentUserKey.name);
-    _user = userVal != null ? UserModel.fromJson(userVal) : null;
+    _user = userVal != null ? User.fromJson(userVal) : null;
   }
 
   late ThemeMode _theme;
@@ -47,9 +47,9 @@ final class Defaults extends ChangeNotifier {
     notifyListeners();
   }
 
-  UserModel? _user;
-  UserModel? get user => _user;
-  set user(UserModel? value) {
+  User? _user;
+  User? get user => _user;
+  set user(User? value) {
     _user = value;
     _box.setValue(_Keys.kCurrentUserKey.name, value?.toJson());
     notifyListeners();

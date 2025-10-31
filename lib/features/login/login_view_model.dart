@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/network/network.dart';
-import '/models/user_model.dart';
+import '/models/user.dart';
 import '/utils/api.dart';
 
 final class LoginViewModel extends ChangeNotifier {
@@ -124,7 +124,7 @@ final class LoginViewModel extends ChangeNotifier {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.accountCheckCode(email, code), UserModel.fromLogin);
+      final result = await _network.reqRes(Api.accountCheckCode(email, code), User.fromApi);
       submiting = false;
 
       switch (result) {
@@ -132,7 +132,7 @@ final class LoginViewModel extends ChangeNotifier {
           final res = result.value;
           if (res.success) {
             snackPub.value = LocaledStr(res.message);
-            final user = res.getObject<UserModel>();
+            final user = res.getObject<User>();
             _secures.lastUsername = user?.email;
             _secures.accessToken = user?.token;
             _defaults.user = user;
