@@ -38,10 +38,10 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
       body: ListenableBuilder(
         listenable: widget.vm,
         builder: (context, child) {
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: SectionView(
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                SectionView(
                   title: 'Add Image',
                   children: [
                     UploadView(
@@ -51,10 +51,8 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                     ),
                   ],
                 ),
-              ),
 
-              SliverToBoxAdapter(
-                child: SectionView(
+                SectionView(
                   title: 'Basic Information',
                   children: [
                     FieldView(
@@ -78,40 +76,43 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                         ),
                       ),
                     ),
+
+                    FieldView(title: 'Gender', child: Text('data')),
+
+                    Table(
+                      children: [
+                        TableRow(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(right: 4),
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: MyColors.violet300,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text('a'),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 4),
+                              child: Container(
+                                height: 60,
+                                decoration: BoxDecoration(
+                                  color: MyColors.violet300,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text('111'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-              ),
-
-              // SliverPadding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              //   sliver: SliverToBoxAdapter(child: SectionTitle(title: 'Add Image')),
-              // ),
-              // SliverPadding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 50),
-              //   sliver: SliverToBoxAdapter(
-              //     child: UploadView(
-              //       images: widget.vm.uploads,
-              //       imageChoosed: widget.vm.didChooseImage,
-              //       info: 'Please add a clear character image.',
-              //     ),
-              //   ),
-              // ),
-              // SliverPadding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-              //   sliver: SliverToBoxAdapter(child: SectionTitle(title: 'Basic Information')),
-              // ),
-
-              // SliverGrid.builder(
-              //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              //     crossAxisCount: 2,
-              //     crossAxisSpacing: 20,
-              //     mainAxisSpacing: 20,
-              //     childAspectRatio: 1,
-              //   ),
-              //   itemCount: 5,
-              //   itemBuilder: (context, index) => Container(color: Colors.amber),
-              // ),
-            ],
+              ],
+            ),
           );
         },
       ),
