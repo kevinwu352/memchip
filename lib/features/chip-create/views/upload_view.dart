@@ -30,7 +30,7 @@ class UploadView extends StatelessWidget {
                   dashPattern: [3, 3],
                 ),
                 child: GestureDetector(
-                  onTap: () => _showImageSources(e.$1, context),
+                  onTap: e.$2.uploading ? null : () => _showImageSources(e.$1, context),
                   child: Container(
                     width: 91,
                     height: 106,
@@ -46,7 +46,8 @@ class UploadView extends StatelessWidget {
                               child: Image.file(File(e.$2.path!), fit: BoxFit.cover),
                             ),
                           ),
-                        CircularProgressIndicator.adaptive(backgroundColor: Colors.white),
+                        if (e.$2.uploading) CircularProgressIndicator.adaptive(backgroundColor: Colors.white),
+                        // if (e.$2.success != null) Text(e.$2.success == true ? 'success' : 'failed'),
                       ],
                     ),
                   ),

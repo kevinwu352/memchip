@@ -17,9 +17,8 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
   void didChooseImage(int index, String path) async {
     final item = uploads[index];
     if (item.path != path) {
+      item.reset();
       item.path = path;
-      item.url = null;
-      item.uploading = false;
       notifyListeners();
       getUploadParas(index, path);
     }
@@ -37,7 +36,7 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
           final res = result.value;
           final paras = res.getObject<CreateParas>();
           if (paras != null) {
-            print('upload: paras success');
+            // print('upload: paras success');
             uploadImage(index, path, paras);
           } else {
             throw HttpError.operation;
@@ -48,10 +47,10 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       snackPub.value = err;
-
-      print('upload: paras failed');
+      // print('upload: paras failed');
 
       uploads[index].uploading = false;
+      uploads[index].success = false;
       notifyListeners();
     }
   }
@@ -67,15 +66,17 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         uploads[index].url = paras.url;
         uploads[index].uploading = false;
-        print('upload: upload success ${paras.url}');
+        uploads[index].success = true;
+        // print('upload: upload success ${paras.url}');
         notifyListeners();
       } else {
         throw HttpError.status;
       }
     } catch (e) {
-      print('upload: upload failed ${paras.url}');
+      // print('upload: upload failed ${paras.url}');
 
       uploads[index].uploading = false;
+      uploads[index].success = false;
       notifyListeners();
     }
   }
@@ -85,4 +86,11 @@ class UploadImage {
   String? path;
   String? url;
   bool uploading = false;
+  bool? success;
+  void reset() {
+    path = null;
+    url = null;
+    uploading = false;
+    success = null;
+  }
 }
