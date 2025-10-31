@@ -4,6 +4,7 @@ import '/theme/theme.dart';
 import 'views/section_view.dart';
 import 'views/field_view.dart';
 import 'views/upload_view.dart';
+import 'views/selection_view.dart';
 import 'chip_create_human_view_model.dart';
 
 class ChipCreateHumanPage extends StatefulWidget {
@@ -77,38 +78,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                       ),
                     ),
 
-                    FieldView(title: 'Gender', child: Text('data')),
-
-                    Table(
-                      children: [
-                        TableRow(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(right: 4),
-                              child: Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: MyColors.violet300,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text('a'),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 4),
-                              child: Container(
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: MyColors.violet300,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text('111'),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    FieldView(title: 'Gender', child: SelectionView(count: 9, itemsPerRow: 3, height: 60, spacing: 8)),
                   ],
                 ),
               ],
