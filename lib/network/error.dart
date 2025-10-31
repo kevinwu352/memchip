@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:memchip/l10n/localizations.dart';
+import '/l10n/localizations.dart';
 import '/core/core.dart';
 
 enum HttpError implements Exception, Localable {

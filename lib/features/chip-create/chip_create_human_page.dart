@@ -83,8 +83,8 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                     FieldView(
                       title: 'Gender',
                       child: SelectionView(
-                        count: 9,
-                        per: 3,
+                        count: Gender.values.length,
+                        per: 2,
                         height: 60,
                         spacing: 8,
                         selected: selected,
@@ -92,8 +92,11 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                           vertical: false,
                           compact: false,
                           spacing: 0,
-                          lead: Text('a'),
-                          trail: Text('b'),
+                          lead: Text(
+                            Gender.fromIndex(i).title(context),
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.white100),
+                          ),
+                          trail: Image.asset(Gender.fromIndex(i).image),
                         ),
                         selectAction: (i) => setState(() {
                           print(i);

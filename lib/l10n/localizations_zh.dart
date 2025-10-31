@@ -115,4 +115,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get chip_create_image_camera => 'Camera zh';
+
+  @override
+  String get chip_create_gender_male => '男';
+
+  @override
+  String get chip_create_gender_female => '女';
 }

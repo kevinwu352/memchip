@@ -114,4 +114,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chip_create_image_camera => 'Camera';
+
+  @override
+  String get chip_create_gender_male => 'Male';
+
+  @override
+  String get chip_create_gender_female => 'Female';
 }

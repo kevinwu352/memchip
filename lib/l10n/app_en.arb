@@ -39,5 +39,7 @@
   "chip_category_pet_btn": "Create Pet Character",
 
   "chip_create_image_library": "Photo library",
-  "chip_create_image_camera": "Camera"
+  "chip_create_image_camera": "Camera",
+  "chip_create_gender_male": "Male",
+  "chip_create_gender_female": "Female"
 }

@@ -289,6 +289,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Camera'**
   String get chip_create_image_camera;
+
+  /// No description provided for @chip_create_gender_male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get chip_create_gender_male;
+
+  /// No description provided for @chip_create_gender_female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get chip_create_gender_female;
 }
 
 class _AppLocalizationsDelegate
