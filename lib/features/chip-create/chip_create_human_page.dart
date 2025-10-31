@@ -32,6 +32,8 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
     super.dispose();
   }
 
+  int? selected;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +80,31 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                       ),
                     ),
 
-                    FieldView(title: 'Gender', child: SelectionView(count: 9, itemsPerRow: 3, height: 60, spacing: 8)),
+                    FieldView(
+                      title: 'Gender',
+                      child: SelectionView(
+                        count: 9,
+                        per: 3,
+                        height: 60,
+                        spacing: 8,
+                        selected: selected,
+                        itemBuilder: (i) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              //
+                              Text('d'),
+                              Text('2'),
+                            ],
+                          ),
+                        ),
+                        selectAction: (i) => setState(() {
+                          print(i);
+                          selected = i;
+                        }),
+                      ),
+                    ),
                   ],
                 ),
               ],

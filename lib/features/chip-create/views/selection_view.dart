@@ -5,20 +5,30 @@ class SelectionView extends StatelessWidget {
   const SelectionView({
     super.key,
     required this.count,
-    required this.itemsPerRow,
+    required this.per,
     required this.height,
     required this.spacing,
+    this.normalColor = MyColors.violet300,
+    this.selectedColor = MyColors.orange400,
+    required this.itemBuilder,
+    required this.selected,
+    required this.selectAction,
   });
 
   final int count;
-  final int itemsPerRow;
+  final int per;
   final double height;
   final double spacing;
+  final Color normalColor;
+  final Color selectedColor;
+  final Widget Function(int i) itemBuilder;
+  final int? selected;
+  final void Function(int i) selectAction;
 
   @override
   Widget build(BuildContext context) {
-    int rows = (count / itemsPerRow).ceil();
-    int cols = itemsPerRow;
+    int rows = (count / per).ceil();
+    int cols = per;
     double pad = spacing / 2;
     return Table(
       children: [
@@ -34,43 +44,22 @@ class SelectionView extends StatelessWidget {
                       top: r != 0 ? pad : 0,
                       bottom: r != rows - 1 ? pad : 0,
                     ),
-                    child: Container(
-                      height: height,
-                      decoration: BoxDecoration(color: MyColors.violet300, borderRadius: BorderRadius.circular(8)),
-                      child: Text('$r $c'),
+                    child: GestureDetector(
+                      onTap: () => selectAction(r * cols + c),
+                      child: Container(
+                        height: height,
+                        decoration: BoxDecoration(
+                          color: selected == (r * cols + c) ? selectedColor : normalColor,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: itemBuilder(r * cols + c),
+                      ),
                     ),
                   )
                 else
                   Container(),
             ],
           ),
-
-        // final v = c * per + r;
-        // if (c * per + r < count) {
-        //   print('$c $r $v');
-        // } else {
-        //   print('$c $r $v xxx');
-        // }
-        // TableRow(
-        //   children: [
-        //     Padding(
-        //       padding: EdgeInsets.only(right: 4),
-        //       child: Container(
-        //         height: 60,
-        //         decoration: BoxDecoration(color: MyColors.violet300, borderRadius: BorderRadius.circular(8)),
-        //         child: Text('a'),
-        //       ),
-        //     ),
-        //     Padding(
-        //       padding: EdgeInsets.only(left: 4),
-        //       child: Container(
-        //         height: 60,
-        //         decoration: BoxDecoration(color: MyColors.violet300, borderRadius: BorderRadius.circular(8)),
-        //         child: Text('111'),
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }
