@@ -88,16 +88,12 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                         height: 60,
                         spacing: 8,
                         selected: selected,
-                        itemBuilder: (i) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //
-                              Text('d'),
-                              Text('2'),
-                            ],
-                          ),
+                        itemBuilder: (i) => SelectionEntryView(
+                          vertical: false,
+                          compact: false,
+                          spacing: 0,
+                          lead: Text('a'),
+                          trail: Text('b'),
                         ),
                         selectAction: (i) => setState(() {
                           print(i);

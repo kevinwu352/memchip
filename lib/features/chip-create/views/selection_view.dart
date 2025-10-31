@@ -64,3 +64,38 @@ class SelectionView extends StatelessWidget {
     );
   }
 }
+
+class SelectionEntryView extends StatelessWidget {
+  const SelectionEntryView({
+    super.key,
+    required this.vertical,
+    required this.compact,
+    required this.spacing,
+    required this.lead,
+    required this.trail,
+  });
+
+  final bool vertical;
+  final bool compact;
+  final double spacing;
+  final Widget lead;
+  final Widget trail;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: vertical
+          ? Column(
+              mainAxisAlignment: compact ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+              spacing: spacing,
+              children: [lead, trail],
+            )
+          : Row(
+              mainAxisAlignment: compact ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+              spacing: spacing,
+              children: [lead, trail],
+            ),
+    );
+  }
+}
