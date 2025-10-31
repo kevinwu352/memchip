@@ -1,18 +1,22 @@
+import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '/core/core.dart';
 import '/network/network.dart';
-import '/utils/api.dart';
 import '/models/create_paras.dart';
 
 final class ChipCreateHumanViewModel extends ChangeNotifier {
-  ChipCreateHumanViewModel({required Networkable network}) : _network = network;
+  ChipCreateHumanViewModel({required Networkable network}) : _network = network {
+    for (var element in uploads) {
+      element.notify = notifyListeners;
+    }
+  }
   final Networkable _network;
 
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
 
-  List<UploadImage> uploads = [UploadImage()];
+  List<ImageUploader> uploads = [ImageUploader()];
 
   void didChooseImage(int index, String path) async {
     final item = uploads[index];
@@ -20,38 +24,55 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
       item.reset();
       item.path = path;
       notifyListeners();
-      getUploadParas(index, path);
+      // getUploadParas(index, path);
+      item.getUploadParas(index, path);
     }
+  }
+}
+
+class ImageUploader {
+  String? path;
+  String? url;
+  bool uploading = false;
+  bool? success;
+  void Function()? notify;
+
+  void reset() {
+    path = null;
+    url = null;
+    uploading = false;
+    success = null;
   }
 
   void getUploadParas(int index, String path) async {
     try {
-      uploads[index].uploading = true;
-      notifyListeners();
+      uploading = true;
+      notify?.call();
 
-      final name = 'upload/${DateTime.now().millisecondsSinceEpoch}-${Random().nextInt(10000)}.png';
-      final result = await _network.reqRes(Api.createGetUploadParas(name), CreateParas.fromApi);
-      switch (result) {
-        case Ok():
-          final res = result.value;
-          final paras = res.getObject<CreateParas>();
-          if (paras != null) {
-            // print('upload: paras success');
-            uploadImage(index, path, paras);
-          } else {
-            throw HttpError.operation;
-          }
-        case Error():
-          throw result.error;
+      final name = 'upload/${DateTime.now().millisecondsSinceEpoch}-${Random().nextInt(100000)}.png';
+      final uri = Uri(
+        scheme: 'https',
+        host: kCurrentHost,
+        path: '/http/ext-storage-co/getUploadFileOptions',
+        queryParameters: {'cloudPath': Uri.encodeComponent(name)},
+      );
+      final response = await get(uri).timeout(Duration(seconds: 15));
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        final json = jsonDecode(response.body);
+        final paras = CreateParas.fromApi(json);
+        // print('upload: paras success');
+        uploadImage(index, path, paras);
+      } else {
+        throw HttpError.status;
       }
     } catch (e) {
-      final err = e is HttpError ? e : HttpError.unknown;
-      snackPub.value = err;
-      // print('upload: paras failed');
+      // final err = e is HttpError ? e : HttpError.unknown;
+      // snackPub.value = err;
+      print('upload: paras failed');
 
-      uploads[index].uploading = false;
-      uploads[index].success = false;
-      notifyListeners();
+      uploading = false;
+      success = false;
+      notify?.call();
     }
   }
 
@@ -64,33 +85,20 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
 
       var response = await request.send();
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        uploads[index].url = paras.url;
-        uploads[index].uploading = false;
-        uploads[index].success = true;
-        // print('upload: upload success ${paras.url}');
-        notifyListeners();
+        url = paras.url;
+        uploading = false;
+        success = true;
+        print('upload: upload success ${paras.url}');
+        notify?.call();
       } else {
         throw HttpError.status;
       }
     } catch (e) {
-      // print('upload: upload failed ${paras.url}');
+      print('upload: upload failed ${paras.url}');
 
-      uploads[index].uploading = false;
-      uploads[index].success = false;
-      notifyListeners();
+      uploading = false;
+      success = false;
+      notify?.call();
     }
-  }
-}
-
-class UploadImage {
-  String? path;
-  String? url;
-  bool uploading = false;
-  bool? success;
-  void reset() {
-    path = null;
-    url = null;
-    uploading = false;
-    success = null;
   }
 }

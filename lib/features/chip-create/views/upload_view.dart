@@ -9,7 +9,7 @@ import '../chip_create_human_view_model.dart';
 
 class UploadView extends StatelessWidget {
   const UploadView({super.key, required this.images, required this.chooseAction});
-  final List<UploadImage> images;
+  final List<ImageUploader> images;
   final void Function(int index, ImageSource source) chooseAction;
 
   @override
