@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '/network/network.dart';
-import 'views/section_title.dart';
-import 'views/field_title.dart';
+import '/theme/theme.dart';
+import 'views/section_view.dart';
+import 'views/field_view.dart';
 import 'views/upload_view.dart';
 import 'chip_create_human_view_model.dart';
 
@@ -39,25 +40,66 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
         builder: (context, child) {
           return CustomScrollView(
             slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                sliver: SliverToBoxAdapter(child: SectionTitle(title: 'Add Image')),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 50),
-                sliver: SliverToBoxAdapter(
-                  child: UploadView(
-                    images: widget.vm.uploads,
-                    imageChoosed: widget.vm.didChooseImage,
-                    info: 'Please add a clear character image.',
-                  ),
+              SliverToBoxAdapter(
+                child: SectionView(
+                  title: 'Add Image',
+                  children: [
+                    UploadView(
+                      images: widget.vm.uploads,
+                      imageChoosed: widget.vm.didChooseImage,
+                      info: 'Please add a clear character image.',
+                    ),
+                  ],
                 ),
               ),
 
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                sliver: SliverToBoxAdapter(child: SectionTitle(title: 'Basic Information')),
+              SliverToBoxAdapter(
+                child: SectionView(
+                  title: 'Basic Information',
+                  children: [
+                    FieldView(
+                      title: 'Image Frame Name',
+                      child: TextField(
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                        onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+                        decoration: InputDecoration(
+                          hintText: 'Enter image box name',
+                          hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyColors.gray300, width: 1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyColors.violet200, width: 1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                          constraints: BoxConstraints(maxHeight: 36),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
+              // SliverPadding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              //   sliver: SliverToBoxAdapter(child: SectionTitle(title: 'Add Image')),
+              // ),
+              // SliverPadding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 50),
+              //   sliver: SliverToBoxAdapter(
+              //     child: UploadView(
+              //       images: widget.vm.uploads,
+              //       imageChoosed: widget.vm.didChooseImage,
+              //       info: 'Please add a clear character image.',
+              //     ),
+              //   ),
+              // ),
+              // SliverPadding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+              //   sliver: SliverToBoxAdapter(child: SectionTitle(title: 'Basic Information')),
+              // ),
 
               // SliverGrid.builder(
               //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
