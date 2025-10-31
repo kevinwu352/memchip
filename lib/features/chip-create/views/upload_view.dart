@@ -8,9 +8,9 @@ import '/theme/theme.dart';
 import '/utils/image_uploader.dart';
 
 class UploadView extends StatelessWidget {
-  const UploadView({super.key, required this.images, required this.chooseAction});
+  const UploadView({super.key, required this.images, required this.imageChoosed});
   final List<ImageUploader> images;
-  final void Function(int index, ImageSource source) chooseAction;
+  final void Function(int index, String path) imageChoosed;
 
   @override
   Widget build(BuildContext context) {
@@ -70,14 +70,25 @@ class UploadView extends StatelessWidget {
       actions: [
         BottomSheetAction(
           title: Text(AppLocalizations.of(context)!.chip_create_image_library),
-          onPressed: (context) => chooseAction(index, ImageSource.gallery),
+          onPressed: (context) => _chooseImage(index, ImageSource.gallery, context),
         ),
         BottomSheetAction(
           title: Text(AppLocalizations.of(context)!.chip_create_image_camera),
-          onPressed: (context) => chooseAction(index, ImageSource.camera),
+          onPressed: (context) => _chooseImage(index, ImageSource.camera, context),
         ),
       ],
       cancelAction: CancelAction(title: Text(AppLocalizations.of(context)!.cancel)),
     );
+  }
+
+  void _chooseImage(int index, ImageSource source, BuildContext context) async {
+    Navigator.pop(context);
+    final picker = ImagePicker();
+    final file = await picker.pickImage(source: source);
+    // print('path:${file?.path}, name:${file?.name}, mime:${file?.mimeType}, length:${file?.length()}');
+    final path = file?.path;
+    if (path != null && path.isNotEmpty) {
+      imageChoosed(index, path);
+    }
   }
 }

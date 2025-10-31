@@ -18,6 +18,14 @@ class ImageUploader {
     success = null;
   }
 
+  void launch(String path, void Function() notify) {
+    if (this.path == path) return;
+    reset();
+    this.path = path;
+    this.notify = notify;
+    getUploadParas(path);
+  }
+
   void getUploadParas(String path) async {
     try {
       uploading = true;
@@ -40,8 +48,6 @@ class ImageUploader {
         throw HttpError.status;
       }
     } catch (e) {
-      // final err = e is HttpError ? e : HttpError.unknown;
-      // snackPub.value = err;
       // print('upload: paras failed');
       uploading = false;
       success = false;

@@ -16,12 +16,6 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
   List<ImageUploader> uploads = [ImageUploader()];
 
   void didChooseImage(int index, String path) async {
-    final item = uploads[index];
-    if (item.path != path) {
-      item.reset();
-      item.path = path;
-      notifyListeners();
-      item.getUploadParas(path);
-    }
+    uploads[index].launch(path, notifyListeners);
   }
 }

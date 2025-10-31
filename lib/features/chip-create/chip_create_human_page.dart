@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import '/network/network.dart';
 import 'views/section_view.dart';
 import 'views/upload_view.dart';
@@ -46,7 +45,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 sliver: SliverToBoxAdapter(
-                  child: UploadView(images: widget.vm.uploads, chooseAction: _chooseImage),
+                  child: UploadView(images: widget.vm.uploads, imageChoosed: widget.vm.didChooseImage),
                 ),
               ),
 
@@ -65,17 +64,6 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
         },
       ),
     );
-  }
-
-  void _chooseImage(int index, ImageSource source) async {
-    Navigator.pop(context);
-    final picker = ImagePicker();
-    final file = await picker.pickImage(source: source);
-    // print('path:${file?.path}, name:${file?.name}, mime:${file?.mimeType}, length:${file?.length()}');
-    final path = file?.path;
-    if (path != null && path.isNotEmpty) {
-      widget.vm.didChooseImage(index, path);
-    }
   }
 
   void _subscribeSnack() {
