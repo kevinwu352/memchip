@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '/l10n/localizations.dart';
 import '/theme/theme.dart';
-import '../chip_create_human_view_model.dart';
+import '/utils/image_uploader.dart';
 
 class UploadView extends StatelessWidget {
   const UploadView({super.key, required this.images, required this.chooseAction});
