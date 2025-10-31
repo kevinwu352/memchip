@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '/network/network.dart';
-import 'views/section_view.dart';
+import 'views/section_title.dart';
+import 'views/field_title.dart';
 import 'views/upload_view.dart';
 import 'chip_create_human_view_model.dart';
 
@@ -40,13 +41,22 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
             slivers: [
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                sliver: SliverToBoxAdapter(child: SectionView(title: 'Add Image')),
+                sliver: SliverToBoxAdapter(child: SectionTitle(title: 'Add Image')),
               ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 50),
                 sliver: SliverToBoxAdapter(
-                  child: UploadView(images: widget.vm.uploads, imageChoosed: widget.vm.didChooseImage),
+                  child: UploadView(
+                    images: widget.vm.uploads,
+                    imageChoosed: widget.vm.didChooseImage,
+                    info: 'Please add a clear character image.',
+                  ),
                 ),
+              ),
+
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                sliver: SliverToBoxAdapter(child: SectionTitle(title: 'Basic Information')),
               ),
 
               // SliverGrid.builder(

@@ -8,9 +8,10 @@ import '/theme/theme.dart';
 import '/utils/image_uploader.dart';
 
 class UploadView extends StatelessWidget {
-  const UploadView({super.key, required this.images, required this.imageChoosed});
+  const UploadView({super.key, required this.images, required this.imageChoosed, required this.info});
   final List<ImageUploader> images;
   final void Function(int index, String path) imageChoosed;
+  final String info;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class UploadView extends StatelessWidget {
           ],
         ),
         Text(
-          'Please upload one clear front photo and one side photo of your pet.',
+          info,
           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
         ),
       ],
