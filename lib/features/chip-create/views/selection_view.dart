@@ -68,14 +68,14 @@ class SelectionView extends StatelessWidget {
 class SelectionEntryView extends StatelessWidget {
   const SelectionEntryView({
     super.key,
-    required this.vertical,
-    required this.compact,
-    required this.spacing,
+    this.axis = Axis.horizontal,
+    this.compact = false,
+    this.spacing = 0,
     required this.lead,
     required this.trail,
   });
 
-  final bool vertical;
+  final Axis axis;
   final bool compact;
   final double spacing;
   final Widget lead;
@@ -85,13 +85,13 @@ class SelectionEntryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: vertical
-          ? Column(
+      child: axis == Axis.horizontal
+          ? Row(
               mainAxisAlignment: compact ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
               spacing: spacing,
               children: [lead, trail],
             )
-          : Row(
+          : Column(
               mainAxisAlignment: compact ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
               spacing: spacing,
               children: [lead, trail],

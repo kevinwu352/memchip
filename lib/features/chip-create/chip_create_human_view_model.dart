@@ -16,6 +16,13 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
 
   List<ImageUploader> uploads = [ImageUploader()];
 
+  Gender? _gender;
+  Gender? get gender => _gender;
+  set gender(Gender? value) {
+    _gender = value;
+    notifyListeners();
+  }
+
   void didChooseImage(int index, String path) async {
     uploads[index].launch(path, notifyListeners);
   }

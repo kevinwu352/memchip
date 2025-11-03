@@ -32,8 +32,6 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
     super.dispose();
   }
 
-  int? selected;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,21 +85,15 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                         per: 2,
                         height: 60,
                         spacing: 8,
-                        selected: selected,
+                        selected: widget.vm.gender?.index,
                         itemBuilder: (i) => SelectionEntryView(
-                          vertical: false,
-                          compact: false,
-                          spacing: 0,
                           lead: Text(
                             Gender.fromIndex(i).title(context),
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.white100),
                           ),
                           trail: Image.asset(Gender.fromIndex(i).image),
                         ),
-                        selectAction: (i) => setState(() {
-                          print(i);
-                          selected = i;
-                        }),
+                        selectAction: (i) => widget.vm.gender = Gender.fromIndex(i),
                       ),
                     ),
                   ],
