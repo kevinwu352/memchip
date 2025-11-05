@@ -17,10 +17,27 @@ final class ChipCreateHumanVm extends ChangeNotifier {
 
   List<ImageUploader> uploads = [ImageUploader()];
 
+  void didChooseImage(int index, String path) async {
+    uploads[index].launch(path, notifyListeners);
+  }
+
+  final nameController = TextEditingController();
+
+  void nameChanged(String value) {
+    notifyListeners();
+  }
+
   Gender? _gender;
   Gender? get gender => _gender;
   set gender(Gender? value) {
     _gender = value;
+    notifyListeners();
+  }
+
+  AgeRange? _age;
+  AgeRange? get age => _age;
+  set age(AgeRange? value) {
+    _age = value;
     notifyListeners();
   }
 
@@ -31,8 +48,25 @@ final class ChipCreateHumanVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  void didChooseImage(int index, String path) async {
-    uploads[index].launch(path, notifyListeners);
+  bool get submitEnabled {
+    return uploads.every((e) => e.success == true) &&
+        nameController.text.isNotEmpty &&
+        _gender != null &&
+        _age != null &&
+        _figure != null;
+  }
+
+  var _submiting = false;
+  bool get submiting => _submiting;
+  set submiting(bool value) {
+    _submiting = value;
+    notifyListeners();
+  }
+
+  void submitAction() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (_submiting) return;
+    print('do submit');
   }
 }
 

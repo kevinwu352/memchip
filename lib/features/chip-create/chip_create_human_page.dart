@@ -60,8 +60,13 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                       FieldView(
                         title: AppLocalizations.of(context)!.chip_create_name_title_human,
                         child: TextField(
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                          controller: widget.vm.nameController,
+                          onChanged: widget.vm.nameChanged,
                           onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+                          autocorrect: false,
+                          textCapitalization: TextCapitalization.none,
+                          enableSuggestions: false,
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
                           decoration: InputDecoration(
                             hintText: AppLocalizations.of(context)!.chip_create_name_ph_human,
                             hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
@@ -156,7 +161,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                         ),
                         Expanded(
                           child: FilledButton(
-                            onPressed: () {},
+                            onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
                             style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
                             child: Text(
                               AppLocalizations.of(context)!.chip_create_create_btn,
