@@ -5,8 +5,8 @@ import '/core/core.dart';
 import '/network/network.dart';
 import '/utils/image_uploader.dart';
 
-final class ChipCreateHumanViewModel extends ChangeNotifier {
-  ChipCreateHumanViewModel({required Networkable network}) : _network = network {
+final class ChipCreateHumanVm extends ChangeNotifier {
+  ChipCreateHumanVm({required Networkable network}) : _network = network {
     for (var element in uploads) {
       element.notify = notifyListeners;
     }

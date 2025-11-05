@@ -10,14 +10,14 @@ import '/network/network.dart';
 import '/theme/theme.dart';
 import '/utils/router.dart';
 import '/models/user.dart';
-import 'home_view_model.dart';
+import 'home_vm.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.vm});
 
-  final HomeViewModel vm;
+  final HomeVm vm;
 
-  HomePage.create({super.key, required Networkable network}) : vm = HomeViewModel(network: network);
+  HomePage.create({super.key, required Networkable network}) : vm = HomeVm(network: network);
 
   @override
   State<HomePage> createState() => _HomePageState();

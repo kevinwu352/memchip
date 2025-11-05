@@ -6,8 +6,8 @@ import '/network/network.dart';
 import '/models/user.dart';
 import '/utils/api.dart';
 
-final class LoginViewModel extends ChangeNotifier {
-  LoginViewModel({required Networkable network, required Secures secures, required Defaults defaults})
+final class LoginVm extends ChangeNotifier {
+  LoginVm({required Networkable network, required Secures secures, required Defaults defaults})
     : _network = network,
       _secures = secures,
       _defaults = defaults;

@@ -6,15 +6,15 @@ import '/storage/storage.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
 import '/utils/router.dart';
-import 'login_view_model.dart';
+import 'login_vm.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.vm});
 
-  final LoginViewModel vm;
+  final LoginVm vm;
 
   LoginPage.create({super.key, required Networkable network, required Secures secures, required Defaults defaults})
-    : vm = LoginViewModel(network: network, secures: secures, defaults: defaults);
+    : vm = LoginVm(network: network, secures: secures, defaults: defaults);
 
   @override
   State<LoginPage> createState() => _LoginPageState();

@@ -6,15 +6,14 @@ import 'views/section_view.dart';
 import 'views/field_view.dart';
 import 'views/upload_view.dart';
 import 'views/round_sel_view.dart';
-import 'chip_create_human_view_model.dart';
+import 'chip_create_human_vm.dart';
 
 class ChipCreateHumanPage extends StatefulWidget {
   const ChipCreateHumanPage({super.key, required this.vm});
 
-  final ChipCreateHumanViewModel vm;
+  final ChipCreateHumanVm vm;
 
-  ChipCreateHumanPage.create({super.key, required Networkable network})
-    : vm = ChipCreateHumanViewModel(network: network);
+  ChipCreateHumanPage.create({super.key, required Networkable network}) : vm = ChipCreateHumanVm(network: network);
 
   @override
   State<ChipCreateHumanPage> createState() => _ChipCreateHumanPageState();
