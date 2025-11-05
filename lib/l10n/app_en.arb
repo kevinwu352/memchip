@@ -41,5 +41,9 @@
   "chip_create_image_library": "Photo library",
   "chip_create_image_camera": "Camera",
   "chip_create_gender_male": "Male",
-  "chip_create_gender_female": "Female"
+  "chip_create_gender_female": "Female",
+  "chip_create_figure_1": "Slim",
+  "chip_create_figure_2": "Standard",
+  "chip_create_figure_3": "Fit",
+  "chip_create_figure_4": "Chubby"
 }

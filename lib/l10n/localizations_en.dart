@@ -120,4 +120,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chip_create_gender_female => 'Female';
+
+  @override
+  String get chip_create_figure_1 => 'Slim';
+
+  @override
+  String get chip_create_figure_2 => 'Standard';
+
+  @override
+  String get chip_create_figure_3 => 'Fit';
+
+  @override
+  String get chip_create_figure_4 => 'Chubby';
 }

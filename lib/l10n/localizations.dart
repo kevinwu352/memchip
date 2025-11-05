@@ -301,6 +301,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Female'**
   String get chip_create_gender_female;
+
+  /// No description provided for @chip_create_figure_1.
+  ///
+  /// In en, this message translates to:
+  /// **'Slim'**
+  String get chip_create_figure_1;
+
+  /// No description provided for @chip_create_figure_2.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard'**
+  String get chip_create_figure_2;
+
+  /// No description provided for @chip_create_figure_3.
+  ///
+  /// In en, this message translates to:
+  /// **'Fit'**
+  String get chip_create_figure_3;
+
+  /// No description provided for @chip_create_figure_4.
+  ///
+  /// In en, this message translates to:
+  /// **'Chubby'**
+  String get chip_create_figure_4;
 }
 
 class _AppLocalizationsDelegate

@@ -24,6 +24,13 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  Figure? _figure;
+  Figure? get figure => _figure;
+  set figure(Figure? value) {
+    _figure = value;
+    notifyListeners();
+  }
+
   void didChooseImage(int index, String path) async {
     uploads[index].launch(path, notifyListeners);
   }
@@ -82,4 +89,39 @@ enum AgeRange {
   static List<DropdownMenuEntry<AgeRange>> entries = UnmodifiableListView<DropdownMenuEntry<AgeRange>>(
     values.map((e) => DropdownMenuEntry(value: e, label: e.title)),
   );
+}
+
+enum Figure {
+  slim,
+  standard,
+  fit,
+  chubby;
+
+  factory Figure.fromIndex(int i) => Figure.values[i];
+
+  String title(BuildContext context) {
+    switch (this) {
+      case slim:
+        return AppLocalizations.of(context)!.chip_create_figure_1;
+      case standard:
+        return AppLocalizations.of(context)!.chip_create_figure_2;
+      case fit:
+        return AppLocalizations.of(context)!.chip_create_figure_3;
+      case chubby:
+        return AppLocalizations.of(context)!.chip_create_figure_4;
+    }
+  }
+
+  String get image {
+    switch (this) {
+      case slim:
+        return 'assets/images/create_figure_1.png';
+      case standard:
+        return 'assets/images/create_figure_2.png';
+      case fit:
+        return 'assets/images/create_figure_3.png';
+      case chubby:
+        return 'assets/images/create_figure_4.png';
+    }
+  }
 }

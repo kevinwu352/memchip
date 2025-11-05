@@ -40,83 +40,104 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
         listenable: widget.vm,
         builder: (context, child) {
           return SingleChildScrollView(
-            child: Column(
-              children: [
-                SectionView(
-                  title: 'Add Image',
-                  children: [
-                    UploadView(
-                      images: widget.vm.uploads,
-                      imageChoosed: widget.vm.didChooseImage,
-                      info: 'Please add a clear character image.',
-                    ),
-                  ],
-                ),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  SectionView(
+                    title: 'Add Image',
+                    children: [
+                      UploadView(
+                        images: widget.vm.uploads,
+                        imageChoosed: widget.vm.didChooseImage,
+                        info: 'Please add a clear character image.',
+                      ),
+                    ],
+                  ),
 
-                SectionView(
-                  title: 'Basic Information',
-                  children: [
-                    FieldView(
-                      title: 'Image Frame Name',
-                      child: TextField(
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
-                        onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
-                        decoration: InputDecoration(
-                          hintText: 'Enter image box name',
-                          hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: MyColors.gray300, width: 1),
-                            borderRadius: BorderRadius.circular(8),
+                  SectionView(
+                    title: 'Basic Information',
+                    children: [
+                      FieldView(
+                        title: 'Image Frame Name',
+                        child: TextField(
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                          onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+                          decoration: InputDecoration(
+                            hintText: 'Enter image box name',
+                            hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: MyColors.gray300, width: 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: MyColors.violet200, width: 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                            constraints: BoxConstraints(maxHeight: 36),
                           ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: MyColors.violet200, width: 1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                          constraints: BoxConstraints(maxHeight: 36),
                         ),
                       ),
-                    ),
 
-                    FieldView(
-                      title: 'Gender',
-                      child: SelectionView(
-                        count: Gender.values.length,
-                        per: 2,
-                        height: 60,
-                        spacing: 8,
-                        selected: widget.vm.gender?.index,
-                        itemBuilder: (i) => SelectionEntryView(
-                          lead: Text(
-                            Gender.fromIndex(i).title(context),
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
+                      FieldView(
+                        title: 'Gender',
+                        child: SelectionView(
+                          count: Gender.values.length,
+                          per: 2,
+                          height: 60,
+                          spacing: 8,
+                          selected: widget.vm.gender?.index,
+                          itemBuilder: (i) => SelectionEntryView(
+                            lead: Text(
+                              Gender.fromIndex(i).title(context),
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
+                            ),
+                            trail: Image.asset(Gender.fromIndex(i).image),
                           ),
-                          trail: Image.asset(Gender.fromIndex(i).image),
-                        ),
-                        selectAction: (i) => widget.vm.gender = Gender.fromIndex(i),
-                      ),
-                    ),
-
-                    FieldView(
-                      title: 'Age Group',
-                      child: DropdownMenu(
-                        dropdownMenuEntries: AgeRange.entries,
-                        expandedInsets: EdgeInsets.zero,
-                        textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
-                        inputDecorationTheme: InputDecorationThemeData(
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: MyColors.gray300, width: 1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                          constraints: BoxConstraints(maxHeight: 36),
-                          isCollapsed: true,
+                          selectAction: (i) => widget.vm.gender = Gender.fromIndex(i),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+
+                      FieldView(
+                        title: 'Age Group',
+                        child: DropdownMenu(
+                          dropdownMenuEntries: AgeRange.entries,
+                          expandedInsets: EdgeInsets.zero,
+                          textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                          inputDecorationTheme: InputDecorationThemeData(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: MyColors.gray300, width: 1),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                            constraints: BoxConstraints(maxHeight: 36),
+                            isCollapsed: true,
+                          ),
+                        ),
+                      ),
+
+                      FieldView(
+                        title: 'Figure Type',
+                        child: SelectionView(
+                          count: Figure.values.length,
+                          per: 2,
+                          height: 100,
+                          spacing: 6,
+                          selected: widget.vm.figure?.index,
+                          itemBuilder: (i) => SelectionEntryView(
+                            lead: Text(
+                              Figure.fromIndex(i).title(context),
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
+                            ),
+                            trail: Image.asset(Figure.fromIndex(i).image),
+                          ),
+                          selectAction: (i) => widget.vm.figure = Figure.fromIndex(i),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           );
         },

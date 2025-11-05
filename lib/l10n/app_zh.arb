@@ -41,5 +41,9 @@
   "chip_create_image_library": "Photo library zh",
   "chip_create_image_camera": "Camera zh",
   "chip_create_gender_male": "男",
-  "chip_create_gender_female": "女"
+  "chip_create_gender_female": "女",
+  "chip_create_figure_1": "Slim zh",
+  "chip_create_figure_2": "Standard zh",
+  "chip_create_figure_3": "Fit zh",
+  "chip_create_figure_4": "Chubby zh"
 }

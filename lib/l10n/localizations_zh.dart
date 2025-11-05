@@ -121,4 +121,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get chip_create_gender_female => '女';
+
+  @override
+  String get chip_create_figure_1 => 'Slim zh';
+
+  @override
+  String get chip_create_figure_2 => 'Standard zh';
+
+  @override
+  String get chip_create_figure_3 => 'Fit zh';
+
+  @override
+  String get chip_create_figure_4 => 'Chubby zh';
 }
