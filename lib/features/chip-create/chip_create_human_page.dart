@@ -7,6 +7,7 @@ import 'views/field_view.dart';
 import 'views/upload_view.dart';
 import 'views/round_sel_view.dart';
 import 'chip_create_human_vm.dart';
+import 'gender.dart';
 
 class ChipCreateHumanPage extends StatefulWidget {
   const ChipCreateHumanPage({super.key, required this.vm});

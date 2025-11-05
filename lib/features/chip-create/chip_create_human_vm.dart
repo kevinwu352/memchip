@@ -4,6 +4,7 @@ import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/network/network.dart';
 import '/utils/image_uploader.dart';
+import 'gender.dart';
 
 final class ChipCreateHumanVm extends ChangeNotifier {
   ChipCreateHumanVm({required Networkable network}) : _network = network {
@@ -16,13 +17,11 @@ final class ChipCreateHumanVm extends ChangeNotifier {
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
 
   List<ImageUploader> uploads = [ImageUploader()];
-
   void didChooseImage(int index, String path) async {
     uploads[index].launch(path, notifyListeners);
   }
 
   final nameController = TextEditingController();
-
   void nameChanged(String value) {
     notifyListeners();
   }
@@ -67,40 +66,6 @@ final class ChipCreateHumanVm extends ChangeNotifier {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
     print('do submit');
-  }
-}
-
-enum Gender {
-  male,
-  female;
-
-  factory Gender.fromIndex(int i) => Gender.values[i];
-
-  String human(BuildContext context) {
-    switch (this) {
-      case male:
-        return AppLocalizations.of(context)!.chip_create_gender_male_human;
-      case female:
-        return AppLocalizations.of(context)!.chip_create_gender_female_human;
-    }
-  }
-
-  String pet(BuildContext context) {
-    switch (this) {
-      case male:
-        return AppLocalizations.of(context)!.chip_create_gender_male_pet;
-      case female:
-        return AppLocalizations.of(context)!.chip_create_gender_female_pet;
-    }
-  }
-
-  String get image {
-    switch (this) {
-      case male:
-        return 'assets/images/create_sex_male.png';
-      case female:
-        return 'assets/images/create_sex_female.png';
-    }
   }
 }
 
