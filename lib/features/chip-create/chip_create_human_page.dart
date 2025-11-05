@@ -89,7 +89,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                           selected: widget.vm.gender?.index,
                           itemBuilder: (i) => RoundSelEntryView(
                             lead: Text(
-                              Gender.fromIndex(i).title(context),
+                              Gender.fromIndex(i).human(context),
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
                             ),
                             trail: Image.asset(Gender.fromIndex(i).image),

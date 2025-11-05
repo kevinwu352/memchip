@@ -278,6 +278,18 @@ abstract class AppLocalizations {
   /// **'Create Pet Character'**
   String get chip_category_pet_btn;
 
+  /// No description provided for @chip_create_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Image Frame'**
+  String get chip_create_page_title;
+
+  /// No description provided for @chip_create_image_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Image'**
+  String get chip_create_image_title;
+
   /// No description provided for @chip_create_image_library.
   ///
   /// In en, this message translates to:
@@ -290,17 +302,95 @@ abstract class AppLocalizations {
   /// **'Camera'**
   String get chip_create_image_camera;
 
-  /// No description provided for @chip_create_gender_male.
+  /// No description provided for @chip_create_image_info_human.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add a clear character image.'**
+  String get chip_create_image_info_human;
+
+  /// No description provided for @chip_create_image_info_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'Please upload one clear front photo and one side photo of your pet.'**
+  String get chip_create_image_info_pet;
+
+  /// No description provided for @chip_create_basic_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get chip_create_basic_title;
+
+  /// No description provided for @chip_create_name_title_human.
+  ///
+  /// In en, this message translates to:
+  /// **'Image Frame Name'**
+  String get chip_create_name_title_human;
+
+  /// No description provided for @chip_create_name_ph_human.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter image frame name'**
+  String get chip_create_name_ph_human;
+
+  /// No description provided for @chip_create_name_title_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Name'**
+  String get chip_create_name_title_pet;
+
+  /// No description provided for @chip_create_name_ph_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter pet name'**
+  String get chip_create_name_ph_pet;
+
+  /// No description provided for @chip_create_gender_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get chip_create_gender_title;
+
+  /// No description provided for @chip_create_gender_male_human.
   ///
   /// In en, this message translates to:
   /// **'Male'**
-  String get chip_create_gender_male;
+  String get chip_create_gender_male_human;
 
-  /// No description provided for @chip_create_gender_female.
+  /// No description provided for @chip_create_gender_female_human.
   ///
   /// In en, this message translates to:
   /// **'Female'**
-  String get chip_create_gender_female;
+  String get chip_create_gender_female_human;
+
+  /// No description provided for @chip_create_gender_male_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'Boy'**
+  String get chip_create_gender_male_pet;
+
+  /// No description provided for @chip_create_gender_female_pet.
+  ///
+  /// In en, this message translates to:
+  /// **'Girl'**
+  String get chip_create_gender_female_pet;
+
+  /// No description provided for @chip_create_age_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Age Range'**
+  String get chip_create_age_title;
+
+  /// No description provided for @chip_create_age_ph.
+  ///
+  /// In en, this message translates to:
+  /// **'Select age range'**
+  String get chip_create_age_ph;
+
+  /// No description provided for @chip_create_figure_type.
+  ///
+  /// In en, this message translates to:
+  /// **'Figure Type'**
+  String get chip_create_figure_type;
 
   /// No description provided for @chip_create_figure_1.
   ///
@@ -325,6 +415,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chubby'**
   String get chip_create_figure_4;
+
+  /// No description provided for @chip_create_species_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Pet Type'**
+  String get chip_create_species_title;
+
+  /// No description provided for @chip_create_species_cat.
+  ///
+  /// In en, this message translates to:
+  /// **'Cat'**
+  String get chip_create_species_cat;
+
+  /// No description provided for @chip_create_species_dog.
+  ///
+  /// In en, this message translates to:
+  /// **'Dog'**
+  String get chip_create_species_dog;
+
+  /// No description provided for @chip_create_species_rabbit.
+  ///
+  /// In en, this message translates to:
+  /// **'Rabbit'**
+  String get chip_create_species_rabbit;
+
+  /// No description provided for @chip_create_species_parrot.
+  ///
+  /// In en, this message translates to:
+  /// **'Parrot'**
+  String get chip_create_species_parrot;
+
+  /// No description provided for @chip_create_species_hamster.
+  ///
+  /// In en, this message translates to:
+  /// **'Hamster'**
+  String get chip_create_species_hamster;
+
+  /// No description provided for @chip_create_species_other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get chip_create_species_other;
+
+  /// No description provided for @chip_create_tail_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Tail'**
+  String get chip_create_tail_title;
+
+  /// No description provided for @chip_create_tail_yes.
+  ///
+  /// In en, this message translates to:
+  /// **'With tail'**
+  String get chip_create_tail_yes;
+
+  /// No description provided for @chip_create_tail_no.
+  ///
+  /// In en, this message translates to:
+  /// **'No tail'**
+  String get chip_create_tail_no;
+
+  /// No description provided for @chip_create_personality_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Personality'**
+  String get chip_create_personality_title;
+
+  /// No description provided for @chip_create_personality_playful.
+  ///
+  /// In en, this message translates to:
+  /// **'Playful'**
+  String get chip_create_personality_playful;
+
+  /// No description provided for @chip_create_personality_quiet.
+  ///
+  /// In en, this message translates to:
+  /// **'Quiet'**
+  String get chip_create_personality_quiet;
+
+  /// No description provided for @chip_create_personality_foodie.
+  ///
+  /// In en, this message translates to:
+  /// **'Foodie'**
+  String get chip_create_personality_foodie;
+
+  /// No description provided for @chip_create_personality_timid.
+  ///
+  /// In en, this message translates to:
+  /// **'Timid'**
+  String get chip_create_personality_timid;
+
+  /// No description provided for @chip_create_personality_clingy.
+  ///
+  /// In en, this message translates to:
+  /// **'Clingy'**
+  String get chip_create_personality_clingy;
+
+  /// No description provided for @chip_create_personality_solo.
+  ///
+  /// In en, this message translates to:
+  /// **'Solo'**
+  String get chip_create_personality_solo;
+
+  /// No description provided for @chip_create_personality_naughty.
+  ///
+  /// In en, this message translates to:
+  /// **'Naughty'**
+  String get chip_create_personality_naughty;
+
+  /// No description provided for @chip_create_personality_tame.
+  ///
+  /// In en, this message translates to:
+  /// **'Tame'**
+  String get chip_create_personality_tame;
 
   /// No description provided for @chip_create_create_btn.
   ///

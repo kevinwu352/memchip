@@ -42,12 +42,12 @@ enum Gender {
 
   factory Gender.fromIndex(int i) => Gender.values[i];
 
-  String title(BuildContext context) {
+  String human(BuildContext context) {
     switch (this) {
       case male:
-        return AppLocalizations.of(context)!.chip_create_gender_male;
+        return AppLocalizations.of(context)!.chip_create_gender_male_human;
       case female:
-        return AppLocalizations.of(context)!.chip_create_gender_female;
+        return AppLocalizations.of(context)!.chip_create_gender_female_human;
     }
   }
 

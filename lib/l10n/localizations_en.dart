@@ -110,16 +110,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chip_category_pet_btn => 'Create Pet Character';
 
   @override
+  String get chip_create_page_title => 'Create Image Frame';
+
+  @override
+  String get chip_create_image_title => 'Add Image';
+
+  @override
   String get chip_create_image_library => 'Photo library';
 
   @override
   String get chip_create_image_camera => 'Camera';
 
   @override
-  String get chip_create_gender_male => 'Male';
+  String get chip_create_image_info_human =>
+      'Please add a clear character image.';
 
   @override
-  String get chip_create_gender_female => 'Female';
+  String get chip_create_image_info_pet =>
+      'Please upload one clear front photo and one side photo of your pet.';
+
+  @override
+  String get chip_create_basic_title => 'Basic Information';
+
+  @override
+  String get chip_create_name_title_human => 'Image Frame Name';
+
+  @override
+  String get chip_create_name_ph_human => 'Enter image frame name';
+
+  @override
+  String get chip_create_name_title_pet => 'Pet Name';
+
+  @override
+  String get chip_create_name_ph_pet => 'Enter pet name';
+
+  @override
+  String get chip_create_gender_title => 'Gender';
+
+  @override
+  String get chip_create_gender_male_human => 'Male';
+
+  @override
+  String get chip_create_gender_female_human => 'Female';
+
+  @override
+  String get chip_create_gender_male_pet => 'Boy';
+
+  @override
+  String get chip_create_gender_female_pet => 'Girl';
+
+  @override
+  String get chip_create_age_title => 'Age Range';
+
+  @override
+  String get chip_create_age_ph => 'Select age range';
+
+  @override
+  String get chip_create_figure_type => 'Figure Type';
 
   @override
   String get chip_create_figure_1 => 'Slim';
@@ -132,6 +179,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chip_create_figure_4 => 'Chubby';
+
+  @override
+  String get chip_create_species_title => 'Pet Type';
+
+  @override
+  String get chip_create_species_cat => 'Cat';
+
+  @override
+  String get chip_create_species_dog => 'Dog';
+
+  @override
+  String get chip_create_species_rabbit => 'Rabbit';
+
+  @override
+  String get chip_create_species_parrot => 'Parrot';
+
+  @override
+  String get chip_create_species_hamster => 'Hamster';
+
+  @override
+  String get chip_create_species_other => 'Other';
+
+  @override
+  String get chip_create_tail_title => 'Tail';
+
+  @override
+  String get chip_create_tail_yes => 'With tail';
+
+  @override
+  String get chip_create_tail_no => 'No tail';
+
+  @override
+  String get chip_create_personality_title => 'Personality';
+
+  @override
+  String get chip_create_personality_playful => 'Playful';
+
+  @override
+  String get chip_create_personality_quiet => 'Quiet';
+
+  @override
+  String get chip_create_personality_foodie => 'Foodie';
+
+  @override
+  String get chip_create_personality_timid => 'Timid';
+
+  @override
+  String get chip_create_personality_clingy => 'Clingy';
+
+  @override
+  String get chip_create_personality_solo => 'Solo';
+
+  @override
+  String get chip_create_personality_naughty => 'Naughty';
+
+  @override
+  String get chip_create_personality_tame => 'Tame';
 
   @override
   String get chip_create_create_btn => 'Create';
