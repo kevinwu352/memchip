@@ -33,9 +33,9 @@ final class ChipCreateHumanVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  AgeRange? _age;
-  AgeRange? get age => _age;
-  set age(AgeRange? value) {
+  Age? _age;
+  Age? get age => _age;
+  set age(Age? value) {
     _age = value;
     notifyListeners();
   }
@@ -69,7 +69,7 @@ final class ChipCreateHumanVm extends ChangeNotifier {
   }
 }
 
-enum AgeRange {
+enum Age {
   range0,
   range13,
   range18,
@@ -94,7 +94,7 @@ enum AgeRange {
     }
   }
 
-  static List<DropdownMenuEntry<AgeRange>> entries = UnmodifiableListView<DropdownMenuEntry<AgeRange>>(
+  static List<DropdownMenuEntry<Age>> entries = UnmodifiableListView<DropdownMenuEntry<Age>>(
     values.map((e) => DropdownMenuEntry(value: e, label: e.title)),
   );
 }

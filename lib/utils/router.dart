@@ -46,6 +46,9 @@ GoRouter router() => GoRouter(
       path: Routes.chipCreateHuman,
       builder: (context, state) => ChipCreateHumanPage.create(network: context.read()),
     ),
-    GoRoute(path: Routes.chipCreatePet, builder: (context, state) => ChipCreatePetPage()),
+    GoRoute(
+      path: Routes.chipCreatePet,
+      builder: (context, state) => ChipCreatePetPage.create(network: context.read()),
+    ),
   ],
 );

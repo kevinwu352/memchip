@@ -107,7 +107,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                       FieldView(
                         title: AppLocalizations.of(context)!.chip_create_age_title,
                         child: DropdownMenu(
-                          dropdownMenuEntries: AgeRange.entries,
+                          dropdownMenuEntries: Age.entries,
                           expandedInsets: EdgeInsets.zero,
                           textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
                           hintText: AppLocalizations.of(context)!.chip_create_age_ph,
