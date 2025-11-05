@@ -48,6 +48,35 @@ final class ChipCreatePetVm extends ChangeNotifier {
     _personality = value;
     notifyListeners();
   }
+
+  bool get submitEnabled {
+    return uploads.every((e) => e.success == true) &&
+        nameController.text.isNotEmpty &&
+        _gender != null &&
+        _species != null &&
+        _withTail != null &&
+        _personality != null;
+  }
+
+  var _submiting = false;
+  bool get submiting => _submiting;
+  set submiting(bool value) {
+    _submiting = value;
+    notifyListeners();
+  }
+
+  void submitAction() {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (_submiting) return;
+    print('do submit');
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    snackPub.dispose();
+    super.dispose();
+  }
 }
 
 enum Species {
@@ -57,6 +86,8 @@ enum Species {
   parrot,
   hamster,
   other;
+
+  factory Species.fromIndex(int i) => Species.values[i];
 
   String title(BuildContext context) {
     switch (this) {

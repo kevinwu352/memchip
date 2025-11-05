@@ -67,6 +67,13 @@ final class ChipCreateHumanVm extends ChangeNotifier {
     if (_submiting) return;
     print('do submit');
   }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    snackPub.dispose();
+    super.dispose();
+  }
 }
 
 enum Age {

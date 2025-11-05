@@ -34,7 +34,7 @@ class LineSelEntryView extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: MyColors.violet100, width: 1)),
           color: selected ? MyColors.violet100 : null,
-          borderRadius: BorderRadius.circular(3),
+          borderRadius: BorderRadius.circular(2),
         ),
         padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
         child: Row(

@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import '/theme/theme.dart';
 
 class CharView extends StatelessWidget {
-  const CharView({super.key, required this.items, this.selected, required this.action});
+  const CharView({super.key, required this.children});
 
-  final List<String> items;
-  final String? selected;
-  final void Function() action;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(color: MyColors.violet00, borderRadius: BorderRadius.circular(8)),
       padding: EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-      child: Wrap(
-        spacing: 12,
-        children: [...items.map((e) => CharEntryView(title: e, selected: e == selected, action: action))],
-      ),
+      child: Wrap(spacing: 12, runSpacing: 10, children: children),
     );
   }
 }
