@@ -51,6 +51,15 @@ enum Gender {
     }
   }
 
+  String pet(BuildContext context) {
+    switch (this) {
+      case male:
+        return AppLocalizations.of(context)!.chip_create_gender_male_pet;
+      case female:
+        return AppLocalizations.of(context)!.chip_create_gender_female_pet;
+    }
+  }
+
   String get image {
     switch (this) {
       case male:

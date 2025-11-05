@@ -167,7 +167,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get chip_create_age_ph => 'Select age range';
 
   @override
-  String get chip_create_figure_type => 'Figure Type';
+  String get chip_create_figure_title => 'Figure Type';
 
   @override
   String get chip_create_figure_1 => 'Slim';

@@ -386,11 +386,11 @@ abstract class AppLocalizations {
   /// **'Select age range'**
   String get chip_create_age_ph;
 
-  /// No description provided for @chip_create_figure_type.
+  /// No description provided for @chip_create_figure_title.
   ///
   /// In en, this message translates to:
   /// **'Figure Type'**
-  String get chip_create_figure_type;
+  String get chip_create_figure_title;
 
   /// No description provided for @chip_create_figure_1.
   ///

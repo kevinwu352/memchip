@@ -35,7 +35,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Create Human')),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.chip_create_page_title)),
       body: ListenableBuilder(
         listenable: widget.vm,
         builder: (context, child) {
@@ -44,26 +44,26 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
               child: Column(
                 children: [
                   SectionView(
-                    title: 'Add Image',
+                    title: AppLocalizations.of(context)!.chip_create_image_title,
                     children: [
                       UploadView(
                         images: widget.vm.uploads,
                         imageChoosed: widget.vm.didChooseImage,
-                        info: 'Please add a clear character image.',
+                        info: AppLocalizations.of(context)!.chip_create_image_info_human,
                       ),
                     ],
                   ),
 
                   SectionView(
-                    title: 'Basic Information',
+                    title: AppLocalizations.of(context)!.chip_create_basic_title,
                     children: [
                       FieldView(
-                        title: 'Image Frame Name',
+                        title: AppLocalizations.of(context)!.chip_create_name_title_human,
                         child: TextField(
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
                           onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                           decoration: InputDecoration(
-                            hintText: 'Enter image box name',
+                            hintText: AppLocalizations.of(context)!.chip_create_name_ph_human,
                             hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: MyColors.gray300, width: 1),
@@ -80,7 +80,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                       ),
 
                       FieldView(
-                        title: 'Gender',
+                        title: AppLocalizations.of(context)!.chip_create_gender_title,
                         child: RoundSelView(
                           count: Gender.values.length,
                           per: 2,
@@ -99,11 +99,12 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                       ),
 
                       FieldView(
-                        title: 'Age Group',
+                        title: AppLocalizations.of(context)!.chip_create_age_title,
                         child: DropdownMenu(
                           dropdownMenuEntries: AgeRange.entries,
                           expandedInsets: EdgeInsets.zero,
                           textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                          hintText: AppLocalizations.of(context)!.chip_create_age_ph,
                           inputDecorationTheme: InputDecorationThemeData(
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: MyColors.gray300, width: 1),
@@ -112,12 +113,13 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                             contentPadding: EdgeInsets.symmetric(horizontal: 8),
                             constraints: BoxConstraints(maxHeight: 36),
                             isCollapsed: true,
+                            hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
                           ),
                         ),
                       ),
 
                       FieldView(
-                        title: 'Figure Type',
+                        title: AppLocalizations.of(context)!.chip_create_figure_title,
                         child: RoundSelView(
                           count: Figure.values.length,
                           per: 2,
