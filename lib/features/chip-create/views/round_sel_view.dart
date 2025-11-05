@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '/theme/theme.dart';
 
-class SelectionView extends StatelessWidget {
-  const SelectionView({
+class RoundSelView extends StatelessWidget {
+  const RoundSelView({
     super.key,
     required this.count,
     required this.per,
@@ -65,8 +65,8 @@ class SelectionView extends StatelessWidget {
   }
 }
 
-class SelectionEntryView extends StatelessWidget {
-  const SelectionEntryView({
+class RoundSelEntryView extends StatelessWidget {
+  const RoundSelEntryView({
     super.key,
     this.axis = Axis.horizontal,
     this.compact = false,

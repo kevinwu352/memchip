@@ -4,7 +4,8 @@ import '/theme/theme.dart';
 import 'views/section_view.dart';
 import 'views/field_view.dart';
 import 'views/upload_view.dart';
-import 'views/selection_view.dart';
+import 'views/round_sel_view.dart';
+import 'views/line_sel_view.dart';
 import 'chip_create_human_view_model.dart';
 
 class ChipCreateHumanPage extends StatefulWidget {
@@ -81,13 +82,13 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
 
                       FieldView(
                         title: 'Gender',
-                        child: SelectionView(
+                        child: RoundSelView(
                           count: Gender.values.length,
                           per: 2,
                           height: 60,
                           spacing: 8,
                           selected: widget.vm.gender?.index,
-                          itemBuilder: (i) => SelectionEntryView(
+                          itemBuilder: (i) => RoundSelEntryView(
                             lead: Text(
                               Gender.fromIndex(i).title(context),
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
@@ -118,13 +119,13 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
 
                       FieldView(
                         title: 'Figure Type',
-                        child: SelectionView(
+                        child: RoundSelView(
                           count: Figure.values.length,
                           per: 2,
                           height: 100,
                           spacing: 6,
                           selected: widget.vm.figure?.index,
-                          itemBuilder: (i) => SelectionEntryView(
+                          itemBuilder: (i) => RoundSelEntryView(
                             lead: Text(
                               Figure.fromIndex(i).title(context),
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
@@ -134,6 +135,8 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                           selectAction: (i) => widget.vm.figure = Figure.fromIndex(i),
                         ),
                       ),
+
+                      FieldView(title: 'xxx', child: LineSelView()),
                     ],
                   ),
                 ],
