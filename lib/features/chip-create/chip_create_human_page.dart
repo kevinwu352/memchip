@@ -96,6 +96,24 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                         selectAction: (i) => widget.vm.gender = Gender.fromIndex(i),
                       ),
                     ),
+
+                    FieldView(
+                      title: 'Age Group',
+                      child: DropdownMenu(
+                        dropdownMenuEntries: AgeRange.entries,
+                        expandedInsets: EdgeInsets.zero,
+                        textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+                        inputDecorationTheme: InputDecorationThemeData(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: MyColors.gray300, width: 1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                          constraints: BoxConstraints(maxHeight: 36),
+                          isCollapsed: true,
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],

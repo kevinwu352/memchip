@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'package:flutter/material.dart';
 import '/l10n/localizations.dart';
 import '/core/core.dart';
@@ -51,4 +52,34 @@ enum Gender {
         return 'assets/images/create_sex_female.png';
     }
   }
+}
+
+enum AgeRange {
+  range0,
+  range13,
+  range18,
+  range25,
+  range35,
+  range60;
+
+  String get title {
+    switch (this) {
+      case range0:
+        return '0-12';
+      case range13:
+        return '13-17';
+      case range18:
+        return '18-24';
+      case range25:
+        return '25-34';
+      case range35:
+        return '35-59';
+      case range60:
+        return '60+';
+    }
+  }
+
+  static List<DropdownMenuEntry<AgeRange>> entries = UnmodifiableListView<DropdownMenuEntry<AgeRange>>(
+    values.map((e) => DropdownMenuEntry(value: e, label: e.title)),
+  );
 }
