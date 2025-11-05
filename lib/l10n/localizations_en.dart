@@ -132,4 +132,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get chip_create_figure_4 => 'Chubby';
+
+  @override
+  String get chip_create_create_btn => 'Create';
 }

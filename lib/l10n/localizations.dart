@@ -325,6 +325,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Chubby'**
   String get chip_create_figure_4;
+
+  /// No description provided for @chip_create_create_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get chip_create_create_btn;
 }
 
 class _AppLocalizationsDelegate

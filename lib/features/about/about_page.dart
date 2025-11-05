@@ -70,10 +70,7 @@ class AboutPage extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: 40),
                     width: double.infinity,
                     child: FilledButton(
-                      style: FilledButton.styleFrom(
-                        backgroundColor: MyColors.violet300,
-                        textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                      ),
+                      style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
                       onPressed: () {
                         final secures = context.read<Secures>();
                         secures.lastUsername = null;
@@ -82,7 +79,10 @@ class AboutPage extends StatelessWidget {
                         defaults.user = null;
                         context.go(Routes.home);
                       },
-                      child: Text(AppLocalizations.of(context)!.about_logout_btn),
+                      child: Text(
+                        AppLocalizations.of(context)!.about_logout_btn,
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
 

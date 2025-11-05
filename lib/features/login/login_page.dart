@@ -128,14 +128,16 @@ class _LoginPageState extends State<LoginPage> {
                             style: FilledButton.styleFrom(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                               backgroundColor: MyColors.violet100,
-                              textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               minimumSize: Size(82, 24),
                             ),
                             onPressed: widget.vm.sendEnabled ? widget.vm.sendAction : null,
                             child: widget.vm.sending
                                 ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
-                                : Text(AppLocalizations.of(context)!.login_code_send_btn(widget.vm.countdown)),
+                                : Text(
+                                    AppLocalizations.of(context)!.login_code_send_btn(widget.vm.countdown),
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                                  ),
                           ),
                         ),
                       ),
@@ -148,12 +150,14 @@ class _LoginPageState extends State<LoginPage> {
                         style: FilledButton.styleFrom(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           backgroundColor: MyColors.violet300,
-                          textStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                         ),
                         onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
                         child: widget.vm.submiting
                             ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
-                            : Text(AppLocalizations.of(context)!.login_submit_btn),
+                            : Text(
+                                AppLocalizations.of(context)!.login_submit_btn,
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                              ),
                       ),
                     ),
                   ],

@@ -45,5 +45,6 @@
   "chip_create_figure_1": "Slim",
   "chip_create_figure_2": "Standard",
   "chip_create_figure_3": "Fit",
-  "chip_create_figure_4": "Chubby"
+  "chip_create_figure_4": "Chubby",
+  "chip_create_create_btn": "Create"
 }

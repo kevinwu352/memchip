@@ -31,13 +31,6 @@ final class ChipCreateHumanViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool? _withTail;
-  bool? get withTail => _withTail;
-  set withTail(bool? value) {
-    _withTail = value;
-    notifyListeners();
-  }
-
   void didChooseImage(int index, String path) async {
     uploads[index].launch(path, notifyListeners);
   }

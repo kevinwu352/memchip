@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import '/l10n/localizations.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
 import 'views/section_view.dart';
 import 'views/field_view.dart';
 import 'views/upload_view.dart';
 import 'views/round_sel_view.dart';
-import 'views/line_sel_view.dart';
 import 'chip_create_human_view_model.dart';
 
 class ChipCreateHumanPage extends StatefulWidget {
@@ -135,9 +135,36 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                           selectAction: (i) => widget.vm.figure = Figure.fromIndex(i),
                         ),
                       ),
-
-                      FieldView(title: 'xxx', child: LineSelView()),
                     ],
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 24),
+                    child: Row(
+                      spacing: 12,
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(side: BorderSide(color: MyColors.violet300, width: 1)),
+                            child: Text(
+                              AppLocalizations.of(context)!.cancel,
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.violet300),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: FilledButton(
+                            onPressed: () {},
+                            style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
+                            child: Text(
+                              AppLocalizations.of(context)!.chip_create_create_btn,
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
