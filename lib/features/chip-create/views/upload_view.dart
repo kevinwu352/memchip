@@ -59,7 +59,7 @@ class UploadView extends StatelessWidget {
         ),
         Text(
           info,
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
+          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: MyColors.gray500),
         ),
       ],
     );

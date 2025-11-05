@@ -17,7 +17,7 @@ class SectionView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Text(
               title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: MyColors.gray700),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: MyColors.gray700),
             ),
           ),
           Column(spacing: 12, crossAxisAlignment: CrossAxisAlignment.start, children: children),

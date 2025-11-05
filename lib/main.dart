@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarThemeData(
           backgroundColor: MyColors.violet300,
           foregroundColor: Colors.white,
-          titleTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+          titleTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
       ),
       // theme: ThemeData(colorScheme: MySchemes.light),

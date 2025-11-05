@@ -89,7 +89,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                         itemBuilder: (i) => SelectionEntryView(
                           lead: Text(
                             Gender.fromIndex(i).title(context),
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.white100),
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
                           ),
                           trail: Image.asset(Gender.fromIndex(i).image),
                         ),

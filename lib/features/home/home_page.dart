@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                   width: double.infinity,
                   child: Text(
                     AppLocalizations.of(context)!.home_section_title,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: MyColors.gray800),
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: MyColors.gray800),
                   ),
                 ),
 
@@ -128,7 +128,7 @@ class _HeaderView extends StatelessWidget {
                     child: Text(
                       nickname ?? AppLocalizations.of(context)!.account_nickname_empty,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: MyColors.gray800),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: MyColors.gray800),
                     ),
                   ),
                   IconButton(
@@ -151,7 +151,7 @@ class _HeaderView extends StatelessWidget {
                     child: Text(
                       phomail ?? AppLocalizations.of(context)!.account_phomail_empty,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray600),
+                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.gray600),
                     ),
                   ),
                 ],
@@ -220,7 +220,7 @@ class _EntryView extends StatelessWidget {
                       child: Text(
                         title,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: MyColors.gray700),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: MyColors.gray700),
                       ),
                     ),
                   ],
@@ -233,7 +233,7 @@ class _EntryView extends StatelessWidget {
                       child: Text(
                         GetTimeAgo.parse(date, locale: AppLocalizations.of(context)!.localeName),
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: MyColors.gray500),
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: MyColors.gray500),
                       ),
                     ),
                   ],
