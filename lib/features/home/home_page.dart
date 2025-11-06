@@ -10,6 +10,7 @@ import '/network/network.dart';
 import '/theme/theme.dart';
 import '/utils/router.dart';
 import '/models/user.dart';
+import '/models/box.dart';
 import 'home_vm.dart';
 
 class HomePage extends StatefulWidget {
@@ -56,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                if (widget.vm.chips.isEmpty)
+                if (widget.vm.boxes.isEmpty)
                   Expanded(
                     child: Padding(padding: const EdgeInsets.only(top: 50), child: _EmptyView()),
                   )
@@ -70,12 +71,8 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSpacing: 20,
                         childAspectRatio: 139 / 247,
                       ),
-                      itemCount: widget.vm.chips.length,
-                      itemBuilder: (context, index) => _EntryView(
-                        coverUrl: 'https://picsum.photos/200/300',
-                        title: 'The widget below this widget in the tree.',
-                        date: DateTime.now().subtract(Duration(minutes: 10)),
-                      ),
+                      itemCount: widget.vm.boxes.length,
+                      itemBuilder: (context, index) => _EntryView(box: widget.vm.boxes[index]),
                     ),
                   ),
 
@@ -187,11 +184,9 @@ class _EmptyView extends StatelessWidget {
 }
 
 class _EntryView extends StatelessWidget {
-  const _EntryView({required this.coverUrl, required this.title, required this.date});
+  const _EntryView({required this.box});
 
-  final String coverUrl;
-  final String title;
-  final DateTime date;
+  final Box box;
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +199,7 @@ class _EntryView extends StatelessWidget {
         children: [
           Expanded(
             child: CachedNetworkImage(
-              imageUrl: coverUrl,
+              imageUrl: box.coverImage,
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(color: Colors.white),
               errorWidget: (context, url, error) => Container(color: Colors.white),
@@ -224,7 +219,7 @@ class _EntryView extends StatelessWidget {
                     Image.asset('assets/images/home_entry_paw.png'),
                     Expanded(
                       child: Text(
-                        title,
+                        box.boxName,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: MyColors.gray700),
                       ),
@@ -237,7 +232,7 @@ class _EntryView extends StatelessWidget {
                     Image.asset('assets/images/home_entry_time.png'),
                     Expanded(
                       child: Text(
-                        GetTimeAgo.parse(date, locale: AppLocalizations.of(context)!.localeName),
+                        GetTimeAgo.parse(box.createdTime, locale: AppLocalizations.of(context)!.localeName),
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: MyColors.gray500),
                       ),
