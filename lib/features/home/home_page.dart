@@ -14,28 +14,33 @@ import '/models/box.dart';
 import 'home_vm.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.vm});
-
-  final HomeVm vm;
-
-  HomePage.create({super.key, required Networkable network}) : vm = HomeVm(network: network);
+  const HomePage({super.key, required this.network});
+  final Networkable network;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  late HomeVm vm = HomeVm(network: widget.network);
+
   @override
   void initState() {
     super.initState();
-    widget.vm.getAllChips();
+    vm.getAllChips();
+  }
+
+  @override
+  void dispose() {
+    vm.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListenableBuilder(
-        listenable: widget.vm,
+        listenable: vm,
         builder: (context, child) {
           return SizedBox.expand(
             child: Column(
@@ -57,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                if (widget.vm.boxes.isEmpty)
+                if (vm.boxes.isEmpty)
                   Expanded(
                     child: Padding(padding: const EdgeInsets.only(top: 50), child: _EmptyView()),
                   )
@@ -71,8 +76,8 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSpacing: 20,
                         childAspectRatio: 139 / 247,
                       ),
-                      itemCount: widget.vm.boxes.length,
-                      itemBuilder: (context, index) => _EntryView(box: widget.vm.boxes[index]),
+                      itemCount: vm.boxes.length,
+                      itemBuilder: (context, index) => _EntryView(box: vm.boxes[index]),
                     ),
                   ),
 

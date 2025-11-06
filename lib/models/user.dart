@@ -1,3 +1,20 @@
+// {
+//   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGZlZTBlM2JkMDIyMGRhODgyNWQwYTMiLCJpYXQiOjE3NjI0MjA0MDAsImV4cCI6MTc2NTAxMjQwMH0.MFor4iKYuh_SdOwlxHntmmqVcd0whI5QE7tgOxNFOws",
+//   "userInfo": {
+//     "_id": "68fee0e3bd0220da8825d0a3",
+//     "email": "wuhp@proton.me",
+//     "nickname": "风拂柳丝_710",
+//     "avatarUrl": "https://cdn.paoxiaokeji.com/meetAgain/defaultHeadImg/defaultImg4.webp",
+//     "openId": "wuhp@proton.me_openid",
+//     "systemInfo": "",
+//     "createTime": "2025-10-27T03:02:59.699Z",
+//     "lastLoginTime": "2025-11-06T09:13:20.275Z",
+//     "openid": "wuhp@proton.me_openid",
+//     "hasPet": true,
+//     "updateTime": "2025-11-06T06:06:49.035Z"
+//   }
+// }
+
 class User {
   String token;
   String id;

@@ -42,7 +42,7 @@ final class HomeVm extends ChangeNotifier {
 
   @override
   void dispose() {
-    snackPub.dispose();
+    // snackPub.dispose();
     super.dispose();
   }
 }

@@ -6,8 +6,8 @@ import '/utils/image_uploader.dart';
 import '/utils/api.dart';
 import 'gender.dart';
 
-final class CreateHumanPageVm extends ChangeNotifier {
-  CreateHumanPageVm({required Networkable network}) : _network = network {
+final class CreateHumanVm extends ChangeNotifier {
+  CreateHumanVm({required Networkable network}) : _network = network {
     for (var element in uploads) {
       element.notify = notifyListeners;
     }
@@ -96,8 +96,8 @@ final class CreateHumanPageVm extends ChangeNotifier {
   @override
   void dispose() {
     nameController.dispose();
-    snackPub.dispose();
-    donePub.dispose();
+    // snackPub.dispose();
+    // donePub.dispose();
     super.dispose();
   }
 }

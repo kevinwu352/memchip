@@ -9,18 +9,18 @@ import '/utils/router.dart';
 import 'login_vm.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, required this.vm});
-
-  final LoginVm vm;
-
-  LoginPage.create({super.key, required Networkable network, required Secures secures, required Defaults defaults})
-    : vm = LoginVm(network: network, secures: secures, defaults: defaults);
+  const LoginPage({super.key, required this.network, required this.secures, required this.defaults});
+  final Networkable network;
+  final Secures secures;
+  final Defaults defaults;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late LoginVm vm = LoginVm(network: widget.network, secures: widget.secures, defaults: widget.defaults);
+
   @override
   void initState() {
     super.initState();
@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    widget.vm.dispose();
+    vm.dispose();
     super.dispose();
   }
 
@@ -39,13 +39,13 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: ListenableBuilder(
-        listenable: widget.vm,
+        listenable: vm,
         builder: (context, child) {
           return SizedBox.expand(
             child: Padding(
               padding: EdgeInsets.fromLTRB(30, kSafeTop, 30, kSafeBot),
               child: Form(
-                key: widget.vm.formKey,
+                key: vm.formKey,
                 child: Column(
                   children: [
                     SizedBox(height: 32),
@@ -69,8 +69,8 @@ class _LoginPageState extends State<LoginPage> {
 
                     SizedBox(height: 50),
                     TextFormField(
-                      controller: widget.vm.emailController,
-                      onChanged: widget.vm.emailChanged,
+                      controller: vm.emailController,
+                      onChanged: vm.emailChanged,
                       onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                       autocorrect: false,
                       textCapitalization: TextCapitalization.none,
@@ -89,9 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: MyColors.violet200, width: 2),
                         ),
-                        suffixIcon: widget.vm.emailShowClear
+                        suffixIcon: vm.emailShowClear
                             ? IconButton(
-                                onPressed: widget.vm.clearAction,
+                                onPressed: vm.clearAction,
                                 icon: Icon(Icons.cancel),
                                 iconSize: 18,
                                 color: MyColors.gray600,
@@ -102,8 +102,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 24),
                     TextFormField(
-                      controller: widget.vm.codeController,
-                      onChanged: widget.vm.codeChanged,
+                      controller: vm.codeController,
+                      onChanged: vm.codeChanged,
                       onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                       autocorrect: false,
                       textCapitalization: TextCapitalization.none,
@@ -131,11 +131,11 @@ class _LoginPageState extends State<LoginPage> {
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               minimumSize: Size(82, 24),
                             ),
-                            onPressed: widget.vm.sendEnabled ? widget.vm.sendAction : null,
-                            child: widget.vm.sending
+                            onPressed: vm.sendEnabled ? vm.sendAction : null,
+                            child: vm.sending
                                 ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
                                 : Text(
-                                    AppLocalizations.of(context)!.login_code_send_btn(widget.vm.countdown),
+                                    AppLocalizations.of(context)!.login_code_send_btn(vm.countdown),
                                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                                   ),
                           ),
@@ -151,8 +151,8 @@ class _LoginPageState extends State<LoginPage> {
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           backgroundColor: MyColors.violet300,
                         ),
-                        onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
-                        child: widget.vm.submiting
+                        onPressed: vm.submitEnabled ? vm.submitAction : null,
+                        child: vm.submiting
                             ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
                             : Text(
                                 AppLocalizations.of(context)!.login_submit_btn,
@@ -171,19 +171,19 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _subscribeSnack() {
-    widget.vm.snackPub.addListener(() {
-      final msg = widget.vm.snackPub.value?.localized(context);
+    vm.snackPub.addListener(() {
+      final msg = vm.snackPub.value?.localized(context);
       if (msg != null && msg.isNotEmpty) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }
-      widget.vm.snackPub.value = null;
+      vm.snackPub.value = null;
     });
   }
 
   void _subscribeDone() {
-    widget.vm.donePub.addListener(() {
-      if (widget.vm.donePub.value) {
+    vm.donePub.addListener(() {
+      if (vm.donePub.value) {
         Future.delayed(Duration(seconds: 1)).then((_) => mounted ? context.go(Routes.home) : null);
       }
     });

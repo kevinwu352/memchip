@@ -11,18 +11,17 @@ import 'views/round_sel_view.dart';
 import 'create_human_vm.dart';
 import 'gender.dart';
 
-class CreateHumanPagePage extends StatefulWidget {
-  const CreateHumanPagePage({super.key, required this.vm});
-
-  final CreateHumanPageVm vm;
-
-  CreateHumanPagePage.create({super.key, required Networkable network}) : vm = CreateHumanPageVm(network: network);
+class CreateHumanPage extends StatefulWidget {
+  const CreateHumanPage({super.key, required this.network});
+  final Networkable network;
 
   @override
-  State<CreateHumanPagePage> createState() => _CreateHumanPagePageState();
+  State<CreateHumanPage> createState() => _CreateHumanPageState();
 }
 
-class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
+class _CreateHumanPageState extends State<CreateHumanPage> {
+  late CreateHumanVm vm = CreateHumanVm(network: widget.network);
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +31,7 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
 
   @override
   void dispose() {
-    widget.vm.dispose();
+    vm.dispose();
     super.dispose();
   }
 
@@ -41,7 +40,7 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.create_page_title)),
       body: ListenableBuilder(
-        listenable: widget.vm,
+        listenable: vm,
         builder: (context, child) {
           return SingleChildScrollView(
             child: SafeArea(
@@ -51,8 +50,8 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                     title: AppLocalizations.of(context)!.create_image_title,
                     children: [
                       UploadView(
-                        images: widget.vm.uploads,
-                        imageChoosed: widget.vm.didChooseImage,
+                        images: vm.uploads,
+                        imageChoosed: vm.didChooseImage,
                         info: AppLocalizations.of(context)!.create_image_info_human,
                       ),
                     ],
@@ -64,8 +63,8 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                       FieldView(
                         title: AppLocalizations.of(context)!.create_name_title_human,
                         child: TextField(
-                          controller: widget.vm.nameController,
-                          onChanged: widget.vm.nameChanged,
+                          controller: vm.nameController,
+                          onChanged: vm.nameChanged,
                           onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                           autocorrect: false,
                           textCapitalization: TextCapitalization.none,
@@ -95,7 +94,7 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                           per: 2,
                           height: 60,
                           spacing: 8,
-                          selected: widget.vm.gender?.index,
+                          selected: vm.gender?.index,
                           itemBuilder: (i) => RoundSelEntryView(
                             lead: Text(
                               Gender.fromIndex(i).human(context),
@@ -103,14 +102,14 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                             ),
                             trail: Image.asset(Gender.fromIndex(i).image),
                           ),
-                          selectAction: (i) => widget.vm.gender = Gender.fromIndex(i),
+                          selectAction: (i) => vm.gender = Gender.fromIndex(i),
                         ),
                       ),
 
                       FieldView(
                         title: AppLocalizations.of(context)!.create_age_title,
                         child: DropdownMenu(
-                          onSelected: (value) => widget.vm.age = value,
+                          onSelected: (value) => vm.age = value,
                           dropdownMenuEntries: Age.values
                               .map((e) => DropdownMenuEntry(value: e, label: e.title(context)))
                               .toList(),
@@ -137,7 +136,7 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                           per: 2,
                           height: 100,
                           spacing: 6,
-                          selected: widget.vm.figure?.index,
+                          selected: vm.figure?.index,
                           itemBuilder: (i) => RoundSelEntryView(
                             lead: Text(
                               Figure.fromIndex(i).title(context),
@@ -145,7 +144,7 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                             ),
                             trail: Image.asset(Figure.fromIndex(i).image),
                           ),
-                          selectAction: (i) => widget.vm.figure = Figure.fromIndex(i),
+                          selectAction: (i) => vm.figure = Figure.fromIndex(i),
                         ),
                       ),
                     ],
@@ -168,9 +167,9 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                         ),
                         Expanded(
                           child: FilledButton(
-                            onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
+                            onPressed: vm.submitEnabled ? vm.submitAction : null,
                             style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
-                            child: widget.vm.submiting
+                            child: vm.submiting
                                 ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
                                 : Text(
                                     AppLocalizations.of(context)!.create_create_btn,
@@ -191,19 +190,19 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
   }
 
   void _subscribeSnack() {
-    widget.vm.snackPub.addListener(() {
-      final msg = widget.vm.snackPub.value?.localized(context);
+    vm.snackPub.addListener(() {
+      final msg = vm.snackPub.value?.localized(context);
       if (msg != null && msg.isNotEmpty) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }
-      widget.vm.snackPub.value = null;
+      vm.snackPub.value = null;
     });
   }
 
   void _subscribeDone() {
-    widget.vm.donePub.addListener(() {
-      if (widget.vm.donePub.value) {
+    vm.donePub.addListener(() {
+      if (vm.donePub.value) {
         Future.delayed(Duration(seconds: 1)).then((_) => mounted ? context.go(Routes.home) : null);
       }
     });

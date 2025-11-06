@@ -32,23 +32,23 @@ GoRouter router() => GoRouter(
 
     GoRoute(
       path: Routes.home,
-      builder: (context, state) => HomePage.create(network: context.read()),
+      builder: (context, state) => HomePage(network: context.read()),
     ),
     GoRoute(
       path: Routes.login,
       builder: (context, state) =>
-          LoginPage.create(network: context.read(), secures: context.read(), defaults: context.read()),
+          LoginPage(network: context.read(), secures: context.read(), defaults: context.read()),
     ),
     GoRoute(path: Routes.about, builder: (context, state) => AboutPage()),
 
     GoRoute(path: Routes.category, builder: (context, state) => CategoryPage()),
     GoRoute(
       path: Routes.createHuman,
-      builder: (context, state) => CreateHumanPagePage.create(network: context.read()),
+      builder: (context, state) => CreateHumanPage(network: context.read()),
     ),
     GoRoute(
       path: Routes.createPet,
-      builder: (context, state) => CreatePetPage.create(network: context.read()),
+      builder: (context, state) => CreatePetPage(network: context.read()),
     ),
   ],
 );

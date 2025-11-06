@@ -14,17 +14,16 @@ import 'create_pet_vm.dart';
 import 'gender.dart';
 
 class CreatePetPage extends StatefulWidget {
-  const CreatePetPage({super.key, required this.vm});
-
-  final CreatePetVm vm;
-
-  CreatePetPage.create({super.key, required Networkable network}) : vm = CreatePetVm(network: network);
+  const CreatePetPage({super.key, required this.network});
+  final Networkable network;
 
   @override
   State<CreatePetPage> createState() => _CreatePetPageState();
 }
 
 class _CreatePetPageState extends State<CreatePetPage> {
+  late CreatePetVm vm = CreatePetVm(network: widget.network);
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +33,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
 
   @override
   void dispose() {
-    widget.vm.dispose();
+    vm.dispose();
     super.dispose();
   }
 
@@ -43,7 +42,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.create_page_title)),
       body: ListenableBuilder(
-        listenable: widget.vm,
+        listenable: vm,
         builder: (context, child) {
           return SingleChildScrollView(
             child: SafeArea(
@@ -53,8 +52,8 @@ class _CreatePetPageState extends State<CreatePetPage> {
                     title: AppLocalizations.of(context)!.create_image_title,
                     children: [
                       UploadView(
-                        images: widget.vm.uploads,
-                        imageChoosed: widget.vm.didChooseImage,
+                        images: vm.uploads,
+                        imageChoosed: vm.didChooseImage,
                         info: AppLocalizations.of(context)!.create_image_info_pet,
                       ),
                     ],
@@ -66,8 +65,8 @@ class _CreatePetPageState extends State<CreatePetPage> {
                       FieldView(
                         title: AppLocalizations.of(context)!.create_name_title_pet,
                         child: TextField(
-                          controller: widget.vm.nameController,
-                          onChanged: widget.vm.nameChanged,
+                          controller: vm.nameController,
+                          onChanged: vm.nameChanged,
                           onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                           autocorrect: false,
                           textCapitalization: TextCapitalization.none,
@@ -97,7 +96,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                           per: 2,
                           height: 60,
                           spacing: 8,
-                          selected: widget.vm.gender?.index,
+                          selected: vm.gender?.index,
                           itemBuilder: (i) => RoundSelEntryView(
                             lead: Text(
                               Gender.fromIndex(i).pet(context),
@@ -105,7 +104,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                             ),
                             trail: Image.asset(Gender.fromIndex(i).image),
                           ),
-                          selectAction: (i) => widget.vm.gender = Gender.fromIndex(i),
+                          selectAction: (i) => vm.gender = Gender.fromIndex(i),
                         ),
                       ),
 
@@ -116,7 +115,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                           per: 3,
                           height: 86,
                           spacing: 8,
-                          selected: widget.vm.species?.index,
+                          selected: vm.species?.index,
                           normalColor: MyColors.violet100,
                           selectedColor: MyColors.orange300,
                           itemBuilder: (i) => RoundSelEntryView(
@@ -128,7 +127,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
                             ),
                           ),
-                          selectAction: (i) => widget.vm.species = Species.fromIndex(i),
+                          selectAction: (i) => vm.species = Species.fromIndex(i),
                         ),
                       ),
 
@@ -139,14 +138,14 @@ class _CreatePetPageState extends State<CreatePetPage> {
                             LineSelEntryView(
                               icon: 'assets/images/create_tail_yes.png',
                               name: 'With tail',
-                              selected: widget.vm.withTail == true,
-                              action: () => widget.vm.withTail = true,
+                              selected: vm.withTail == true,
+                              action: () => vm.withTail = true,
                             ),
                             LineSelEntryView(
                               icon: 'assets/images/create_tail_no.png',
                               name: 'No tail',
-                              selected: widget.vm.withTail == false,
-                              action: () => widget.vm.withTail = false,
+                              selected: vm.withTail == false,
+                              action: () => vm.withTail = false,
                             ),
                           ],
                         ),
@@ -159,8 +158,8 @@ class _CreatePetPageState extends State<CreatePetPage> {
                             ...Personality.values.map(
                               (e) => CharEntryView(
                                 title: e.title(context),
-                                selected: e == widget.vm.personality,
-                                action: () => widget.vm.personality = e,
+                                selected: e == vm.personality,
+                                action: () => vm.personality = e,
                               ),
                             ),
                           ],
@@ -186,9 +185,9 @@ class _CreatePetPageState extends State<CreatePetPage> {
                         ),
                         Expanded(
                           child: FilledButton(
-                            onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
+                            onPressed: vm.submitEnabled ? vm.submitAction : null,
                             style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
-                            child: widget.vm.submiting
+                            child: vm.submiting
                                 ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
                                 : Text(
                                     AppLocalizations.of(context)!.create_create_btn,
@@ -209,19 +208,19 @@ class _CreatePetPageState extends State<CreatePetPage> {
   }
 
   void _subscribeSnack() {
-    widget.vm.snackPub.addListener(() {
-      final msg = widget.vm.snackPub.value?.localized(context);
+    vm.snackPub.addListener(() {
+      final msg = vm.snackPub.value?.localized(context);
       if (msg != null && msg.isNotEmpty) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }
-      widget.vm.snackPub.value = null;
+      vm.snackPub.value = null;
     });
   }
 
   void _subscribeDone() {
-    widget.vm.donePub.addListener(() {
-      if (widget.vm.donePub.value) {
+    vm.donePub.addListener(() {
+      if (vm.donePub.value) {
         Future.delayed(Duration(seconds: 1)).then((_) => mounted ? context.go(Routes.home) : null);
       }
     });
