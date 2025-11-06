@@ -40,6 +40,7 @@ class CharEntryView extends StatelessWidget {
       padding: EdgeInsets.zero,
       labelPadding: EdgeInsets.symmetric(horizontal: 7),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      visualDensity: VisualDensity.compact,
       onPressed: action,
     );
   }
