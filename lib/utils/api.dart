@@ -17,6 +17,8 @@ final class Api extends Endpoint {
         encoding: ReqEncoding.json,
       );
 
+  Api.getAllChips() : super('/MeetAgain-memoryBoxes/getMemoryBoxesByUserId', ReqMethod.get);
+
   Api.createHuman(String name, String? image, String? gender, String? age, String? figure)
     : super(
         '/MeetAgain-memoryBoxes/createMemoryBox',

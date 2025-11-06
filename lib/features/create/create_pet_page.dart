@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import '/l10n/localizations.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
+import '/utils/router.dart';
 import 'views/section_view.dart';
 import 'views/field_view.dart';
 import 'views/upload_view.dart';
@@ -28,6 +29,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
   void initState() {
     super.initState();
     _subscribeSnack();
+    _subscribeDone();
   }
 
   @override
@@ -214,6 +216,14 @@ class _CreatePetPageState extends State<CreatePetPage> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }
       widget.vm.snackPub.value = null;
+    });
+  }
+
+  void _subscribeDone() {
+    widget.vm.donePub.addListener(() {
+      if (widget.vm.donePub.value) {
+        Future.delayed(Duration(seconds: 1)).then((_) => mounted ? context.go(Routes.home) : null);
+      }
     });
   }
 }

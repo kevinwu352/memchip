@@ -25,6 +25,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    widget.vm.getAllChips();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListenableBuilder(
