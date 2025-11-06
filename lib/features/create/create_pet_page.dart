@@ -6,21 +6,23 @@ import 'views/section_view.dart';
 import 'views/field_view.dart';
 import 'views/upload_view.dart';
 import 'views/round_sel_view.dart';
-import 'chip_create_human_vm.dart';
+import 'views/line_sel_view.dart';
+import 'views/char_view.dart';
+import 'create_pet_vm.dart';
 import 'gender.dart';
 
-class ChipCreateHumanPage extends StatefulWidget {
-  const ChipCreateHumanPage({super.key, required this.vm});
+class CreatePetPage extends StatefulWidget {
+  const CreatePetPage({super.key, required this.vm});
 
-  final ChipCreateHumanVm vm;
+  final CreatePetVm vm;
 
-  ChipCreateHumanPage.create({super.key, required Networkable network}) : vm = ChipCreateHumanVm(network: network);
+  CreatePetPage.create({super.key, required Networkable network}) : vm = CreatePetVm(network: network);
 
   @override
-  State<ChipCreateHumanPage> createState() => _ChipCreateHumanPageState();
+  State<CreatePetPage> createState() => _CreatePetPageState();
 }
 
-class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
+class _CreatePetPageState extends State<CreatePetPage> {
   @override
   void initState() {
     super.initState();
@@ -36,7 +38,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.chip_create_page_title)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.create_page_title)),
       body: ListenableBuilder(
         listenable: widget.vm,
         builder: (context, child) {
@@ -45,21 +47,21 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
               child: Column(
                 children: [
                   SectionView(
-                    title: AppLocalizations.of(context)!.chip_create_image_title,
+                    title: AppLocalizations.of(context)!.create_image_title,
                     children: [
                       UploadView(
                         images: widget.vm.uploads,
                         imageChoosed: widget.vm.didChooseImage,
-                        info: AppLocalizations.of(context)!.chip_create_image_info_human,
+                        info: AppLocalizations.of(context)!.create_image_info_pet,
                       ),
                     ],
                   ),
 
                   SectionView(
-                    title: AppLocalizations.of(context)!.chip_create_basic_title,
+                    title: AppLocalizations.of(context)!.create_basic_title,
                     children: [
                       FieldView(
-                        title: AppLocalizations.of(context)!.chip_create_name_title_human,
+                        title: AppLocalizations.of(context)!.create_name_title_pet,
                         child: TextField(
                           controller: widget.vm.nameController,
                           onChanged: widget.vm.nameChanged,
@@ -69,7 +71,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                           enableSuggestions: false,
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
                           decoration: InputDecoration(
-                            hintText: AppLocalizations.of(context)!.chip_create_name_ph_human,
+                            hintText: AppLocalizations.of(context)!.create_name_ph_pet,
                             hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: MyColors.gray300, width: 1),
@@ -86,7 +88,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                       ),
 
                       FieldView(
-                        title: AppLocalizations.of(context)!.chip_create_gender_title,
+                        title: AppLocalizations.of(context)!.create_gender_title,
                         child: RoundSelView(
                           count: Gender.values.length,
                           per: 2,
@@ -95,7 +97,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                           selected: widget.vm.gender?.index,
                           itemBuilder: (i) => RoundSelEntryView(
                             lead: Text(
-                              Gender.fromIndex(i).human(context),
+                              Gender.fromIndex(i).pet(context),
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
                             ),
                             trail: Image.asset(Gender.fromIndex(i).image),
@@ -105,41 +107,60 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                       ),
 
                       FieldView(
-                        title: AppLocalizations.of(context)!.chip_create_age_title,
-                        child: DropdownMenu(
-                          dropdownMenuEntries: Age.entries,
-                          expandedInsets: EdgeInsets.zero,
-                          textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
-                          hintText: AppLocalizations.of(context)!.chip_create_age_ph,
-                          inputDecorationTheme: InputDecorationThemeData(
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: MyColors.gray300, width: 1),
-                              borderRadius: BorderRadius.circular(8),
+                        title: AppLocalizations.of(context)!.create_species_title,
+                        child: RoundSelView(
+                          count: Species.values.length,
+                          per: 3,
+                          height: 86,
+                          spacing: 8,
+                          selected: widget.vm.species?.index,
+                          normalColor: MyColors.violet100,
+                          selectedColor: MyColors.orange300,
+                          itemBuilder: (i) => RoundSelEntryView(
+                            axis: Axis.vertical,
+                            compact: true,
+                            lead: Image.asset(Species.fromIndex(i).image),
+                            trail: Text(
+                              Species.fromIndex(i).title(context),
+                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
                             ),
-                            contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                            constraints: BoxConstraints(maxHeight: 36),
-                            isCollapsed: true,
-                            hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
                           ),
+                          selectAction: (i) => widget.vm.species = Species.fromIndex(i),
                         ),
                       ),
 
                       FieldView(
-                        title: AppLocalizations.of(context)!.chip_create_figure_title,
-                        child: RoundSelView(
-                          count: Figure.values.length,
-                          per: 2,
-                          height: 100,
-                          spacing: 6,
-                          selected: widget.vm.figure?.index,
-                          itemBuilder: (i) => RoundSelEntryView(
-                            lead: Text(
-                              Figure.fromIndex(i).title(context),
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
+                        title: AppLocalizations.of(context)!.create_tail_title,
+                        child: LineSelView(
+                          children: [
+                            LineSelEntryView(
+                              icon: 'assets/images/create_tail_yes.png',
+                              name: 'With tail',
+                              selected: widget.vm.withTail == true,
+                              action: () => widget.vm.withTail = true,
                             ),
-                            trail: Image.asset(Figure.fromIndex(i).image),
-                          ),
-                          selectAction: (i) => widget.vm.figure = Figure.fromIndex(i),
+                            LineSelEntryView(
+                              icon: 'assets/images/create_tail_no.png',
+                              name: 'No tail',
+                              selected: widget.vm.withTail == false,
+                              action: () => widget.vm.withTail = false,
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      FieldView(
+                        title: AppLocalizations.of(context)!.create_personality_title,
+                        child: CharView(
+                          children: [
+                            ...Personality.values.map(
+                              (e) => CharEntryView(
+                                title: e.title(context),
+                                selected: e == widget.vm.personality,
+                                action: () => widget.vm.personality = e,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -165,7 +186,7 @@ class _ChipCreateHumanPageState extends State<ChipCreateHumanPage> {
                             onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
                             style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
                             child: Text(
-                              AppLocalizations.of(context)!.chip_create_create_btn,
+                              AppLocalizations.of(context)!.create_create_btn,
                               style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
                             ),
                           ),

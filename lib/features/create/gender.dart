@@ -10,18 +10,18 @@ enum Gender {
   String human(BuildContext context) {
     switch (this) {
       case male:
-        return AppLocalizations.of(context)!.chip_create_gender_male_human;
+        return AppLocalizations.of(context)!.create_gender_male_human;
       case female:
-        return AppLocalizations.of(context)!.chip_create_gender_female_human;
+        return AppLocalizations.of(context)!.create_gender_female_human;
     }
   }
 
   String pet(BuildContext context) {
     switch (this) {
       case male:
-        return AppLocalizations.of(context)!.chip_create_gender_male_pet;
+        return AppLocalizations.of(context)!.create_gender_male_pet;
       case female:
-        return AppLocalizations.of(context)!.chip_create_gender_female_pet;
+        return AppLocalizations.of(context)!.create_gender_female_pet;
     }
   }
 

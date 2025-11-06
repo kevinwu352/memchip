@@ -4,13 +4,13 @@ import '/l10n/localizations.dart';
 import '/theme/theme.dart';
 import '/utils/router.dart';
 
-class ChipCategoryPage extends StatelessWidget {
-  const ChipCategoryPage({super.key});
+class CategoryPage extends StatelessWidget {
+  const CategoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.chip_category_page_title)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.category_page_title)),
       body: SizedBox.expand(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 60, vertical: 50),
@@ -50,27 +50,27 @@ enum _Entry {
   String info(BuildContext context) {
     switch (this) {
       case human:
-        return AppLocalizations.of(context)!.chip_category_human_info;
+        return AppLocalizations.of(context)!.category_human_info;
       case pet:
-        return AppLocalizations.of(context)!.chip_category_pet_info;
+        return AppLocalizations.of(context)!.category_pet_info;
     }
   }
 
   String button(BuildContext context) {
     switch (this) {
       case human:
-        return AppLocalizations.of(context)!.chip_category_human_btn;
+        return AppLocalizations.of(context)!.category_human_btn;
       case pet:
-        return AppLocalizations.of(context)!.chip_category_pet_btn;
+        return AppLocalizations.of(context)!.category_pet_btn;
     }
   }
 
   String get route {
     switch (this) {
       case human:
-        return Routes.chipCreateHuman;
+        return Routes.createHuman;
       case pet:
-        return Routes.chipCreatePet;
+        return Routes.createPet;
     }
   }
 }

@@ -70,11 +70,11 @@ class UploadView extends StatelessWidget {
       context: context,
       actions: [
         BottomSheetAction(
-          title: Text(AppLocalizations.of(context)!.chip_create_image_library),
+          title: Text(AppLocalizations.of(context)!.create_image_library),
           onPressed: (context) => _chooseImage(index, ImageSource.gallery, context),
         ),
         BottomSheetAction(
-          title: Text(AppLocalizations.of(context)!.chip_create_image_camera),
+          title: Text(AppLocalizations.of(context)!.create_image_camera),
           onPressed: (context) => _chooseImage(index, ImageSource.camera, context),
         ),
       ],

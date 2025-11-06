@@ -5,8 +5,8 @@ import '/network/network.dart';
 import '/utils/image_uploader.dart';
 import 'gender.dart';
 
-final class ChipCreatePetVm extends ChangeNotifier {
-  ChipCreatePetVm({required Networkable network}) : _network = network;
+final class CreatePetVm extends ChangeNotifier {
+  CreatePetVm({required Networkable network}) : _network = network;
   final Networkable _network;
 
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
@@ -92,17 +92,17 @@ enum Species {
   String title(BuildContext context) {
     switch (this) {
       case cat:
-        return AppLocalizations.of(context)!.chip_create_species_cat;
+        return AppLocalizations.of(context)!.create_species_cat;
       case dog:
-        return AppLocalizations.of(context)!.chip_create_species_dog;
+        return AppLocalizations.of(context)!.create_species_dog;
       case rabbit:
-        return AppLocalizations.of(context)!.chip_create_species_rabbit;
+        return AppLocalizations.of(context)!.create_species_rabbit;
       case parrot:
-        return AppLocalizations.of(context)!.chip_create_species_parrot;
+        return AppLocalizations.of(context)!.create_species_parrot;
       case hamster:
-        return AppLocalizations.of(context)!.chip_create_species_hamster;
+        return AppLocalizations.of(context)!.create_species_hamster;
       case other:
-        return AppLocalizations.of(context)!.chip_create_species_other;
+        return AppLocalizations.of(context)!.create_species_other;
     }
   }
 
@@ -137,21 +137,21 @@ enum Personality {
   String title(BuildContext context) {
     switch (this) {
       case playful:
-        return AppLocalizations.of(context)!.chip_create_personality_playful;
+        return AppLocalizations.of(context)!.create_personality_playful;
       case quiet:
-        return AppLocalizations.of(context)!.chip_create_personality_quiet;
+        return AppLocalizations.of(context)!.create_personality_quiet;
       case foodie:
-        return AppLocalizations.of(context)!.chip_create_personality_foodie;
+        return AppLocalizations.of(context)!.create_personality_foodie;
       case timid:
-        return AppLocalizations.of(context)!.chip_create_personality_timid;
+        return AppLocalizations.of(context)!.create_personality_timid;
       case clingy:
-        return AppLocalizations.of(context)!.chip_create_personality_clingy;
+        return AppLocalizations.of(context)!.create_personality_clingy;
       case solo:
-        return AppLocalizations.of(context)!.chip_create_personality_solo;
+        return AppLocalizations.of(context)!.create_personality_solo;
       case naughty:
-        return AppLocalizations.of(context)!.chip_create_personality_naughty;
+        return AppLocalizations.of(context)!.create_personality_naughty;
       case tame:
-        return AppLocalizations.of(context)!.chip_create_personality_tame;
+        return AppLocalizations.of(context)!.create_personality_tame;
     }
   }
 }

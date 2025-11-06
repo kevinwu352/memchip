@@ -6,8 +6,8 @@ import '/network/network.dart';
 import '/utils/image_uploader.dart';
 import 'gender.dart';
 
-final class ChipCreateHumanVm extends ChangeNotifier {
-  ChipCreateHumanVm({required Networkable network}) : _network = network {
+final class CreateHumanPageVm extends ChangeNotifier {
+  CreateHumanPageVm({required Networkable network}) : _network = network {
     for (var element in uploads) {
       element.notify = notifyListeners;
     }
@@ -117,13 +117,13 @@ enum Figure {
   String title(BuildContext context) {
     switch (this) {
       case slim:
-        return AppLocalizations.of(context)!.chip_create_figure_1;
+        return AppLocalizations.of(context)!.create_figure_1;
       case standard:
-        return AppLocalizations.of(context)!.chip_create_figure_2;
+        return AppLocalizations.of(context)!.create_figure_2;
       case fit:
-        return AppLocalizations.of(context)!.chip_create_figure_3;
+        return AppLocalizations.of(context)!.create_figure_3;
       case chubby:
-        return AppLocalizations.of(context)!.chip_create_figure_4;
+        return AppLocalizations.of(context)!.create_figure_4;
     }
   }
 

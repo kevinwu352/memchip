@@ -94,150 +94,148 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get chip_category_page_title => 'Create Character zh';
+  String get category_page_title => 'Create Character zh';
 
   @override
-  String get chip_category_human_info =>
-      'Please add a clear character image. zh';
+  String get category_human_info => 'Please add a clear character image. zh';
 
   @override
-  String get chip_category_human_btn => 'Create Human Character zh';
+  String get category_human_btn => 'Create Human Character zh';
 
   @override
-  String get chip_category_pet_info =>
+  String get category_pet_info =>
       'Please upload one clear front photo and one side photo of your pet. zh';
 
   @override
-  String get chip_category_pet_btn => 'Create Pet Character zh';
+  String get category_pet_btn => 'Create Pet Character zh';
 
   @override
-  String get chip_create_page_title => 'Create Image Frame';
+  String get create_page_title => 'Create Image Frame';
 
   @override
-  String get chip_create_image_title => 'Add Image';
+  String get create_image_title => 'Add Image';
 
   @override
-  String get chip_create_image_library => 'Photo library';
+  String get create_image_library => 'Photo library';
 
   @override
-  String get chip_create_image_camera => 'Camera';
+  String get create_image_camera => 'Camera';
 
   @override
-  String get chip_create_image_info_human =>
-      'Please add a clear character image.';
+  String get create_image_info_human => 'Please add a clear character image.';
 
   @override
-  String get chip_create_image_info_pet =>
+  String get create_image_info_pet =>
       'Please upload one clear front photo and one side photo of your pet.';
 
   @override
-  String get chip_create_basic_title => 'Basic Information';
+  String get create_basic_title => 'Basic Information';
 
   @override
-  String get chip_create_name_title_human => 'Image Frame Name';
+  String get create_name_title_human => 'Image Frame Name';
 
   @override
-  String get chip_create_name_ph_human => 'Enter image frame name';
+  String get create_name_ph_human => 'Enter image frame name';
 
   @override
-  String get chip_create_name_title_pet => 'Pet Name';
+  String get create_name_title_pet => 'Pet Name';
 
   @override
-  String get chip_create_name_ph_pet => 'Enter pet name';
+  String get create_name_ph_pet => 'Enter pet name';
 
   @override
-  String get chip_create_gender_title => 'Gender';
+  String get create_gender_title => 'Gender';
 
   @override
-  String get chip_create_gender_male_human => 'Male';
+  String get create_gender_male_human => 'Male';
 
   @override
-  String get chip_create_gender_female_human => 'Female';
+  String get create_gender_female_human => 'Female';
 
   @override
-  String get chip_create_gender_male_pet => 'Boy';
+  String get create_gender_male_pet => 'Boy';
 
   @override
-  String get chip_create_gender_female_pet => 'Girl';
+  String get create_gender_female_pet => 'Girl';
 
   @override
-  String get chip_create_age_title => 'Age Range';
+  String get create_age_title => 'Age Range';
 
   @override
-  String get chip_create_age_ph => 'Select age range';
+  String get create_age_ph => 'Select age range';
 
   @override
-  String get chip_create_figure_title => 'Figure Type';
+  String get create_figure_title => 'Figure Type';
 
   @override
-  String get chip_create_figure_1 => 'Slim';
+  String get create_figure_1 => 'Slim';
 
   @override
-  String get chip_create_figure_2 => 'Standard';
+  String get create_figure_2 => 'Standard';
 
   @override
-  String get chip_create_figure_3 => 'Fit';
+  String get create_figure_3 => 'Fit';
 
   @override
-  String get chip_create_figure_4 => 'Chubby';
+  String get create_figure_4 => 'Chubby';
 
   @override
-  String get chip_create_species_title => 'Pet Type';
+  String get create_species_title => 'Pet Type';
 
   @override
-  String get chip_create_species_cat => 'Cat';
+  String get create_species_cat => 'Cat';
 
   @override
-  String get chip_create_species_dog => 'Dog';
+  String get create_species_dog => 'Dog';
 
   @override
-  String get chip_create_species_rabbit => 'Rabbit';
+  String get create_species_rabbit => 'Rabbit';
 
   @override
-  String get chip_create_species_parrot => 'Parrot';
+  String get create_species_parrot => 'Parrot';
 
   @override
-  String get chip_create_species_hamster => 'Hamster';
+  String get create_species_hamster => 'Hamster';
 
   @override
-  String get chip_create_species_other => 'Other';
+  String get create_species_other => 'Other';
 
   @override
-  String get chip_create_tail_title => 'Tail';
+  String get create_tail_title => 'Tail';
 
   @override
-  String get chip_create_tail_yes => 'With tail';
+  String get create_tail_yes => 'With tail';
 
   @override
-  String get chip_create_tail_no => 'No tail';
+  String get create_tail_no => 'No tail';
 
   @override
-  String get chip_create_personality_title => 'Personality';
+  String get create_personality_title => 'Personality';
 
   @override
-  String get chip_create_personality_playful => 'Playful';
+  String get create_personality_playful => 'Playful';
 
   @override
-  String get chip_create_personality_quiet => 'Quiet';
+  String get create_personality_quiet => 'Quiet';
 
   @override
-  String get chip_create_personality_foodie => 'Foodie';
+  String get create_personality_foodie => 'Foodie';
 
   @override
-  String get chip_create_personality_timid => 'Timid';
+  String get create_personality_timid => 'Timid';
 
   @override
-  String get chip_create_personality_clingy => 'Clingy';
+  String get create_personality_clingy => 'Clingy';
 
   @override
-  String get chip_create_personality_solo => 'Solo';
+  String get create_personality_solo => 'Solo';
 
   @override
-  String get chip_create_personality_naughty => 'Naughty';
+  String get create_personality_naughty => 'Naughty';
 
   @override
-  String get chip_create_personality_tame => 'Tame';
+  String get create_personality_tame => 'Tame';
 
   @override
-  String get chip_create_create_btn => 'Create';
+  String get create_create_btn => 'Create';
 }

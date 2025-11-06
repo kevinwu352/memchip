@@ -7,9 +7,9 @@ import '/ui/web_page.dart';
 import '/features/home/home_page.dart';
 import '/features/login/login_page.dart';
 import '/features/about/about_page.dart';
-import '/features/chip-create/chip_category_page.dart';
-import '/features/chip-create/chip_create_human_page.dart';
-import '/features/chip-create/chip_create_pet_page.dart';
+import '/features/category/category_page.dart';
+import '/features/create/create_human_page.dart';
+import '/features/create/create_pet_page.dart';
 
 abstract final class Routes {
   static String web(String url) => '/web/${url.encodeComponent}';
@@ -17,9 +17,9 @@ abstract final class Routes {
   static const home = '/home';
   static const login = '/login';
   static const about = '/about';
-  static const chipCategory = '/chip-category';
-  static const chipCreateHuman = '/chip-create-human';
-  static const chipCreatePet = '/chip-create-pet';
+  static const category = '/category';
+  static const createHuman = '/create-human';
+  static const createPet = '/create-pet';
 }
 
 GoRouter router() => GoRouter(
@@ -41,14 +41,14 @@ GoRouter router() => GoRouter(
     ),
     GoRoute(path: Routes.about, builder: (context, state) => AboutPage()),
 
-    GoRoute(path: Routes.chipCategory, builder: (context, state) => ChipCategoryPage()),
+    GoRoute(path: Routes.category, builder: (context, state) => CategoryPage()),
     GoRoute(
-      path: Routes.chipCreateHuman,
-      builder: (context, state) => ChipCreateHumanPage.create(network: context.read()),
+      path: Routes.createHuman,
+      builder: (context, state) => CreateHumanPagePage.create(network: context.read()),
     ),
     GoRoute(
-      path: Routes.chipCreatePet,
-      builder: (context, state) => ChipCreatePetPage.create(network: context.read()),
+      path: Routes.createPet,
+      builder: (context, state) => CreatePetPage.create(network: context.read()),
     ),
   ],
 );
