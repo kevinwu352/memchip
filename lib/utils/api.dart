@@ -31,4 +31,19 @@ final class Api extends Endpoint {
         },
         encoding: ReqEncoding.json,
       );
+
+  Api.createPet(String name, String image1, String image2, String gender, String species, bool tail, String character)
+    : super(
+        '/pet/create',
+        ReqMethod.post,
+        parameters: {
+          'name': name,
+          'photos': [image1, image2],
+          'gender': gender,
+          'species': species,
+          'tail': tail,
+          'character': [character],
+        },
+        encoding: ReqEncoding.json,
+      );
 }

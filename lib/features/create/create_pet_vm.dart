@@ -10,6 +10,7 @@ final class CreatePetVm extends ChangeNotifier {
   final Networkable _network;
 
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
+  ValueNotifier<bool> donePub = ValueNotifier(false);
 
   List<ImageUploader> uploads = [ImageUploader(), ImageUploader()];
   void didChooseImage(int index, String path) async {
@@ -75,6 +76,7 @@ final class CreatePetVm extends ChangeNotifier {
   void dispose() {
     nameController.dispose();
     snackPub.dispose();
+    donePub.dispose();
     super.dispose();
   }
 }
@@ -122,6 +124,23 @@ enum Species {
         return 'assets/images/create_pet_other.png';
     }
   }
+
+  String get serval {
+    switch (this) {
+      case cat:
+        return '猫';
+      case dog:
+        return '狗';
+      case rabbit:
+        return '兔子';
+      case parrot:
+        return '鹦鹉';
+      case hamster:
+        return '仓鼠';
+      case other:
+        return '其它';
+    }
+  }
 }
 
 enum Personality {
@@ -152,6 +171,27 @@ enum Personality {
         return AppLocalizations.of(context)!.create_personality_naughty;
       case tame:
         return AppLocalizations.of(context)!.create_personality_tame;
+    }
+  }
+
+  String get serval {
+    switch (this) {
+      case playful:
+        return '活泼';
+      case quiet:
+        return '安静';
+      case foodie:
+        return '贪吃';
+      case timid:
+        return '胆小';
+      case clingy:
+        return '粘人';
+      case solo:
+        return '独立';
+      case naughty:
+        return '调皮';
+      case tame:
+        return '乖巧';
     }
   }
 }
