@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '/l10n/localizations.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
+import '/utils/router.dart';
 import 'views/section_view.dart';
 import 'views/field_view.dart';
 import 'views/upload_view.dart';
@@ -25,6 +27,7 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
   void initState() {
     super.initState();
     _subscribeSnack();
+    _subscribeDone();
   }
 
   @override
@@ -107,6 +110,7 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                       FieldView(
                         title: AppLocalizations.of(context)!.create_age_title,
                         child: DropdownMenu(
+                          onSelected: (value) => widget.vm.age = value,
                           dropdownMenuEntries: Age.values
                               .map((e) => DropdownMenuEntry(value: e, label: e.title(context)))
                               .toList(),
@@ -154,7 +158,7 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                       children: [
                         Expanded(
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: () => context.pop(),
                             style: OutlinedButton.styleFrom(side: BorderSide(color: MyColors.violet300, width: 1)),
                             child: Text(
                               AppLocalizations.of(context)!.cancel,
@@ -192,6 +196,14 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
       }
       widget.vm.snackPub.value = null;
+    });
+  }
+
+  void _subscribeDone() {
+    widget.vm.donePub.addListener(() {
+      if (widget.vm.donePub.value) {
+        Future.delayed(Duration(seconds: 1)).then((_) => mounted ? context.go(Routes.home) : null);
+      }
     });
   }
 }

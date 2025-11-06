@@ -29,5 +29,6 @@ final class Api extends Endpoint {
           'ageStage': age,
           'bodyType': figure,
         },
+        encoding: ReqEncoding.json,
       );
 }

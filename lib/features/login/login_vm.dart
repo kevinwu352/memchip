@@ -16,8 +16,7 @@ final class LoginVm extends ChangeNotifier {
   final Defaults _defaults;
 
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
-
-  ValueNotifier<bool> loginedPub = ValueNotifier(false);
+  ValueNotifier<bool> donePub = ValueNotifier(false);
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -71,7 +70,6 @@ final class LoginVm extends ChangeNotifier {
       // await Future.delayed(Duration(seconds: 60));
       final result = await _network.reqRes(Api.accountSendCode(email), null);
       sending = false;
-
       switch (result) {
         case Ok():
           final res = result.value;
@@ -126,7 +124,6 @@ final class LoginVm extends ChangeNotifier {
       // await Future.delayed(Duration(seconds: 60));
       final result = await _network.reqRes(Api.accountCheckCode(email, code), User.fromApi);
       submiting = false;
-
       switch (result) {
         case Ok():
           final res = result.value;
@@ -136,7 +133,7 @@ final class LoginVm extends ChangeNotifier {
             _secures.lastUsername = user?.email;
             _secures.accessToken = user?.token;
             _defaults.user = user;
-            loginedPub.value = true;
+            donePub.value = true;
           } else {
             throw HttpError.operation;
           }
@@ -155,7 +152,7 @@ final class LoginVm extends ChangeNotifier {
     codeController.dispose();
     timer?.cancel();
     snackPub.dispose();
-    loginedPub.dispose();
+    donePub.dispose();
     super.dispose();
   }
 }

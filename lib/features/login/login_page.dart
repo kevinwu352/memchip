@@ -25,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _subscribeSnack();
-    _subscribeLogin();
+    _subscribeDone();
   }
 
   @override
@@ -181,9 +181,9 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _subscribeLogin() {
-    widget.vm.loginedPub.addListener(() {
-      if (widget.vm.loginedPub.value) {
+  void _subscribeDone() {
+    widget.vm.donePub.addListener(() {
+      if (widget.vm.donePub.value) {
         Future.delayed(Duration(seconds: 1)).then((_) => mounted ? context.go(Routes.home) : null);
       }
     });

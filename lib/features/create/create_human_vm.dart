@@ -3,6 +3,7 @@ import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/network/network.dart';
 import '/utils/image_uploader.dart';
+import '/utils/api.dart';
 import 'gender.dart';
 
 final class CreateHumanPageVm extends ChangeNotifier {
@@ -14,6 +15,7 @@ final class CreateHumanPageVm extends ChangeNotifier {
   final Networkable _network;
 
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
+  ValueNotifier<bool> donePub = ValueNotifier(false);
 
   List<ImageUploader> uploads = [ImageUploader()];
   void didChooseImage(int index, String path) async {
@@ -64,13 +66,38 @@ final class CreateHumanPageVm extends ChangeNotifier {
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
-    print('do submit');
+    create(nameController.text, uploads[0].url ?? '', _gender?.serval ?? '', _age?.serval ?? '', _figure?.serval ?? '');
+  }
+
+  void create(String name, String image, String gender, String age, String figure) async {
+    try {
+      submiting = true;
+      // await Future.delayed(Duration(seconds: 60));
+      final result = await _network.reqRes(Api.createHuman(name, image, gender, age, figure), null);
+      submiting = false;
+      switch (result) {
+        case Ok():
+          final res = result.value;
+          if (res.success) {
+            snackPub.value = LocaledStr(res.message);
+            donePub.value = true;
+          } else {
+            throw HttpError.operation;
+          }
+        case Error():
+          throw result.error;
+      }
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknown;
+      snackPub.value = err;
+    }
   }
 
   @override
   void dispose() {
     nameController.dispose();
     snackPub.dispose();
+    donePub.dispose();
     super.dispose();
   }
 }
