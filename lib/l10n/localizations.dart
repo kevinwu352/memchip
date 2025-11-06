@@ -386,35 +386,65 @@ abstract class AppLocalizations {
   /// **'Select age range'**
   String get create_age_ph;
 
+  /// No description provided for @create_age_range1.
+  ///
+  /// In en, this message translates to:
+  /// **'Children (0-12)'**
+  String get create_age_range1;
+
+  /// No description provided for @create_age_range2.
+  ///
+  /// In en, this message translates to:
+  /// **'Teenager (13-17)'**
+  String get create_age_range2;
+
+  /// No description provided for @create_age_range3.
+  ///
+  /// In en, this message translates to:
+  /// **'Youth (18-35)'**
+  String get create_age_range3;
+
+  /// No description provided for @create_age_range4.
+  ///
+  /// In en, this message translates to:
+  /// **'Middle-Aged (36-59)'**
+  String get create_age_range4;
+
+  /// No description provided for @create_age_range5.
+  ///
+  /// In en, this message translates to:
+  /// **'Seniors (60+)'**
+  String get create_age_range5;
+
   /// No description provided for @create_figure_title.
   ///
   /// In en, this message translates to:
   /// **'Figure Type'**
   String get create_figure_title;
 
-  /// No description provided for @create_figure_1.
+  /// No description provided for @create_figure1.
   ///
   /// In en, this message translates to:
   /// **'Slim'**
-  String get create_figure_1;
+  String get create_figure1;
 
-  /// No description provided for @create_figure_2.
+  /// No description provided for @create_figure2.
   ///
   /// In en, this message translates to:
   /// **'Standard'**
-  String get create_figure_2;
+  String get create_figure2;
 
-  /// No description provided for @create_figure_3.
+  /// No description provided for @create_figure3.
   ///
   /// In en, this message translates to:
   /// **'Fit'**
-  String get create_figure_3;
+  String get create_figure3;
 
-  /// No description provided for @create_figure_4.
+  /// No description provided for @create_figure4.
   ///
   /// In en, this message translates to:
   /// **'Chubby'**
-  String get create_figure_4;
+  String get create_figure4;
 
   /// No description provided for @create_species_title.
   ///

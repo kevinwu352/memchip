@@ -17,6 +17,17 @@ final class Api extends Endpoint {
         encoding: ReqEncoding.json,
       );
 
-  Api.createGetUploadParas(String name)
-    : super('/http/ext-storage-co/getUploadFileOptions', ReqMethod.get, parameters: {'cloudPath': name});
+  Api.createHuman(String name, String image, String gender, String age, String figure)
+    : super(
+        '/MeetAgain-memoryBoxes/createMemoryBox',
+        ReqMethod.post,
+        parameters: {
+          'boxName': name,
+          'coverImage': image,
+          'frontImage': image,
+          'gender': gender,
+          'ageStage': age,
+          'bodyType': figure,
+        },
+      );
 }

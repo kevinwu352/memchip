@@ -165,19 +165,34 @@ class AppLocalizationsEn extends AppLocalizations {
   String get create_age_ph => 'Select age range';
 
   @override
+  String get create_age_range1 => 'Children (0-12)';
+
+  @override
+  String get create_age_range2 => 'Teenager (13-17)';
+
+  @override
+  String get create_age_range3 => 'Youth (18-35)';
+
+  @override
+  String get create_age_range4 => 'Middle-Aged (36-59)';
+
+  @override
+  String get create_age_range5 => 'Seniors (60+)';
+
+  @override
   String get create_figure_title => 'Figure Type';
 
   @override
-  String get create_figure_1 => 'Slim';
+  String get create_figure1 => 'Slim';
 
   @override
-  String get create_figure_2 => 'Standard';
+  String get create_figure2 => 'Standard';
 
   @override
-  String get create_figure_3 => 'Fit';
+  String get create_figure3 => 'Fit';
 
   @override
-  String get create_figure_4 => 'Chubby';
+  String get create_figure4 => 'Chubby';
 
   @override
   String get create_species_title => 'Pet Type';

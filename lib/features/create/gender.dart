@@ -33,4 +33,13 @@ enum Gender {
         return 'assets/images/create_sex_female.png';
     }
   }
+
+  String get serval {
+    switch (this) {
+      case male:
+        return 'male';
+      case female:
+        return 'female';
+    }
+  }
 }

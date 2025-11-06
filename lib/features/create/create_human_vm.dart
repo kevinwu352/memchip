@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'package:flutter/material.dart';
 import '/l10n/localizations.dart';
 import '/core/core.dart';
@@ -80,30 +79,38 @@ enum Age {
   range0,
   range13,
   range18,
-  range25,
-  range35,
+  range36,
   range60;
 
-  String get title {
+  String title(BuildContext context) {
     switch (this) {
       case range0:
-        return '0-12';
+        return AppLocalizations.of(context)!.create_age_range1;
       case range13:
-        return '13-17';
+        return AppLocalizations.of(context)!.create_age_range2;
       case range18:
-        return '18-24';
-      case range25:
-        return '25-34';
-      case range35:
-        return '35-59';
+        return AppLocalizations.of(context)!.create_age_range3;
+      case range36:
+        return AppLocalizations.of(context)!.create_age_range4;
       case range60:
-        return '60+';
+        return AppLocalizations.of(context)!.create_age_range5;
     }
   }
 
-  static List<DropdownMenuEntry<Age>> entries = UnmodifiableListView<DropdownMenuEntry<Age>>(
-    values.map((e) => DropdownMenuEntry(value: e, label: e.title)),
-  );
+  String get serval {
+    switch (this) {
+      case range0:
+        return '儿童';
+      case range13:
+        return '青少年';
+      case range18:
+        return '青年';
+      case range36:
+        return '中年';
+      case range60:
+        return '老年';
+    }
+  }
 }
 
 enum Figure {
@@ -117,13 +124,13 @@ enum Figure {
   String title(BuildContext context) {
     switch (this) {
       case slim:
-        return AppLocalizations.of(context)!.create_figure_1;
+        return AppLocalizations.of(context)!.create_figure1;
       case standard:
-        return AppLocalizations.of(context)!.create_figure_2;
+        return AppLocalizations.of(context)!.create_figure2;
       case fit:
-        return AppLocalizations.of(context)!.create_figure_3;
+        return AppLocalizations.of(context)!.create_figure3;
       case chubby:
-        return AppLocalizations.of(context)!.create_figure_4;
+        return AppLocalizations.of(context)!.create_figure4;
     }
   }
 
@@ -137,6 +144,19 @@ enum Figure {
         return 'assets/images/create_figure_3.png';
       case chubby:
         return 'assets/images/create_figure_4.png';
+    }
+  }
+
+  String get serval {
+    switch (this) {
+      case slim:
+        return '偏瘦';
+      case standard:
+        return '标准';
+      case fit:
+        return '健壮';
+      case chubby:
+        return '丰满';
     }
   }
 }

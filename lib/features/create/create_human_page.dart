@@ -107,7 +107,9 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                       FieldView(
                         title: AppLocalizations.of(context)!.create_age_title,
                         child: DropdownMenu(
-                          dropdownMenuEntries: Age.entries,
+                          dropdownMenuEntries: Age.values
+                              .map((e) => DropdownMenuEntry(value: e, label: e.title(context)))
+                              .toList(),
                           expandedInsets: EdgeInsets.zero,
                           textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
                           hintText: AppLocalizations.of(context)!.create_age_ph,
