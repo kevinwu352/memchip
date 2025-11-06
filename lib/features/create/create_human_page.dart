@@ -170,10 +170,12 @@ class _CreateHumanPagePageState extends State<CreateHumanPagePage> {
                           child: FilledButton(
                             onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
                             style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
-                            child: Text(
-                              AppLocalizations.of(context)!.create_create_btn,
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                            ),
+                            child: widget.vm.submiting
+                                ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
+                                : Text(
+                                    AppLocalizations.of(context)!.create_create_btn,
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                                  ),
                           ),
                         ),
                       ],

@@ -17,32 +17,39 @@ final class Api extends Endpoint {
         encoding: ReqEncoding.json,
       );
 
-  Api.createHuman(String name, String image, String gender, String age, String figure)
+  Api.createHuman(String name, String? image, String? gender, String? age, String? figure)
     : super(
         '/MeetAgain-memoryBoxes/createMemoryBox',
         ReqMethod.post,
         parameters: {
           'boxName': name,
-          'coverImage': image,
-          'frontImage': image,
-          'gender': gender,
-          'ageStage': age,
-          'bodyType': figure,
+          'coverImage': ?image,
+          'frontImage': ?image,
+          'gender': ?gender,
+          'ageStage': ?age,
+          'bodyType': ?figure,
         },
         encoding: ReqEncoding.json,
       );
 
-  Api.createPet(String name, String image1, String image2, String gender, String species, bool tail, String character)
-    : super(
+  Api.createPet(
+    String name,
+    String? image1,
+    String? image2,
+    String? gender,
+    String? species,
+    bool? tail,
+    String? personality,
+  ) : super(
         '/pet/create',
         ReqMethod.post,
         parameters: {
           'name': name,
-          'photos': [image1, image2],
-          'gender': gender,
-          'species': species,
-          'tail': tail,
-          'character': [character],
+          'photos': [?image1, ?image2],
+          'gender': ?gender,
+          'species': ?species,
+          'tail': ?tail,
+          'character': [?personality],
         },
         encoding: ReqEncoding.json,
       );

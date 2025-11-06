@@ -66,10 +66,10 @@ final class CreateHumanPageVm extends ChangeNotifier {
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
-    create(nameController.text, uploads[0].url ?? '', _gender?.serval ?? '', _age?.serval ?? '', _figure?.serval ?? '');
+    create(nameController.text, uploads[0].url, _gender?.serval, _age?.serval, _figure?.serval);
   }
 
-  void create(String name, String image, String gender, String age, String figure) async {
+  void create(String name, String? image, String? gender, String? age, String? figure) async {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));

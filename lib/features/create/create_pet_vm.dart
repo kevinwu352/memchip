@@ -3,6 +3,7 @@ import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/network/network.dart';
 import '/utils/image_uploader.dart';
+import '/utils/api.dart';
 import 'gender.dart';
 
 final class CreatePetVm extends ChangeNotifier {
@@ -69,7 +70,50 @@ final class CreatePetVm extends ChangeNotifier {
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
-    print('do submit');
+    create(
+      nameController.text,
+      uploads[0].url,
+      uploads[1].url,
+      _gender?.serval,
+      _species?.serval,
+      _withTail,
+      _personality?.serval,
+    );
+  }
+
+  void create(
+    String name,
+    String? image1,
+    String? image2,
+    String? gender,
+    String? species,
+    bool? tail,
+    String? personality,
+  ) async {
+    try {
+      submiting = true;
+      // await Future.delayed(Duration(seconds: 60));
+      final result = await _network.reqRes(
+        Api.createPet(name, image1, image2, gender, species, tail, personality),
+        null,
+      );
+      submiting = false;
+      switch (result) {
+        case Ok():
+          final res = result.value;
+          if (res.success) {
+            snackPub.value = LocaledStr(res.message);
+            donePub.value = true;
+          } else {
+            throw HttpError.operation;
+          }
+        case Error():
+          throw result.error;
+      }
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknown;
+      snackPub.value = err;
+    }
   }
 
   @override

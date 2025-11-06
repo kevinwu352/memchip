@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '/l10n/localizations.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
@@ -173,7 +174,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                       children: [
                         Expanded(
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: () => context.pop(),
                             style: OutlinedButton.styleFrom(side: BorderSide(color: MyColors.violet300, width: 1)),
                             child: Text(
                               AppLocalizations.of(context)!.cancel,
@@ -185,10 +186,12 @@ class _CreatePetPageState extends State<CreatePetPage> {
                           child: FilledButton(
                             onPressed: widget.vm.submitEnabled ? widget.vm.submitAction : null,
                             style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
-                            child: Text(
-                              AppLocalizations.of(context)!.create_create_btn,
-                              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                            ),
+                            child: widget.vm.submiting
+                                ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
+                                : Text(
+                                    AppLocalizations.of(context)!.create_create_btn,
+                                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                                  ),
                           ),
                         ),
                       ],
