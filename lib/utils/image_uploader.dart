@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart';
 import '/network/network.dart';
-import '/models/create_paras.dart';
 
 class ImageUploader {
   String? path;
@@ -41,7 +40,7 @@ class ImageUploader {
       final response = await get(uri).timeout(Duration(seconds: 15));
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final json = jsonDecode(response.body);
-        final paras = CreateParas.fromApi(json);
+        final paras = Paras.fromApi(json);
         // print('upload: paras success');
         uploadImage(path, paras);
       } else {
@@ -55,7 +54,7 @@ class ImageUploader {
     }
   }
 
-  void uploadImage(String path, CreateParas paras) async {
+  void uploadImage(String path, Paras paras) async {
     try {
       var request = MultipartRequest('POST', Uri.parse(paras.server));
       request.fields['token'] = paras.token;
@@ -78,5 +77,27 @@ class ImageUploader {
       success = false;
       notify?.call();
     }
+  }
+}
+
+class Paras {
+  String server;
+  String token;
+  String key;
+  String url;
+
+  Paras({required this.server, required this.token, required this.key, required this.url});
+
+  factory Paras.fromApi(Map<String, dynamic> json) {
+    final url = json['fileURL'] as String;
+
+    final options = json['uploadFileOptions'] as Map;
+    final server = options['url'] as String;
+
+    final data = options['formData'] as Map;
+    final token = data['token'] as String;
+    final key = data['key'] as String;
+
+    return Paras(server: server, token: token, key: key, url: url);
   }
 }
