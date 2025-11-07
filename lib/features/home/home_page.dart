@@ -37,6 +37,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void didUpdateWidget(covariant HomePage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    vm.updateNetwork(widget.network);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListenableBuilder(

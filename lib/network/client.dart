@@ -20,9 +20,10 @@ final class HttpClient implements Networkable {
 
   HttpClient.token(String? token) : host = kCurrentHost, headers = {'token': ?token};
 
-  void setToken(String? token) {
-    if (token is String) {
-      headers['token'] = token;
+  String? get token => headers['token'];
+  set token(String? value) {
+    if (value is String) {
+      headers['token'] = value;
     } else {
       headers.remove('token');
     }

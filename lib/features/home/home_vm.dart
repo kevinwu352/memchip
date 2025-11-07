@@ -6,7 +6,19 @@ import '/models/box.dart';
 
 final class HomeVm extends ChangeNotifier {
   HomeVm({required Networkable network}) : _network = network;
-  final Networkable _network;
+
+  Networkable _network;
+  void updateNetwork(Networkable net) {
+    // Networkable old = _network;
+    // if (old is HttpClient && net is HttpClient) {
+    //   if (old.token != net.token) {
+    //     _network = net;
+    //     getAllChips();
+    //   }
+    // }
+    _network = net;
+    getAllChips();
+  }
 
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
 
@@ -18,6 +30,10 @@ final class HomeVm extends ChangeNotifier {
   }
 
   void getAllChips() async {
+    if (_network is! HttpClient || (_network as HttpClient).token?.isNotEmpty != true) {
+      boxes = [];
+      return;
+    }
     try {
       // await Future.delayed(Duration(seconds: 60));
       final result = await _network.reqRes(Api.getAllChips(), Box.fromApi);
