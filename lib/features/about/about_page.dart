@@ -28,11 +28,14 @@ enum _Kind {
   String get url {
     switch (this) {
       case license:
-        return 'https://www.baidu.com';
+        // return Uri(scheme: 'https', host: kCurrentHost, path: '/serviceAndPrivacy/openSourse').toString();
+        return 'https://cdn.paoxiaokeji.com/static/openSourse/index.html';
       case term:
-        return 'https://www.qq.com';
+        // return Uri(scheme: 'https', host: kCurrentHost, path: '/serviceAndPrivacy/service').toString();
+        return 'https://cdn.paoxiaokeji.com/static/service/index.html';
       case privacy:
-        return 'https://www.bing.com';
+        // return Uri(scheme: 'https', host: kCurrentHost, path: '/serviceAndPrivacy/privacy').toString();
+        return 'https://cdn.paoxiaokeji.com/static/privacy/index.html';
     }
   }
 }
