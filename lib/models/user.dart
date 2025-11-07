@@ -38,6 +38,18 @@ class User {
     required this.lastLoginTime,
   });
 
+  factory User.mock() => User(
+    token: '123456',
+    id: 'uid123',
+    email: 'kevin@local.com',
+    nickname: 'kevin',
+    avatarUrl: 'https://picsum.photos/200',
+    openId: 'oid123',
+    systemInfo: '',
+    createTime: DateTime.now(),
+    lastLoginTime: DateTime.now(),
+  );
+
   factory User.fromApi(Map<String, dynamic> json) {
     final token = json['token'] as String;
     final userInfo = json['userInfo'] as Map;
