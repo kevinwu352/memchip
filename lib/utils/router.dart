@@ -4,6 +4,7 @@ import '/core/core.dart';
 
 import '/ui/web_page.dart';
 
+import '/features/splash/splash_page.dart';
 import '/features/home/home_page.dart';
 import '/features/login/login_page.dart';
 import '/features/about/about_page.dart';
@@ -14,6 +15,7 @@ import '/features/create/create_pet_page.dart';
 abstract final class Routes {
   static String web(String url) => '/web/${url.encodeComponent}';
 
+  static const splash = '/splash';
   static const home = '/home';
   static const login = '/login';
   static const about = '/about';
@@ -30,6 +32,7 @@ GoRouter router() => GoRouter(
       builder: (context, state) => WebPage(url: state.pathParameters['url']?.decodeComponent),
     ),
 
+    GoRoute(path: Routes.splash, builder: (context, state) => SplashPage()),
     GoRoute(
       path: Routes.home,
       builder: (context, state) => HomePage(network: context.read()),
