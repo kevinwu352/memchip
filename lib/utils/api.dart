@@ -1,19 +1,30 @@
 import '/network/network.dart';
 
 final class Api extends Endpoint {
-  Api.accountSendCode(String email)
+  Api.accountRegister(String account, String password)
     : super(
-        '/emailAliyun/sendVerificationCodeToLogin',
+        '/user/register',
         ReqMethod.post,
-        parameters: {'email': email},
+        parameters: {'account': account, 'password': password},
         encoding: ReqEncoding.json,
       );
 
-  Api.accountCheckCode(String email, String code)
+  Api.accountLogin(String account, String password)
     : super(
-        '/MeetAgain-user/emailLogin',
+        '/user/passwordLogin',
         ReqMethod.post,
-        parameters: {'email': email, 'code': code},
+        parameters: {'account': account, 'password': password},
+        encoding: ReqEncoding.json,
+      );
+
+  Api.accountSendCode(String account)
+    : super('/user/sendVerificationCode', ReqMethod.post, parameters: {'account': account}, encoding: ReqEncoding.json);
+
+  Api.accountCheckCode(String account, String code)
+    : super(
+        '/user/verifyCodeLogin',
+        ReqMethod.post,
+        parameters: {'account': account, 'code': code},
         encoding: ReqEncoding.json,
       );
 

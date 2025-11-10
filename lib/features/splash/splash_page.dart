@@ -12,12 +12,12 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    print('init splash');
+    // print('init splash');
   }
 
   @override
   void dispose() {
-    print('dispose splash');
+    // print('dispose splash');
     super.dispose();
   }
 

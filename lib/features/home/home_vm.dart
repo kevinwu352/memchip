@@ -18,6 +18,7 @@ final class HomeVm extends ChangeNotifier {
   }
 
   void getAllChips() async {
+    // print('valid: ${(_network as HttpClient).token}');
     if (tokenValid) {
       try {
         // await Future.delayed(Duration(seconds: 60));

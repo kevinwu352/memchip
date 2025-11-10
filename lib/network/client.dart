@@ -22,6 +22,7 @@ final class HttpClient implements Networkable {
 
   String? get token => headers['token'];
   set token(String? value) {
+    // print('set-token: $value');
     if (value is String) {
       headers['token'] = value;
     } else {
