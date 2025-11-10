@@ -96,8 +96,8 @@ final class CreateHumanVm extends ChangeNotifier {
   @override
   void dispose() {
     nameController.dispose();
-    // snackPub.dispose();
-    // donePub.dispose();
+    snackPub.dispose();
+    donePub.dispose();
     super.dispose();
   }
 }

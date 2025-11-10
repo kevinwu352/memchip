@@ -151,8 +151,8 @@ final class LoginVm extends ChangeNotifier {
     emailController.dispose();
     codeController.dispose();
     timer?.cancel();
-    // snackPub.dispose();
-    // donePub.dispose();
+    snackPub.dispose();
+    donePub.dispose();
     super.dispose();
   }
 }
