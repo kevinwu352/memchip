@@ -9,6 +9,7 @@ import '/network/network.dart';
 import '/theme/theme.dart';
 
 // import '/models/user.dart';
+import '/utils/event_bus.dart';
 import '/utils/router.dart';
 import '/utils/download_manager.dart';
 
@@ -31,13 +32,14 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        Provider(create: (context) => EventBus()),
         ChangeNotifierProvider.value(value: secures),
         ChangeNotifierProvider.value(value: defaults),
         ProxyProvider<Secures, Networkable>(
           create: (context) => HttpClient.token(context.read<Secures>().accessToken),
-          // update: (context, value, previous) =>
-          //     (previous is HttpClient) ? (previous..setToken(value.accessToken)) : HttpClient.token(value.accessToken),
-          update: (context, value, previous) => HttpClient.token(value.accessToken),
+          update: (context, value, previous) =>
+              (previous is HttpClient) ? (previous..token = value.accessToken) : HttpClient.token(value.accessToken),
+          // update: (context, value, previous) => HttpClient.token(value.accessToken),
         ),
         ChangeNotifierProvider.value(value: downmg),
       ],
