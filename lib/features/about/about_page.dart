@@ -5,6 +5,7 @@ import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/theme/theme.dart';
+import '/utils/event_bus.dart';
 import '/utils/router.dart';
 
 enum _Kind {
@@ -81,6 +82,8 @@ class AboutPage extends StatelessWidget {
                         final defaults = context.read<Defaults>();
                         defaults.user = null;
                         context.go(Routes.home);
+                        final bus = context.read<EventBus>();
+                        Future.delayed(Duration(seconds: 0), () => bus.fire(type: EventType.accountLogout));
                       },
                       child: Text(
                         AppLocalizations.of(context)!.about_logout_btn,

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
+import '/utils/event_bus.dart';
 import '/utils/router.dart';
 import 'login_vm.dart';
 
@@ -184,7 +186,9 @@ class _LoginPageState extends State<LoginPage> {
   void _subscribeDone() {
     vm.donePub.addListener(() {
       if (vm.donePub.value) {
-        Future.delayed(Duration(seconds: 1)).then((_) => mounted ? context.go(Routes.home) : null);
+        context.go(Routes.home);
+        final bus = context.read<EventBus>();
+        Future.delayed(Duration(seconds: 0), () => bus.fire(type: EventType.accountLogout));
       }
     });
   }

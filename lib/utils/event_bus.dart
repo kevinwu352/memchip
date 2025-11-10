@@ -1,6 +1,6 @@
 import 'dart:async';
 
-enum EventType { counterIncrement, counterDecrement }
+enum EventType { accountLogin, accountLogout }
 
 class Event {
   final EventType type;

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import '/core/core.dart';
 import '/storage/storage.dart';
 import '/network/network.dart';
 import '/theme/theme.dart';
+import '/utils/event_bus.dart';
 import '/utils/router.dart';
 import '/models/user.dart';
 import '/models/box.dart';
@@ -28,18 +30,14 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     vm.getAllChips();
+    _subscribeAccountEvents();
   }
 
   @override
   void dispose() {
     vm.dispose();
+    accountSub?.cancel();
     super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(covariant HomePage oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    vm.updateNetwork(widget.network);
   }
 
   @override
@@ -105,6 +103,14 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
+    );
+  }
+
+  StreamSubscription? accountSub;
+  void _subscribeAccountEvents() {
+    accountSub = context.read<EventBus>().listen(
+      type: [EventType.accountLogin, EventType.accountLogout],
+      onEvent: (event) => vm.getAllChips(),
     );
   }
 }
