@@ -24,6 +24,8 @@
   "login_submit_btn": "Sign in",
   "login_register_btn": "Register",
 
+  "register_page_title": "Register",
+
   "home_section_title": "My Chips",
   "home_empty_info": "No chips yet",
   "home_new_btn": "New Chip",

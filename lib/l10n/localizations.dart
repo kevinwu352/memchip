@@ -218,6 +218,12 @@ abstract class AppLocalizations {
   /// **'Register'**
   String get login_register_btn;
 
+  /// No description provided for @register_page_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register_page_title;
+
   /// No description provided for @home_section_title.
   ///
   /// In en, this message translates to:

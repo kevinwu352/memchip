@@ -24,6 +24,8 @@
   "login_submit_btn": "登录",
   "login_register_btn": "注册",
 
+  "register_page_title": "Register",
+
   "home_section_title": "My Chips zh",
   "home_empty_info": "No chips yet zh",
   "home_new_btn": "New Chip zh",

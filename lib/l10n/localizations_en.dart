@@ -77,6 +77,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_register_btn => 'Register';
 
   @override
+  String get register_page_title => 'Register';
+
+  @override
   String get home_section_title => 'My Chips';
 
   @override

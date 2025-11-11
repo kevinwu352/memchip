@@ -77,6 +77,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get login_register_btn => '注册';
 
   @override
+  String get register_page_title => 'Register';
+
+  @override
   String get home_section_title => 'My Chips zh';
 
   @override
