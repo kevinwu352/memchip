@@ -170,11 +170,29 @@ abstract class AppLocalizations {
   /// **'with OTP'**
   String get login_method_otp;
 
-  /// No description provided for @login_email_title.
+  /// No description provided for @login_account_title.
   ///
   /// In en, this message translates to:
-  /// **'Email'**
-  String get login_email_title;
+  /// **'Account'**
+  String get login_account_title;
+
+  /// No description provided for @login_account_ph1.
+  ///
+  /// In en, this message translates to:
+  /// **'Email/Phone/Username'**
+  String get login_account_ph1;
+
+  /// No description provided for @login_account_ph2.
+  ///
+  /// In en, this message translates to:
+  /// **'Email/Phone'**
+  String get login_account_ph2;
+
+  /// No description provided for @login_password_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get login_password_title;
 
   /// No description provided for @login_code_title.
   ///

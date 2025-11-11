@@ -19,6 +19,24 @@ enum Method {
         return AppLocalizations.of(context)!.login_method_otp;
     }
   }
+
+  String accountPh(BuildContext context) {
+    switch (this) {
+      case password:
+        return AppLocalizations.of(context)!.login_account_ph1;
+      case otp:
+        return AppLocalizations.of(context)!.login_account_ph2;
+    }
+  }
+
+  String passcodeTitle(BuildContext context) {
+    switch (this) {
+      case password:
+        return AppLocalizations.of(context)!.login_password_title;
+      case otp:
+        return AppLocalizations.of(context)!.login_code_title;
+    }
+  }
 }
 
 final class LoginVm extends ChangeNotifier {

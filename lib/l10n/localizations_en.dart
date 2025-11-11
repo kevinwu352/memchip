@@ -45,7 +45,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_method_otp => 'with OTP';
 
   @override
-  String get login_email_title => 'Email';
+  String get login_account_title => 'Account';
+
+  @override
+  String get login_account_ph1 => 'Email/Phone/Username';
+
+  @override
+  String get login_account_ph2 => 'Email/Phone';
+
+  @override
+  String get login_password_title => 'Password';
 
   @override
   String get login_code_title => 'Code';

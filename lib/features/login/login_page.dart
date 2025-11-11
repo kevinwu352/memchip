@@ -111,9 +111,9 @@ class _LoginPageState extends State<LoginPage> {
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: AppLocalizations.of(context)!.login_email_title,
+                              labelText: AppLocalizations.of(context)!.login_account_title,
                               labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: MyColors.gray800),
-                              hintText: 'example@email.com',
+                              hintText: vm.method?.accountPh(context),
                               hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: MyColors.gray300, width: 2),
@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                             onFieldSubmitted: (value) => FocusManager.instance.primaryFocus?.unfocus(),
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: AppLocalizations.of(context)!.login_code_title,
+                              labelText: vm.method?.passcodeTitle(context),
                               labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: MyColors.gray800),
                               hintText: '123456',
                               hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),

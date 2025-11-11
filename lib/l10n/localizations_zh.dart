@@ -45,7 +45,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get login_method_otp => '验证码登录';
 
   @override
-  String get login_email_title => 'Email';
+  String get login_account_title => '账户';
+
+  @override
+  String get login_account_ph1 => 'Email/Phone/Username';
+
+  @override
+  String get login_account_ph2 => 'Email/Phone';
+
+  @override
+  String get login_password_title => '密码';
 
   @override
   String get login_code_title => 'Code';
