@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import '/core/core.dart';
 import '/network/network.dart';
+import '/utils/api.dart';
 
 final class RegisterVm extends ChangeNotifier {
-  RegisterVm({required Networkable network}) : _network = network;
+  RegisterVm({required Networkable network}) : _network = network {
+    // accountController.text = 'ts00';
+    // codeController.text = '123456';
+    // confirmController.text = '123456';
+  }
   final Networkable _network;
 
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
@@ -50,6 +55,30 @@ final class RegisterVm extends ChangeNotifier {
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
-    //
+    register(accountController.text, codeController.text);
+  }
+
+  void register(String account, String code) async {
+    try {
+      submiting = true;
+      // await Future.delayed(Duration(seconds: 60));
+      final result = await _network.reqRes(Api.accountRegister(account, code));
+      submiting = false;
+      switch (result) {
+        case Ok():
+          final res = result.value;
+          if (res.success) {
+            snackPub.value = LocaledStr(res.message);
+            donePub.value = true;
+          } else {
+            throw HttpError.operation;
+          }
+        case Error():
+          throw result.error;
+      }
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknown;
+      snackPub.value = err;
+    }
   }
 }
