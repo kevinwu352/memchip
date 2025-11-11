@@ -99,8 +99,8 @@ class _LoginPageState extends State<LoginPage> {
                         spacing: 20,
                         children: [
                           TextFormField(
-                            controller: vm.emailController,
-                            onChanged: vm.emailChanged,
+                            controller: vm.accountController,
+                            onChanged: (value) => setState(() {}),
                             onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
@@ -121,9 +121,9 @@ class _LoginPageState extends State<LoginPage> {
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: MyColors.violet200, width: 2),
                               ),
-                              suffixIcon: vm.emailShowClear
+                              suffixIcon: vm.accountShowClear
                                   ? IconButton(
-                                      onPressed: vm.clearAction,
+                                      onPressed: vm.accountClear,
                                       icon: Icon(Icons.cancel),
                                       iconSize: 18,
                                       color: MyColors.gray600,
@@ -134,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           TextFormField(
                             controller: vm.codeController,
-                            onChanged: vm.codeChanged,
+                            onChanged: (value) => setState(() {}),
                             onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
                             autocorrect: false,
                             textCapitalization: TextCapitalization.none,
@@ -156,22 +156,32 @@ class _LoginPageState extends State<LoginPage> {
                               focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: MyColors.violet200, width: 2),
                               ),
-                              suffixIcon: UnconstrainedBox(
-                                child: FilledButton(
-                                  style: FilledButton.styleFrom(
-                                    backgroundColor: MyColors.violet100,
-                                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                    minimumSize: Size(82, 24),
-                                  ),
-                                  onPressed: vm.sendEnabled ? vm.sendAction : null,
-                                  child: vm.sending
-                                      ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
-                                      : Text(
-                                          AppLocalizations.of(context)!.login_code_send_btn(vm.countdown),
-                                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                              suffixIcon: vm.method == Method.password
+                                  ? vm.codeShowClear
+                                        ? IconButton(
+                                            onPressed: vm.codeClear,
+                                            icon: Icon(Icons.cancel),
+                                            iconSize: 18,
+                                            color: MyColors.gray600,
+                                            focusNode: FocusNode(skipTraversal: true),
+                                          )
+                                        : null
+                                  : UnconstrainedBox(
+                                      child: FilledButton(
+                                        style: FilledButton.styleFrom(
+                                          backgroundColor: MyColors.violet100,
+                                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                          minimumSize: Size(82, 24),
                                         ),
-                                ),
-                              ),
+                                        onPressed: vm.sendEnabled ? vm.sendAction : null,
+                                        child: vm.sending
+                                            ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
+                                            : Text(
+                                                AppLocalizations.of(context)!.login_code_send_btn(vm.sendSeconds),
+                                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                                              ),
+                                      ),
+                                    ),
                             ),
                           ),
                         ],
