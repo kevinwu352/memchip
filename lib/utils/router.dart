@@ -7,6 +7,7 @@ import '/ui/web_page.dart';
 import '/features/splash/splash_page.dart';
 import '/features/home/home_page.dart';
 import '/features/login/login_page.dart';
+import '/features/register/register_page.dart';
 import '/features/about/about_page.dart';
 import '/features/category/category_page.dart';
 import '/features/create/create_human_page.dart';
@@ -18,6 +19,7 @@ abstract final class Routes {
   static const splash = '/splash';
   static const home = '/home';
   static const login = '/login';
+  static const register = '/register';
   static const about = '/about';
   static const category = '/category';
   static const createHuman = '/create-human';
@@ -25,7 +27,7 @@ abstract final class Routes {
 }
 
 GoRouter router() => GoRouter(
-  initialLocation: Routes.home,
+  initialLocation: Routes.login,
   routes: [
     GoRoute(
       path: '/web/:url',
@@ -42,6 +44,7 @@ GoRouter router() => GoRouter(
       builder: (context, state) =>
           LoginPage(network: context.read(), secures: context.read(), defaults: context.read()),
     ),
+    GoRoute(path: Routes.register, builder: (context, state) => RegisterPage()),
     GoRoute(path: Routes.about, builder: (context, state) => AboutPage()),
 
     GoRoute(path: Routes.category, builder: (context, state) => CategoryPage()),

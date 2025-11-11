@@ -51,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                 key: vm.formKey,
                 child: Column(
                   children: [
-                    SizedBox(height: 32),
+                    SizedBox(height: 30),
                     Image.asset('assets/images/login_logo.png'),
 
                     SizedBox(height: 80),
@@ -70,34 +70,28 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
 
-                    SizedBox(height: 20),
-                    // SegmentedButton<Method>(
-                    //   segments: [
-                    //     ...Method.values.map(
-                    //       (e) => ButtonSegment(
-                    //         value: e,
-                    //         label: Text(e.name(context), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
-                    //       ),
-                    //     ),
-                    //   ],
-                    //   selected: {vm.method},
-                    //   onSelectionChanged: (value) => vm.method = value.first,
-                    //   showSelectedIcon: false,
-                    //   style: SegmentedButton.styleFrom(
-                    //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    //     visualDensity: VisualDensity.compact,
-                    //     padding: EdgeInsets.zero,
-                    //     minimumSize: Size.zero,
-                    //   ),
-                    // ),
-                    CupertinoSlidingSegmentedControl(
-                      // children: {Method.password: Text('Password'), Method.otp: Text('OTP')},
-                      children: Method.values.toMap((e) => Text(e.name(context))),
-                      groupValue: vm.method,
-                      onValueChanged: (value) => vm.method = value,
+                    SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: CupertinoSlidingSegmentedControl(
+                        children: Method.values.toMap(
+                          (e) => Text(
+                            e.name(context),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              color: vm.method == e ? MyColors.white100 : MyColors.gray500,
+                            ),
+                          ),
+                        ),
+                        groupValue: vm.method,
+                        onValueChanged: (value) => vm.method = value,
+                        thumbColor: MyColors.violet300,
+                        backgroundColor: MyColors.gray300,
+                      ),
                     ),
 
-                    SizedBox(height: 50),
+                    SizedBox(height: 30),
                     TextFormField(
                       controller: vm.emailController,
                       onChanged: vm.emailChanged,
@@ -130,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                             : null,
                       ),
                     ),
-                    SizedBox(height: 24),
+                    SizedBox(height: 20),
                     TextFormField(
                       controller: vm.codeController,
                       onChanged: vm.codeChanged,
@@ -156,7 +150,6 @@ class _LoginPageState extends State<LoginPage> {
                         suffixIcon: UnconstrainedBox(
                           child: FilledButton(
                             style: FilledButton.styleFrom(
-                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                               backgroundColor: MyColors.violet100,
                               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                               minimumSize: Size(82, 24),
@@ -173,14 +166,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
 
-                    Spacer(),
+                    SizedBox(height: 20),
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton(
-                        style: FilledButton.styleFrom(
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                          backgroundColor: MyColors.violet300,
-                        ),
+                        style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
                         onPressed: vm.submitEnabled ? vm.submitAction : null,
                         child: vm.submiting
                             ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
@@ -189,6 +179,10 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                               ),
                       ),
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: TextButton(onPressed: () => context.push(Routes.register), child: Text('Register')),
                     ),
                   ],
                 ),
