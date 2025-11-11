@@ -25,6 +25,11 @@
   "login_register_btn": "Register",
 
   "register_page_title": "Register",
+  "register_account_title": "Account",
+  "register_account_ph": "Email/Phone/Username",
+  "register_code_title": "Password",
+  "register_confirm_title": "Confirm Password",
+  "register_submit_btn": "Register",
 
   "home_section_title": "My Chips",
   "home_empty_info": "No chips yet",

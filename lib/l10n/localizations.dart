@@ -224,6 +224,36 @@ abstract class AppLocalizations {
   /// **'Register'**
   String get register_page_title;
 
+  /// No description provided for @register_account_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get register_account_title;
+
+  /// No description provided for @register_account_ph.
+  ///
+  /// In en, this message translates to:
+  /// **'Email/Phone/Username'**
+  String get register_account_ph;
+
+  /// No description provided for @register_code_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get register_code_title;
+
+  /// No description provided for @register_confirm_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get register_confirm_title;
+
+  /// No description provided for @register_submit_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get register_submit_btn;
+
   /// No description provided for @home_section_title.
   ///
   /// In en, this message translates to:

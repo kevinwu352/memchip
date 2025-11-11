@@ -80,6 +80,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get register_page_title => 'Register';
 
   @override
+  String get register_account_title => 'Account';
+
+  @override
+  String get register_account_ph => 'Email/Phone/Username';
+
+  @override
+  String get register_code_title => 'Password';
+
+  @override
+  String get register_confirm_title => 'Confirm Password';
+
+  @override
+  String get register_submit_btn => 'Register';
+
+  @override
   String get home_section_title => 'My Chips';
 
   @override
