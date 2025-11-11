@@ -6,6 +6,20 @@ import '/network/network.dart';
 import '/models/user.dart';
 import '/utils/api.dart';
 
+enum Method {
+  password,
+  otp;
+
+  String name(BuildContext context) {
+    switch (this) {
+      case password:
+        return 'Password';
+      case otp:
+        return 'OTP';
+    }
+  }
+}
+
 final class LoginVm extends ChangeNotifier {
   LoginVm({required Networkable network, required Secures secures, required Defaults defaults})
     : _network = network,
@@ -19,6 +33,13 @@ final class LoginVm extends ChangeNotifier {
   ValueNotifier<bool> donePub = ValueNotifier(false);
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  Method? _method = Method.password;
+  Method? get method => _method;
+  set method(Method? value) {
+    _method = value;
+    notifyListeners();
+  }
 
   final emailController = TextEditingController();
   final codeController = TextEditingController();

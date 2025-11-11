@@ -11,11 +11,14 @@ extension MapExt<K, V> on Map<K, V> {
 
   Map<K, T> whereType<T>() => Map.fromEntries(entries.where((e) => e.value is T)).cast<K, T>();
 
-  Map<K, R> compactMap<R>(R? Function(K k, V v) transform) => Map.fromEntries(
+  Map<K, T> compactMap<T>(T? Function(K k, V v) transform) => Map.fromEntries(
     entries.map((e) => MapEntry(e.key, transform(e.key, e.value))).where((e) => e.value != null),
-  ).cast<K, R>();
+  ).cast<K, T>();
 }
 
-extension IterableExt<T> on Iterable<T> {
-  Iterable<R> compactMap<R>(R? Function(T e) transform) => map((e) => transform(e)).whereType<R>();
+extension IterableExt<E> on Iterable<E> {
+  Iterable<T> compactMap<T>(T? Function(E e) transform) => map((e) => transform(e)).whereType<T>();
+
+  Map<E, T> toMap<T>(T? Function(E e) transform) =>
+      Map.fromEntries(map((e) => MapEntry(e, transform(e))).where((e) => e.value != null)).cast<E, T>();
 }

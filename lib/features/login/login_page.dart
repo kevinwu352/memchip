@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -67,6 +68,33 @@ class _LoginPageState extends State<LoginPage> {
                         AppLocalizations.of(context)!.login_subtitle,
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: MyColors.orange400),
                       ),
+                    ),
+
+                    SizedBox(height: 20),
+                    // SegmentedButton<Method>(
+                    //   segments: [
+                    //     ...Method.values.map(
+                    //       (e) => ButtonSegment(
+                    //         value: e,
+                    //         label: Text(e.name(context), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+                    //       ),
+                    //     ),
+                    //   ],
+                    //   selected: {vm.method},
+                    //   onSelectionChanged: (value) => vm.method = value.first,
+                    //   showSelectedIcon: false,
+                    //   style: SegmentedButton.styleFrom(
+                    //     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    //     visualDensity: VisualDensity.compact,
+                    //     padding: EdgeInsets.zero,
+                    //     minimumSize: Size.zero,
+                    //   ),
+                    // ),
+                    CupertinoSlidingSegmentedControl(
+                      // children: {Method.password: Text('Password'), Method.otp: Text('OTP')},
+                      children: Method.values.toMap((e) => Text(e.name(context))),
+                      groupValue: vm.method,
+                      onValueChanged: (value) => vm.method = value,
                     ),
 
                     SizedBox(height: 50),

@@ -89,12 +89,12 @@ class _HomePageState extends State<HomePage> {
                   padding: EdgeInsets.fromLTRB(30, 0, 30, kSafeBot + 24),
                   width: double.infinity,
                   child: FilledButton.icon(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: MyColors.violet300,
-                      textStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
+                    style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
                     onPressed: () => context.push(context.read<Secures>().logined ? Routes.category : Routes.login),
-                    label: Text(AppLocalizations.of(context)!.home_new_btn),
+                    label: Text(
+                      AppLocalizations.of(context)!.home_new_btn,
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
                     icon: Image.asset('assets/images/home_new.png'),
                   ),
                 ),
