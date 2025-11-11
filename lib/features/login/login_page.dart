@@ -146,6 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                             keyboardType: TextInputType.text,
                             textInputAction: TextInputAction.done,
                             onFieldSubmitted: (value) => FocusManager.instance.primaryFocus?.unfocus(),
+                            obscureText: vm.codeShouldMask,
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: vm.method.passcodeTitle(context),
@@ -161,10 +162,12 @@ class _LoginPageState extends State<LoginPage> {
                               suffixIcon: vm.method == Method.password
                                   ? vm.codeShowClear
                                         ? IconButton(
-                                            onPressed: vm.codeClear,
-                                            icon: Icon(Icons.cancel),
-                                            iconSize: 18,
-                                            color: MyColors.gray600,
+                                            onPressed: () => vm.codeShow = !vm.codeShow,
+                                            icon: Image.asset(
+                                              vm.codeShow
+                                                  ? 'assets/images/password_on.png'
+                                                  : 'assets/images/password_off.png',
+                                            ),
                                             focusNode: FocusNode(skipTraversal: true),
                                           )
                                         : null

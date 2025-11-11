@@ -48,6 +48,15 @@ final class LoginVm extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool get codeShouldMask => method == Method.password && !_codeShow;
+
+  bool _codeShow = false;
+  bool get codeShow => _codeShow;
+  set codeShow(bool value) {
+    _codeShow = value;
+    notifyListeners();
+  }
+
   bool get sendEnabled => accountController.text.isNotEmpty && sendSeconds <= 0;
   int sendSeconds = 0;
 
