@@ -24,7 +24,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late HomeVm vm = HomeVm(network: widget.network);
+  late final vm = HomeVm(network: widget.network);
 
   @override
   void initState() {

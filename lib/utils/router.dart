@@ -44,7 +44,10 @@ GoRouter router() => GoRouter(
       builder: (context, state) =>
           LoginPage(network: context.read(), secures: context.read(), defaults: context.read()),
     ),
-    GoRoute(path: Routes.register, builder: (context, state) => RegisterPage()),
+    GoRoute(
+      path: Routes.register,
+      builder: (context, state) => RegisterPage(network: context.read()),
+    ),
     GoRoute(path: Routes.about, builder: (context, state) => AboutPage()),
 
     GoRoute(path: Routes.category, builder: (context, state) => CategoryPage()),

@@ -22,7 +22,7 @@ class CreatePetPage extends StatefulWidget {
 }
 
 class _CreatePetPageState extends State<CreatePetPage> {
-  late CreatePetVm vm = CreatePetVm(network: widget.network);
+  late final vm = CreatePetVm(network: widget.network);
 
   @override
   void initState() {

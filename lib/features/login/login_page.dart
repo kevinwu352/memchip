@@ -22,7 +22,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late LoginVm vm = LoginVm(network: widget.network, secures: widget.secures, defaults: widget.defaults);
+  late final vm = LoginVm(network: widget.network, secures: widget.secures, defaults: widget.defaults);
 
   @override
   void initState() {

@@ -20,7 +20,7 @@ class CreateHumanPage extends StatefulWidget {
 }
 
 class _CreateHumanPageState extends State<CreateHumanPage> {
-  late CreateHumanVm vm = CreateHumanVm(network: widget.network);
+  late final vm = CreateHumanVm(network: widget.network);
 
   @override
   void initState() {
