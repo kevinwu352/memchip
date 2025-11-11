@@ -18,7 +18,7 @@
 class User {
   String token;
   String id;
-  String email;
+  String account;
   String nickname;
   String avatarUrl;
   String openId;
@@ -28,7 +28,7 @@ class User {
   User({
     required this.token,
     required this.id,
-    required this.email,
+    required this.account,
     required this.nickname,
     required this.avatarUrl,
     required this.openId,
@@ -39,7 +39,7 @@ class User {
   factory User.mock() => User(
     token: '123456',
     id: 'uid123',
-    email: 'kevin@local.com',
+    account: 'kevin@local.com',
     nickname: 'kevin',
     avatarUrl: 'https://picsum.photos/200',
     openId: 'oid123',
@@ -51,7 +51,18 @@ class User {
     final token = json['token'] as String;
     final userInfo = json['userInfo'] as Map;
     final id = userInfo['_id'] as String;
-    final email = userInfo['email'] as String;
+
+    final email = userInfo['email'];
+    final phone = userInfo['phoneNumber'];
+    final username = userInfo['username'];
+    final account = email is String
+        ? email
+        : phone is String
+        ? phone
+        : username is String
+        ? username
+        : '';
+
     final nickname = userInfo['nickname'] as String;
     final avatarUrl = userInfo['avatarUrl'] as String;
     final openId = userInfo['openId'] as String;
@@ -60,7 +71,7 @@ class User {
     return User(
       token: token,
       id: id,
-      email: email,
+      account: account,
       nickname: nickname,
       avatarUrl: avatarUrl,
       openId: openId,
@@ -72,7 +83,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) {
     final token = json['token'] as String;
     final id = json['id'] as String;
-    final email = json['email'] as String;
+    final account = json['account'] as String;
     final nickname = json['nickname'] as String;
     final avatarUrl = json['avatarUrl'] as String;
     final openId = json['openId'] as String;
@@ -81,7 +92,7 @@ class User {
     return User(
       token: token,
       id: id,
-      email: email,
+      account: account,
       nickname: nickname,
       avatarUrl: avatarUrl,
       openId: openId,
@@ -93,7 +104,7 @@ class User {
   Map<String, dynamic> toJson() => {
     'token': token,
     'id': id,
-    'email': email,
+    'account': account,
     'nickname': nickname,
     'avatarUrl': avatarUrl,
     'openId': openId,

@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                   selector: (_, object) => object.user,
                   builder: (context, value, child) => Padding(
                     padding: EdgeInsets.fromLTRB(30, kSafeTop + 30, 30, 30),
-                    child: _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.email),
+                    child: _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.account),
                   ),
                 ),
 

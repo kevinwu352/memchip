@@ -145,7 +145,7 @@ final class LoginVm extends ChangeNotifier {
           if (res.success) {
             snackPub.value = LocaledStr(res.message);
             final user = res.getObject<User>();
-            _secures.lastUsername = user?.email;
+            _secures.lastUsername = user?.account;
             _secures.accessToken = user?.token;
             _defaults.user = user;
             donePub.value = true;
@@ -173,7 +173,7 @@ final class LoginVm extends ChangeNotifier {
           if (res.success) {
             snackPub.value = LocaledStr(res.message);
             final user = res.getObject<User>();
-            _secures.lastUsername = user?.email;
+            _secures.lastUsername = user?.account;
             _secures.accessToken = user?.token;
             _defaults.user = user;
             donePub.value = true;

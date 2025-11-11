@@ -27,7 +27,7 @@ abstract final class Routes {
 }
 
 GoRouter router() => GoRouter(
-  initialLocation: Routes.login,
+  initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: '/web/:url',
