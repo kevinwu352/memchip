@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '/l10n/localizations.dart';
 import '/core/core.dart';
 import '/storage/storage.dart';
 import '/network/network.dart';
@@ -13,9 +14,9 @@ enum Method {
   String name(BuildContext context) {
     switch (this) {
       case password:
-        return 'Password';
+        return AppLocalizations.of(context)!.login_method_password;
       case otp:
-        return 'OTP';
+        return AppLocalizations.of(context)!.login_method_otp;
     }
   }
 }

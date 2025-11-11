@@ -158,6 +158,18 @@ abstract class AppLocalizations {
   /// **'Hi there! Nice to see you again.'**
   String get login_subtitle;
 
+  /// No description provided for @login_method_password.
+  ///
+  /// In en, this message translates to:
+  /// **'with Password'**
+  String get login_method_password;
+
+  /// No description provided for @login_method_otp.
+  ///
+  /// In en, this message translates to:
+  /// **'with OTP'**
+  String get login_method_otp;
+
   /// No description provided for @login_email_title.
   ///
   /// In en, this message translates to:
@@ -181,6 +193,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign in'**
   String get login_submit_btn;
+
+  /// No description provided for @login_register_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Register'**
+  String get login_register_btn;
 
   /// No description provided for @home_section_title.
   ///

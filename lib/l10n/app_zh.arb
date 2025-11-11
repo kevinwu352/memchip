@@ -13,10 +13,13 @@
 
   "login_title": "Sign In",
   "login_subtitle": "Sign In",
+  "login_method_password": "密码登录",
+  "login_method_otp": "验证码登录",
   "login_email_title": "Email",
   "login_code_title": "Code",
   "login_code_send_btn": "Send{seconds, plural, =0{} other{ ({seconds})}}",
-  "login_submit_btn": "Sign in",
+  "login_submit_btn": "登录",
+  "login_register_btn": "注册",
 
   "home_section_title": "My Chips zh",
   "home_empty_info": "No chips yet zh",

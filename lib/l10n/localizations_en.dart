@@ -39,6 +39,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_subtitle => 'Hi there! Nice to see you again.';
 
   @override
+  String get login_method_password => 'with Password';
+
+  @override
+  String get login_method_otp => 'with OTP';
+
+  @override
   String get login_email_title => 'Email';
 
   @override
@@ -57,6 +63,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get login_submit_btn => 'Sign in';
+
+  @override
+  String get login_register_btn => 'Register';
 
   @override
   String get home_section_title => 'My Chips';

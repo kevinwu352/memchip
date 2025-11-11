@@ -39,6 +39,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get login_subtitle => 'Sign In';
 
   @override
+  String get login_method_password => '密码登录';
+
+  @override
+  String get login_method_otp => '验证码登录';
+
+  @override
   String get login_email_title => 'Email';
 
   @override
@@ -56,7 +62,10 @@ class AppLocalizationsZh extends AppLocalizations {
   }
 
   @override
-  String get login_submit_btn => 'Sign in';
+  String get login_submit_btn => '登录';
+
+  @override
+  String get login_register_btn => '注册';
 
   @override
   String get home_section_title => 'My Chips zh';
