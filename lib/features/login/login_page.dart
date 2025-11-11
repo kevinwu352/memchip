@@ -87,7 +87,9 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         groupValue: vm.method,
-                        onValueChanged: (value) => vm.method = value,
+                        onValueChanged: (value) {
+                          if (value != null) vm.method = value;
+                        },
                         thumbColor: MyColors.violet300,
                         backgroundColor: MyColors.gray300,
                       ),
@@ -113,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                               floatingLabelBehavior: FloatingLabelBehavior.always,
                               labelText: AppLocalizations.of(context)!.login_account_title,
                               labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: MyColors.gray800),
-                              hintText: vm.method?.accountPh(context),
+                              hintText: vm.method.accountPh(context),
                               hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
                               enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(color: MyColors.gray300, width: 2),
@@ -146,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                             onFieldSubmitted: (value) => FocusManager.instance.primaryFocus?.unfocus(),
                             decoration: InputDecoration(
                               floatingLabelBehavior: FloatingLabelBehavior.always,
-                              labelText: vm.method?.passcodeTitle(context),
+                              labelText: vm.method.passcodeTitle(context),
                               labelStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: MyColors.gray800),
                               hintText: '123456',
                               hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),

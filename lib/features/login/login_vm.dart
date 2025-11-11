@@ -7,43 +7,14 @@ import '/network/network.dart';
 import '/models/user.dart';
 import '/utils/api.dart';
 
-enum Method {
-  password,
-  otp;
-
-  String name(BuildContext context) {
-    switch (this) {
-      case password:
-        return AppLocalizations.of(context)!.login_method_password;
-      case otp:
-        return AppLocalizations.of(context)!.login_method_otp;
-    }
-  }
-
-  String accountPh(BuildContext context) {
-    switch (this) {
-      case password:
-        return AppLocalizations.of(context)!.login_account_ph1;
-      case otp:
-        return AppLocalizations.of(context)!.login_account_ph2;
-    }
-  }
-
-  String passcodeTitle(BuildContext context) {
-    switch (this) {
-      case password:
-        return AppLocalizations.of(context)!.login_password_title;
-      case otp:
-        return AppLocalizations.of(context)!.login_code_title;
-    }
-  }
-}
-
 final class LoginVm extends ChangeNotifier {
   LoginVm({required Networkable network, required Secures secures, required Defaults defaults})
     : _network = network,
       _secures = secures,
-      _defaults = defaults;
+      _defaults = defaults {
+    // accountController.text = 'test101';
+    // codeController.text = '123456';
+  }
   final Networkable _network;
   final Secures _secures;
   final Defaults _defaults;
@@ -53,9 +24,9 @@ final class LoginVm extends ChangeNotifier {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Method? _method = Method.password;
-  Method? get method => _method;
-  set method(Method? value) {
+  var _method = Method.password;
+  Method get method => _method;
+  set method(Method value) {
     if (_method != value) {
       _method = value;
       notifyListeners();
@@ -77,8 +48,8 @@ final class LoginVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  int sendSeconds = 0;
   bool get sendEnabled => accountController.text.isNotEmpty && sendSeconds <= 0;
+  int sendSeconds = 0;
 
   bool get submitEnabled => accountController.text.isNotEmpty && codeController.text.isNotEmpty;
 
@@ -146,14 +117,46 @@ final class LoginVm extends ChangeNotifier {
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
-    checkCode(accountController.text, codeController.text);
+    if (method == Method.password) {
+      login(accountController.text, codeController.text);
+    } else {
+      check(accountController.text, codeController.text);
+    }
   }
 
-  void checkCode(String email, String code) async {
+  void login(String account, String code) async {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.accountCheckCode(email, code), User.fromApi);
+      final result = await _network.reqRes(Api.accountLogin(account, code), User.fromApi);
+      submiting = false;
+      switch (result) {
+        case Ok():
+          final res = result.value;
+          if (res.success) {
+            snackPub.value = LocaledStr(res.message);
+            final user = res.getObject<User>();
+            _secures.lastUsername = user?.email;
+            _secures.accessToken = user?.token;
+            _defaults.user = user;
+            donePub.value = true;
+          } else {
+            throw HttpError.operation;
+          }
+        case Error():
+          throw result.error;
+      }
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknown;
+      snackPub.value = err;
+    }
+  }
+
+  void check(String account, String code) async {
+    try {
+      submiting = true;
+      // await Future.delayed(Duration(seconds: 60));
+      final result = await _network.reqRes(Api.accountCheckCode(account, code), User.fromApi);
       submiting = false;
       switch (result) {
         case Ok():
@@ -185,5 +188,37 @@ final class LoginVm extends ChangeNotifier {
     snackPub.dispose();
     donePub.dispose();
     super.dispose();
+  }
+}
+
+enum Method {
+  password,
+  otp;
+
+  String name(BuildContext context) {
+    switch (this) {
+      case password:
+        return AppLocalizations.of(context)!.login_method_password;
+      case otp:
+        return AppLocalizations.of(context)!.login_method_otp;
+    }
+  }
+
+  String accountPh(BuildContext context) {
+    switch (this) {
+      case password:
+        return AppLocalizations.of(context)!.login_account_ph1;
+      case otp:
+        return AppLocalizations.of(context)!.login_account_ph2;
+    }
+  }
+
+  String passcodeTitle(BuildContext context) {
+    switch (this) {
+      case password:
+        return AppLocalizations.of(context)!.login_password_title;
+      case otp:
+        return AppLocalizations.of(context)!.login_code_title;
+    }
   }
 }

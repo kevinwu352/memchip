@@ -22,7 +22,6 @@ class User {
   String nickname;
   String avatarUrl;
   String openId;
-  String systemInfo;
   DateTime createTime;
   DateTime lastLoginTime;
 
@@ -33,7 +32,6 @@ class User {
     required this.nickname,
     required this.avatarUrl,
     required this.openId,
-    required this.systemInfo,
     required this.createTime,
     required this.lastLoginTime,
   });
@@ -45,7 +43,6 @@ class User {
     nickname: 'kevin',
     avatarUrl: 'https://picsum.photos/200',
     openId: 'oid123',
-    systemInfo: '',
     createTime: DateTime.now(),
     lastLoginTime: DateTime.now(),
   );
@@ -58,7 +55,6 @@ class User {
     final nickname = userInfo['nickname'] as String;
     final avatarUrl = userInfo['avatarUrl'] as String;
     final openId = userInfo['openId'] as String;
-    final systemInfo = userInfo['systemInfo'] as String;
     final createTime = DateTime.parse(userInfo['createTime'] as String);
     final lastLoginTime = DateTime.parse(userInfo['lastLoginTime'] as String);
     return User(
@@ -68,7 +64,6 @@ class User {
       nickname: nickname,
       avatarUrl: avatarUrl,
       openId: openId,
-      systemInfo: systemInfo,
       createTime: createTime,
       lastLoginTime: lastLoginTime,
     );
@@ -81,7 +76,6 @@ class User {
     final nickname = json['nickname'] as String;
     final avatarUrl = json['avatarUrl'] as String;
     final openId = json['openId'] as String;
-    final systemInfo = json['systemInfo'] as String;
     final createTime = DateTime.parse(json['createTime'] as String);
     final lastLoginTime = DateTime.parse(json['lastLoginTime'] as String);
     return User(
@@ -91,7 +85,6 @@ class User {
       nickname: nickname,
       avatarUrl: avatarUrl,
       openId: openId,
-      systemInfo: systemInfo,
       createTime: createTime,
       lastLoginTime: lastLoginTime,
     );
@@ -104,7 +97,6 @@ class User {
     'nickname': nickname,
     'avatarUrl': avatarUrl,
     'openId': openId,
-    'systemInfo': systemInfo,
     'createTime': createTime.toIso8601String(),
     'lastLoginTime': lastLoginTime.toIso8601String(),
   };
