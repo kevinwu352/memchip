@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '/network/network.dart';
-import '/models/box.dart';
+import '/pch.dart';
 import 'detail_vm.dart';
 
 class DetailPage extends StatefulWidget {

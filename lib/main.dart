@@ -1,17 +1,8 @@
 // import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '/l10n/localizations.dart';
-
-import '/core/core.dart';
-import '/storage/storage.dart';
-import '/network/network.dart';
-import '/theme/theme.dart';
-
-// import '/models/user.dart';
-import '/utils/event_bus.dart';
-import '/utils/router.dart';
-import '/utils/download_manager.dart';
+import 'pch.dart';
+import 'utils/video_downloader.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,8 +17,8 @@ void main() async {
   await defaults.init();
   await defaults.load();
 
-  final downmg = DownloadManager();
-  await downmg.init();
+  final vdown = VideoDownloader();
+  await vdown.init();
 
   runApp(
     MultiProvider(
@@ -41,7 +32,7 @@ void main() async {
               (previous is HttpClient) ? (previous..token = value.accessToken) : HttpClient.token(value.accessToken),
           // update: (context, value, previous) => HttpClient.token(value.accessToken),
         ),
-        ChangeNotifierProvider.value(value: downmg),
+        ChangeNotifierProvider.value(value: vdown),
       ],
       child: MyApp(),
     ),

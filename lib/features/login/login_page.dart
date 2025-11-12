@@ -2,13 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '/l10n/localizations.dart';
-import '/core/core.dart';
-import '/storage/storage.dart';
-import '/network/network.dart';
-import '/theme/theme.dart';
-import '/utils/event_bus.dart';
-import '/utils/router.dart';
+import '/pch.dart';
 import 'login_vm.dart';
 
 class LoginPage extends StatefulWidget {

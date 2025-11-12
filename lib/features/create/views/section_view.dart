@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/theme/theme.dart';
+import '/pch.dart';
 
 class SectionView extends StatelessWidget {
   const SectionView({super.key, required this.title, required this.children});

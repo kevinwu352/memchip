@@ -3,31 +3,31 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import '/core/core.dart';
 
-enum DownloadStatus { unknown, downloading, waiting, downloaded, failed }
+enum Statu { unknown, downloading, waiting, downloaded, failed }
 
-class DownloadManager extends ChangeNotifier {
+class VideoDownloader extends ChangeNotifier {
   Future<void> init() async {
     final path = pathmk('downloads');
     await direCreate(path);
   }
 
   void enqueue(String url) {
-    final status = statusOf(url);
-    if (kDebugMode) debugPrint('enqueue: $url, ${status.name}');
-    switch (status) {
-      case DownloadStatus.unknown:
-        statusChanged?.call(DownloadStatus.unknown, url);
+    final statu = statuOf(url);
+    if (kDebugMode) debugPrint('enqueue: $url, ${statu.name}');
+    switch (statu) {
+      case Statu.unknown:
+        statuChanged?.call(Statu.unknown, url);
         _queue.insert(0, url);
-        statusChanged?.call(DownloadStatus.waiting, url);
-      case DownloadStatus.downloading:
-        statusChanged?.call(DownloadStatus.downloading, url);
-      case DownloadStatus.waiting:
+        statuChanged?.call(Statu.waiting, url);
+      case Statu.downloading:
+        statuChanged?.call(Statu.downloading, url);
+      case Statu.waiting:
         _queue.remove(url);
         _queue.insert(0, url);
-        statusChanged?.call(DownloadStatus.waiting, url);
-      case DownloadStatus.downloaded:
-        statusChanged?.call(DownloadStatus.downloaded, url);
-      case DownloadStatus.failed:
+        statuChanged?.call(Statu.waiting, url);
+      case Statu.downloaded:
+        statuChanged?.call(Statu.downloaded, url);
+      case Statu.failed:
         break;
     }
   }
@@ -39,7 +39,7 @@ class DownloadManager extends ChangeNotifier {
     String url = _queue.removeAt(0);
     if (kDebugMode) debugPrint('run: start, $url');
     _ongoing = url;
-    statusChanged?.call(DownloadStatus.downloading, url);
+    statuChanged?.call(Statu.downloading, url);
 
     try {
       final uri = Uri.parse(url);
@@ -51,9 +51,9 @@ class DownloadManager extends ChangeNotifier {
       } else {
         if (kDebugMode) debugPrint('run: failed, $url, ${response.statusCode}');
       }
-      statusChanged?.call(response.statusCode == 200 ? DownloadStatus.downloaded : DownloadStatus.failed, url);
+      statuChanged?.call(response.statusCode == 200 ? Statu.downloaded : Statu.failed, url);
     } catch (e) {
-      statusChanged?.call(DownloadStatus.failed, url);
+      statuChanged?.call(Statu.failed, url);
     }
 
     _ongoing = null;
@@ -62,17 +62,17 @@ class DownloadManager extends ChangeNotifier {
 
   final List<String> _queue = [];
   String? _ongoing;
-  void Function(DownloadStatus, String)? statusChanged;
+  void Function(Statu, String)? statuChanged;
 
-  DownloadStatus statusOf(String url) {
+  Statu statuOf(String url) {
     if (_ongoing == url) {
-      return DownloadStatus.downloading;
+      return Statu.downloading;
     } else if (_queue.contains(url)) {
-      return DownloadStatus.waiting;
+      return Statu.waiting;
     } else if (fileExistSync(pathOf(url))) {
-      return DownloadStatus.downloaded;
+      return Statu.downloaded;
     }
-    return DownloadStatus.unknown;
+    return Statu.unknown;
   }
 
   String pathOf(String url) => pathmk('downloads', '${url.md5}.mp4');

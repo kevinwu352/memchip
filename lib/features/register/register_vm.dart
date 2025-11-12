@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import '/core/core.dart';
-import '/network/network.dart';
-import '/utils/api.dart';
+import '/pch.dart';
 
 final class RegisterVm extends ChangeNotifier {
   RegisterVm({required Networkable network}) : _network = network {

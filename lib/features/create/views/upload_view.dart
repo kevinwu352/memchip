@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
-import '/l10n/localizations.dart';
-import '/theme/theme.dart';
+import '/pch.dart';
 import '/utils/image_uploader.dart';
 
 class UploadView extends StatelessWidget {

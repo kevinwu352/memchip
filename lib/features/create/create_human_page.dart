@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import '/l10n/localizations.dart';
-import '/network/network.dart';
-import '/theme/theme.dart';
-import '/utils/event_bus.dart';
-import '/utils/router.dart';
+import '/pch.dart';
 import 'views/section_view.dart';
 import 'views/field_view.dart';
 import 'views/upload_view.dart';

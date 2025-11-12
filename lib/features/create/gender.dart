@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/l10n/localizations.dart';
+import '/pch.dart';
 
 enum Gender {
   male,

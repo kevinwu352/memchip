@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import '/l10n/localizations.dart';
-import '/core/core.dart';
-import '/network/network.dart';
+import '/pch.dart';
 import '/utils/image_uploader.dart';
-import '/utils/api.dart';
 import 'gender.dart';
 
 final class CreateHumanVm extends ChangeNotifier {

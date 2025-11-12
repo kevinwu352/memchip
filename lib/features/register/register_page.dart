@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '/l10n/localizations.dart';
-import '/network/network.dart';
-import '/theme/theme.dart';
+import '/pch.dart';
 import 'register_vm.dart';
 
 class RegisterPage extends StatefulWidget {

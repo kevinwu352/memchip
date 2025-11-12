@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '/l10n/localizations.dart';
-import '/theme/theme.dart';
-import '/utils/router.dart';
+import '/pch.dart';
 
 class CategoryPage extends StatelessWidget {
   const CategoryPage({super.key});

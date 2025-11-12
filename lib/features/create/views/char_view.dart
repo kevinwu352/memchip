@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/theme/theme.dart';
+import '/pch.dart';
 
 class CharView extends StatelessWidget {
   const CharView({super.key, required this.children});

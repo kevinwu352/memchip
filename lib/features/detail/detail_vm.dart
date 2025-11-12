@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '/core/core.dart';
-import '/network/network.dart';
+import '/pch.dart';
 
 final class DetailVm extends ChangeNotifier {
   DetailVm({required Networkable network}) : _network = network;
