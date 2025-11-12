@@ -121,13 +121,15 @@ class _HeaderView extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(24),
-          child: CachedNetworkImage(
-            imageUrl: avatarUrl ?? '',
-            placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
-            errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
-            width: 48,
-            height: 48,
-          ),
+          child: avatarUrl != null
+              ? CachedNetworkImage(
+                  imageUrl: avatarUrl ?? '',
+                  placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
+                  errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
+                  width: 48,
+                  height: 48,
+                )
+              : Image.asset('assets/images/account_avatar.png', width: 48, height: 48),
         ),
 
         SizedBox(width: 12),

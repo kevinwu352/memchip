@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import '/l10n/localizations.dart';
-import '/core/core.dart';
 
-enum HttpError implements Exception, Localable {
+enum HttpError implements Exception {
   unknown,
   network,
   status,
   decode,
   operation;
 
-  @override
   String? localized(BuildContext? context) {
     if (context != null) {
       switch (this) {
