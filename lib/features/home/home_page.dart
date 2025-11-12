@@ -30,13 +30,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     vm.getAllChips();
-    _subscribeAccountEvents();
+    _subscribeBoxesChange();
   }
 
   @override
   void dispose() {
     vm.dispose();
-    accountSub?.cancel();
+    boxesSub?.cancel();
     super.dispose();
   }
 
@@ -106,10 +106,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  StreamSubscription? accountSub;
-  void _subscribeAccountEvents() {
-    accountSub = context.read<EventBus>().listen(
-      type: [EventType.accountLogin, EventType.accountLogout],
+  StreamSubscription? boxesSub;
+  void _subscribeBoxesChange() {
+    boxesSub = context.read<EventBus>().listen(
+      type: [EventType.accountLogin, EventType.accountLogout, EventType.boxCreated],
       onEvent: (event) => vm.getAllChips(),
     );
   }

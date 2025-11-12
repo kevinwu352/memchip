@@ -242,9 +242,12 @@ class _LoginPageState extends State<LoginPage> {
   void _subscribeDone() {
     vm.donePub.addListener(() {
       if (vm.donePub.value) {
-        context.go(Routes.home);
-        final bus = context.read<EventBus>();
-        Future.delayed(Duration(milliseconds: 500), () => bus.fire(type: EventType.accountLogin));
+        Future.delayed(Duration(seconds: 1), () {
+          if (mounted) {
+            context.read<EventBus>().fire(type: EventType.accountLogin);
+            context.go(Routes.home);
+          }
+        });
       }
     });
   }
