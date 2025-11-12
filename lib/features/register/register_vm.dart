@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 final class RegisterVm extends ChangeNotifier {
-  RegisterVm({required Networkable network}) : _network = network {
+  RegisterVm({required Networkable network, void Function(dynamic msg)? onSnack, void Function()? onComplete})
+    : _network = network,
+      _onSnack = onSnack,
+      _onComplete = onComplete {
     // accountController.text = 'ts00';
     // codeController.text = '123456';
     // confirmController.text = '123456';
   }
   final Networkable _network;
 
-  ValueNotifier<Localable?> snackPub = ValueNotifier(null);
-  ValueNotifier<bool> donePub = ValueNotifier(false);
+  final void Function(dynamic msg)? _onSnack;
+  final void Function()? _onComplete;
 
   final accountController = TextEditingController();
   bool get accountShowClear => accountController.text.isNotEmpty;
@@ -64,8 +67,8 @@ final class RegisterVm extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            snackPub.value = LocaledStr(res.message);
-            donePub.value = true;
+            _onSnack?.call(LocaledStr(res.message));
+            _onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -74,7 +77,7 @@ final class RegisterVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      snackPub.value = err;
+      _onSnack?.call(err);
     }
   }
 }

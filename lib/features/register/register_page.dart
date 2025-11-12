@@ -12,12 +12,15 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  late final vm = RegisterVm(network: widget.network);
+  late final vm = RegisterVm(
+    network: widget.network,
+    onSnack: (msg) => context.showSnack(msg),
+    onComplete: () => context.pop(),
+  );
+
   @override
   void initState() {
     super.initState();
-    _subscribeSnack();
-    _subscribeDone();
   }
 
   @override
@@ -176,24 +179,5 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-  }
-
-  void _subscribeSnack() {
-    vm.snackPub.addListener(() {
-      final msg = vm.snackPub.value?.localized(context);
-      if (msg != null && msg.isNotEmpty) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
-      }
-      vm.snackPub.value = null;
-    });
-  }
-
-  void _subscribeDone() {
-    vm.donePub.addListener(() {
-      if (vm.donePub.value) {
-        context.pop();
-      }
-    });
   }
 }
