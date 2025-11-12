@@ -14,8 +14,6 @@ final class RegisterVm extends ChangeNotifier {
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
   ValueNotifier<bool> donePub = ValueNotifier(false);
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   final accountController = TextEditingController();
   bool get accountShowClear => accountController.text.isNotEmpty;
   void accountClear() {

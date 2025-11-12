@@ -22,8 +22,6 @@ final class LoginVm extends ChangeNotifier {
   ValueNotifier<Localable?> snackPub = ValueNotifier(null);
   ValueNotifier<bool> donePub = ValueNotifier(false);
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   var _method = Method.password;
   Method get method => _method;
   set method(Method value) {

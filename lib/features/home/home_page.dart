@@ -45,66 +45,64 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: ListenableBuilder(
         listenable: vm,
-        builder: (context, child) {
-          return SizedBox.expand(
-            child: Column(
-              children: [
-                Selector<Defaults, User?>(
-                  selector: (_, object) => object.user,
-                  builder: (context, value, child) => Padding(
-                    padding: EdgeInsets.fromLTRB(30, kSafeTop + 30, 30, 30),
-                    child: _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.account),
-                  ),
+        builder: (context, child) => SizedBox.expand(
+          child: Column(
+            children: [
+              Selector<Defaults, User?>(
+                selector: (_, object) => object.user,
+                builder: (context, value, child) => Padding(
+                  padding: EdgeInsets.fromLTRB(30, kSafeTop + 30, 30, 30),
+                  child: _HeaderView(avatarUrl: value?.avatarUrl, nickname: value?.nickname, phomail: value?.account),
                 ),
+              ),
 
-                Container(
-                  padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
-                  width: double.infinity,
-                  child: Text(
-                    AppLocalizations.of(context)!.home_section_title,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: MyColors.gray800),
-                  ),
+              Container(
+                padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
+                width: double.infinity,
+                child: Text(
+                  AppLocalizations.of(context)!.home_section_title,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: MyColors.gray800),
                 ),
+              ),
 
-                if (vm.boxes.isEmpty)
-                  Expanded(
-                    child: Padding(padding: const EdgeInsets.only(top: 50), child: _EmptyView()),
-                  )
-                else
-                  Expanded(
-                    child: GridView.builder(
-                      padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        childAspectRatio: 139 / 247,
-                      ),
-                      itemCount: vm.boxes.length,
-                      itemBuilder: (context, index) => _EntryView(
-                        box: vm.boxes[index],
-                        onTap: () => context.push(Routes.detail, extra: vm.boxes[index]),
-                      ),
+              if (vm.boxes.isEmpty)
+                Expanded(
+                  child: Padding(padding: const EdgeInsets.only(top: 50), child: _EmptyView()),
+                )
+              else
+                Expanded(
+                  child: GridView.builder(
+                    padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 20,
+                      mainAxisSpacing: 20,
+                      childAspectRatio: 139 / 247,
+                    ),
+                    itemCount: vm.boxes.length,
+                    itemBuilder: (context, index) => _EntryView(
+                      box: vm.boxes[index],
+                      onTap: () => context.push(Routes.detail, extra: vm.boxes[index]),
                     ),
                   ),
-
-                Container(
-                  padding: EdgeInsets.fromLTRB(30, 0, 30, kSafeBot + 24),
-                  width: double.infinity,
-                  child: FilledButton.icon(
-                    style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
-                    onPressed: () => context.push(context.read<Secures>().logined ? Routes.category : Routes.login),
-                    label: Text(
-                      AppLocalizations.of(context)!.home_new_btn,
-                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    icon: Image.asset('assets/images/home_new.png'),
-                  ),
                 ),
-              ],
-            ),
-          );
-        },
+
+              Container(
+                padding: EdgeInsets.fromLTRB(30, 0, 30, kSafeBot + 24),
+                width: double.infinity,
+                child: FilledButton.icon(
+                  style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
+                  onPressed: () => context.push(context.read<Secures>().logined ? Routes.category : Routes.login),
+                  label: Text(
+                    AppLocalizations.of(context)!.home_new_btn,
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                  ),
+                  icon: Image.asset('assets/images/home_new.png'),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
