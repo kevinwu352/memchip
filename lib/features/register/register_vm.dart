@@ -67,7 +67,7 @@ final class RegisterVm extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            _onSnack?.call(LocaledStr(res.message));
+            _onSnack?.call(res.message);
             _onComplete?.call();
           } else {
             throw HttpError.operation;

@@ -4,15 +4,18 @@ import '/utils/image_uploader.dart';
 import 'gender.dart';
 
 final class CreateHumanVm extends ChangeNotifier {
-  CreateHumanVm({required Networkable network}) : _network = network {
+  CreateHumanVm({required Networkable network, void Function(dynamic msg)? onSnack, void Function()? onComplete})
+    : _network = network,
+      _onSnack = onSnack,
+      _onComplete = onComplete {
     for (var element in uploads) {
       element.notify = notifyListeners;
     }
   }
   final Networkable _network;
 
-  ValueNotifier<Localable?> snackPub = ValueNotifier(null);
-  ValueNotifier<bool> donePub = ValueNotifier(false);
+  final void Function(dynamic msg)? _onSnack;
+  final void Function()? _onComplete;
 
   List<ImageUploader> uploads = [ImageUploader()];
   void didChooseImage(int index, String path) async {
@@ -76,8 +79,8 @@ final class CreateHumanVm extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            snackPub.value = LocaledStr(res.message);
-            donePub.value = true;
+            _onSnack?.call(res.message);
+            _onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -86,15 +89,13 @@ final class CreateHumanVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      snackPub.value = err;
+      _onSnack?.call(err);
     }
   }
 
   @override
   void dispose() {
     nameController.dispose();
-    snackPub.dispose();
-    donePub.dispose();
     super.dispose();
   }
 }

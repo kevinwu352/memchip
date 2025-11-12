@@ -16,13 +16,24 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late final vm = LoginVm(network: widget.network, secures: widget.secures, defaults: widget.defaults);
+  late final vm = LoginVm(
+    network: widget.network,
+    secures: widget.secures,
+    defaults: widget.defaults,
+    onSnack: (msg) => context.showSnack(msg),
+    onComplete: () {
+      Future.delayed(Duration(seconds: 1), () {
+        if (mounted) {
+          context.read<EventBus>().fire(type: EventType.accountLogin);
+          context.go(Routes.home);
+        }
+      });
+    },
+  );
 
   @override
   void initState() {
     super.initState();
-    _subscribeSnack();
-    _subscribeDone();
   }
 
   @override
@@ -215,29 +226,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-
-  void _subscribeSnack() {
-    vm.snackPub.addListener(() {
-      final msg = vm.snackPub.value?.localized(context);
-      if (msg != null && msg.isNotEmpty) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
-      }
-      vm.snackPub.value = null;
-    });
-  }
-
-  void _subscribeDone() {
-    vm.donePub.addListener(() {
-      if (vm.donePub.value) {
-        Future.delayed(Duration(seconds: 1), () {
-          if (mounted) {
-            context.read<EventBus>().fire(type: EventType.accountLogin);
-            context.go(Routes.home);
-          }
-        });
-      }
-    });
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-enum EventType { accountLogin, accountLogout, boxCreated }
+enum EventType { accountLogin, accountLogout, boxCreated, boxDeleted }
 
 class Event {
   final EventType type;

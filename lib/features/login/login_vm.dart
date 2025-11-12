@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 final class LoginVm extends ChangeNotifier {
-  LoginVm({required Networkable network, required Secures secures, required Defaults defaults})
-    : _network = network,
-      _secures = secures,
-      _defaults = defaults {
+  LoginVm({
+    required Networkable network,
+    required Secures secures,
+    required Defaults defaults,
+    void Function(dynamic msg)? onSnack,
+    void Function()? onComplete,
+  }) : _network = network,
+       _secures = secures,
+       _defaults = defaults,
+       _onSnack = onSnack,
+       _onComplete = onComplete {
     // accountController.text = 'test101';
     // codeController.text = '123456';
   }
@@ -14,8 +21,8 @@ final class LoginVm extends ChangeNotifier {
   final Secures _secures;
   final Defaults _defaults;
 
-  ValueNotifier<Localable?> snackPub = ValueNotifier(null);
-  ValueNotifier<bool> donePub = ValueNotifier(false);
+  final void Function(dynamic msg)? _onSnack;
+  final void Function()? _onComplete;
 
   var _method = Method.password;
   Method get method => _method;
@@ -78,7 +85,7 @@ final class LoginVm extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            snackPub.value = LocaledStr(res.message);
+            _onSnack?.call(res.message);
             startCounting();
           } else {
             throw HttpError.operation;
@@ -88,7 +95,7 @@ final class LoginVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      snackPub.value = err;
+      _onSnack?.call(err);
     }
   }
 
@@ -136,12 +143,12 @@ final class LoginVm extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            snackPub.value = LocaledStr(res.message);
+            _onSnack?.call(res.message);
             final user = res.getObject<User>();
             _secures.lastUsername = user?.account;
             _secures.accessToken = user?.token;
             _defaults.user = user;
-            donePub.value = true;
+            _onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -150,7 +157,7 @@ final class LoginVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      snackPub.value = err;
+      _onSnack?.call(err);
     }
   }
 
@@ -164,12 +171,12 @@ final class LoginVm extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            snackPub.value = LocaledStr(res.message);
+            _onSnack?.call(res.message);
             final user = res.getObject<User>();
             _secures.lastUsername = user?.account;
             _secures.accessToken = user?.token;
             _defaults.user = user;
-            donePub.value = true;
+            _onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -178,7 +185,7 @@ final class LoginVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      snackPub.value = err;
+      _onSnack?.call(err);
     }
   }
 
@@ -187,8 +194,6 @@ final class LoginVm extends ChangeNotifier {
     accountController.dispose();
     codeController.dispose();
     timer?.cancel();
-    snackPub.dispose();
-    donePub.dispose();
     super.dispose();
   }
 }

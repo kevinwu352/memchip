@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import '/pch.dart';
 import 'detail_vm.dart';
 
@@ -12,12 +14,22 @@ class DetailPage extends StatefulWidget {
 }
 
 class _DetailPageState extends State<DetailPage> {
-  late final vm = DetailVm(network: widget.network);
+  late final vm = DetailVm(
+    network: widget.network,
+    onSnack: (msg) => context.showSnack(msg),
+    onComplete: () {
+      Future.delayed(Duration(seconds: 1), () {
+        if (mounted) {
+          context.read<EventBus>().fire(type: EventType.boxDeleted);
+          context.pop();
+        }
+      });
+    },
+  );
 
   @override
   void initState() {
     super.initState();
-    _subscribeSnack();
   }
 
   @override
@@ -42,16 +54,5 @@ class _DetailPageState extends State<DetailPage> {
         ),
       ),
     );
-  }
-
-  void _subscribeSnack() {
-    vm.snackPub.addListener(() {
-      final msg = vm.snackPub.value?.localized(context);
-      if (msg != null && msg.isNotEmpty) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
-      }
-      vm.snackPub.value = null;
-    });
   }
 }

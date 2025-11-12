@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 final class DetailVm extends ChangeNotifier {
-  DetailVm({required Networkable network}) : _network = network;
+  DetailVm({required Networkable network, void Function(dynamic msg)? onSnack, void Function()? onComplete})
+    : _network = network,
+      _onSnack = onSnack,
+      _onComplete = onComplete;
   final Networkable _network;
 
-  ValueNotifier<Localable?> snackPub = ValueNotifier(null);
-
-  @override
-  void dispose() {
-    snackPub.dispose();
-    super.dispose();
-  }
+  final void Function(dynamic msg)? _onSnack;
+  final void Function()? _onComplete;
 }

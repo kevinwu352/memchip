@@ -20,13 +20,22 @@ class CreatePetPage extends StatefulWidget {
 }
 
 class _CreatePetPageState extends State<CreatePetPage> {
-  late final vm = CreatePetVm(network: widget.network);
+  late final vm = CreatePetVm(
+    network: widget.network,
+    onSnack: (msg) => context.showSnack(msg),
+    onComplete: () {
+      Future.delayed(Duration(seconds: 1), () {
+        if (mounted) {
+          context.read<EventBus>().fire(type: EventType.boxCreated);
+          context.go(Routes.home);
+        }
+      });
+    },
+  );
 
   @override
   void initState() {
     super.initState();
-    _subscribeSnack();
-    _subscribeDone();
   }
 
   @override
@@ -201,29 +210,5 @@ class _CreatePetPageState extends State<CreatePetPage> {
         ),
       ),
     );
-  }
-
-  void _subscribeSnack() {
-    vm.snackPub.addListener(() {
-      final msg = vm.snackPub.value?.localized(context);
-      if (msg != null && msg.isNotEmpty) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg), behavior: SnackBarBehavior.floating));
-      }
-      vm.snackPub.value = null;
-    });
-  }
-
-  void _subscribeDone() {
-    vm.donePub.addListener(() {
-      if (vm.donePub.value) {
-        Future.delayed(Duration(seconds: 1), () {
-          if (mounted) {
-            context.read<EventBus>().fire(type: EventType.boxCreated);
-            context.go(Routes.home);
-          }
-        });
-      }
-    });
   }
 }
