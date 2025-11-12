@@ -81,7 +81,10 @@ class _HomePageState extends State<HomePage> {
                         childAspectRatio: 139 / 247,
                       ),
                       itemCount: vm.boxes.length,
-                      itemBuilder: (context, index) => _EntryView(box: vm.boxes[index]),
+                      itemBuilder: (context, index) => _EntryView(
+                        box: vm.boxes[index],
+                        onTap: () => context.push(Routes.detail, extra: vm.boxes[index]),
+                      ),
                     ),
                   ),
 
@@ -201,65 +204,68 @@ class _EmptyView extends StatelessWidget {
 }
 
 class _EntryView extends StatelessWidget {
-  const _EntryView({required this.box});
-
+  const _EntryView({required this.box, required this.onTap});
   final Box box;
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      shadowColor: Colors.black.withValues(alpha: 0.3),
-      elevation: 4,
-      clipBehavior: Clip.hardEdge,
-      child: Column(
-        children: [
-          Expanded(
-            child: CachedNetworkImage(
-              imageUrl: box.coverImage,
-              fit: BoxFit.cover,
-              placeholder: (context, url) => Container(color: Colors.white),
-              errorWidget: (context, url, error) => Container(color: Colors.white),
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        color: Colors.white,
+        shadowColor: Colors.black.withValues(alpha: 0.3),
+        elevation: 4,
+        clipBehavior: Clip.hardEdge,
+        child: Column(
+          children: [
+            Expanded(
+              child: CachedNetworkImage(
+                imageUrl: box.coverImage,
+                fit: BoxFit.cover,
+                placeholder: (context, url) => Container(color: Colors.white),
+                errorWidget: (context, url, error) => Container(color: Colors.white),
+              ),
             ),
-          ),
-          Container(
-            height: 60,
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Row(
-                  spacing: 5,
-                  children: [
-                    Image.asset('assets/images/home_entry_paw.png'),
-                    Expanded(
-                      child: Text(
-                        box.boxName,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: MyColors.gray700),
+            Container(
+              height: 60,
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    spacing: 5,
+                    children: [
+                      Image.asset('assets/images/home_entry_paw.png'),
+                      Expanded(
+                        child: Text(
+                          box.boxName,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: MyColors.gray700),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  spacing: 5,
-                  children: [
-                    Image.asset('assets/images/home_entry_time.png'),
-                    Expanded(
-                      child: Text(
-                        GetTimeAgo.parse(box.createdTime, locale: AppLocalizations.of(context)!.localeName),
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: MyColors.gray500),
+                    ],
+                  ),
+                  Row(
+                    spacing: 5,
+                    children: [
+                      Image.asset('assets/images/home_entry_time.png'),
+                      Expanded(
+                        child: Text(
+                          GetTimeAgo.parse(box.createdTime, locale: AppLocalizations.of(context)!.localeName),
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: MyColors.gray500),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

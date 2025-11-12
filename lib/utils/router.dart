@@ -12,6 +12,9 @@ import '/features/about/about_page.dart';
 import '/features/category/category_page.dart';
 import '/features/create/create_human_page.dart';
 import '/features/create/create_pet_page.dart';
+import '/features/detail/detail_page.dart';
+
+import '/models/box.dart';
 
 abstract final class Routes {
   static String web(String url) => '/web/${url.encodeComponent}';
@@ -24,6 +27,7 @@ abstract final class Routes {
   static const category = '/category';
   static const createHuman = '/create-human';
   static const createPet = '/create-pet';
+  static const detail = '/detail';
 }
 
 GoRouter router() => GoRouter(
@@ -58,6 +62,10 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: Routes.createPet,
       builder: (context, state) => CreatePetPage(network: context.read()),
+    ),
+    GoRoute(
+      path: Routes.detail,
+      builder: (context, state) => DetailPage(box: GoRouterState.of(context).extra as Box, network: context.read()),
     ),
   ],
 );
