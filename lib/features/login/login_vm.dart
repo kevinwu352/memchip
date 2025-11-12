@@ -3,26 +3,15 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 final class LoginVm extends ChangeNotifier {
-  LoginVm({
-    required Networkable network,
-    required Secures secures,
-    required Defaults defaults,
-    void Function(dynamic msg)? onSnack,
-    void Function()? onComplete,
-  }) : _network = network,
-       _secures = secures,
-       _defaults = defaults,
-       _onSnack = onSnack,
-       _onComplete = onComplete {
+  LoginVm({required this.network, required this.secures, required this.defaults, this.onSnack, this.onComplete}) {
     // accountController.text = 'test101';
     // codeController.text = '123456';
   }
-  final Networkable _network;
-  final Secures _secures;
-  final Defaults _defaults;
-
-  final void Function(dynamic msg)? _onSnack;
-  final void Function()? _onComplete;
+  final Networkable network;
+  final Secures secures;
+  final Defaults defaults;
+  final void Function(dynamic msg)? onSnack;
+  final void Function()? onComplete;
 
   var _method = Method.password;
   Method get method => _method;
@@ -72,21 +61,21 @@ final class LoginVm extends ChangeNotifier {
   void sendAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_sending) return;
-    sendCode(accountController.text);
+    _sendCode(accountController.text);
   }
 
-  void sendCode(String email) async {
+  void _sendCode(String email) async {
     try {
       sending = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.accountSendCode(email), null);
+      final result = await network.reqRes(Api.accountSendCode(email), null);
       sending = false;
       switch (result) {
         case Ok():
           final res = result.value;
           if (res.success) {
-            _onSnack?.call(res.message);
-            startCounting();
+            onSnack?.call(res.message);
+            _startCounting();
           } else {
             throw HttpError.operation;
           }
@@ -95,16 +84,16 @@ final class LoginVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      _onSnack?.call(err);
+      onSnack?.call(err);
     }
   }
 
-  Timer? timer;
-  void startCounting() {
+  Timer? _timer;
+  void _startCounting() {
     sendSeconds = 60;
     notifyListeners();
 
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (sendSeconds > 0) {
         // print('tick: $sendSeconds next');
         sendSeconds -= 1;
@@ -127,28 +116,28 @@ final class LoginVm extends ChangeNotifier {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
     if (method == Method.password) {
-      login(accountController.text, codeController.text);
+      _login(accountController.text, codeController.text);
     } else {
-      check(accountController.text, codeController.text);
+      _check(accountController.text, codeController.text);
     }
   }
 
-  void login(String account, String code) async {
+  void _login(String account, String code) async {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.accountLogin(account, code), User.fromApi);
+      final result = await network.reqRes(Api.accountLogin(account, code), User.fromApi);
       submiting = false;
       switch (result) {
         case Ok():
           final res = result.value;
           if (res.success) {
-            _onSnack?.call(res.message);
+            onSnack?.call(res.message);
             final user = res.getObject<User>();
-            _secures.lastUsername = user?.account;
-            _secures.accessToken = user?.token;
-            _defaults.user = user;
-            _onComplete?.call();
+            secures.lastUsername = user?.account;
+            secures.accessToken = user?.token;
+            defaults.user = user;
+            onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -157,26 +146,26 @@ final class LoginVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      _onSnack?.call(err);
+      onSnack?.call(err);
     }
   }
 
-  void check(String account, String code) async {
+  void _check(String account, String code) async {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.accountCheckCode(account, code), User.fromApi);
+      final result = await network.reqRes(Api.accountCheckCode(account, code), User.fromApi);
       submiting = false;
       switch (result) {
         case Ok():
           final res = result.value;
           if (res.success) {
-            _onSnack?.call(res.message);
+            onSnack?.call(res.message);
             final user = res.getObject<User>();
-            _secures.lastUsername = user?.account;
-            _secures.accessToken = user?.token;
-            _defaults.user = user;
-            _onComplete?.call();
+            secures.lastUsername = user?.account;
+            secures.accessToken = user?.token;
+            defaults.user = user;
+            onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -185,7 +174,7 @@ final class LoginVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      _onSnack?.call(err);
+      onSnack?.call(err);
     }
   }
 
@@ -193,7 +182,7 @@ final class LoginVm extends ChangeNotifier {
   void dispose() {
     accountController.dispose();
     codeController.dispose();
-    timer?.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 }

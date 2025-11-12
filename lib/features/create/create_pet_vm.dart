@@ -4,18 +4,14 @@ import '/utils/image_uploader.dart';
 import 'gender.dart';
 
 final class CreatePetVm extends ChangeNotifier {
-  CreatePetVm({required Networkable network, void Function(dynamic msg)? onSnack, void Function()? onComplete})
-    : _network = network,
-      _onSnack = onSnack,
-      _onComplete = onComplete {
+  CreatePetVm({required this.network, this.onSnack, this.onComplete}) {
     for (var element in uploads) {
       element.notify = notifyListeners;
     }
   }
-  final Networkable _network;
-
-  final void Function(dynamic msg)? _onSnack;
-  final void Function()? _onComplete;
+  final Networkable network;
+  final void Function(dynamic msg)? onSnack;
+  final void Function()? onComplete;
 
   List<ImageUploader> uploads = [ImageUploader(), ImageUploader()];
   void didChooseImage(int index, String path) async {
@@ -74,7 +70,7 @@ final class CreatePetVm extends ChangeNotifier {
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
-    create(
+    _create(
       nameController.text,
       uploads[0].url,
       uploads[1].url,
@@ -85,7 +81,7 @@ final class CreatePetVm extends ChangeNotifier {
     );
   }
 
-  void create(
+  void _create(
     String name,
     String? image1,
     String? image2,
@@ -97,7 +93,7 @@ final class CreatePetVm extends ChangeNotifier {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(
+      final result = await network.reqRes(
         Api.boxCreatePet(name, image1, image2, gender, species, tail, personality),
         null,
       );
@@ -106,8 +102,8 @@ final class CreatePetVm extends ChangeNotifier {
         case Ok():
           final res = result.value;
           if (res.success) {
-            _onSnack?.call(res.message);
-            _onComplete?.call();
+            onSnack?.call(res.message);
+            onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -116,7 +112,7 @@ final class CreatePetVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      _onSnack?.call(err);
+      onSnack?.call(err);
     }
   }
 

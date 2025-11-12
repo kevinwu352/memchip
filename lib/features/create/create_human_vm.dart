@@ -4,18 +4,14 @@ import '/utils/image_uploader.dart';
 import 'gender.dart';
 
 final class CreateHumanVm extends ChangeNotifier {
-  CreateHumanVm({required Networkable network, void Function(dynamic msg)? onSnack, void Function()? onComplete})
-    : _network = network,
-      _onSnack = onSnack,
-      _onComplete = onComplete {
+  CreateHumanVm({required this.network, this.onSnack, this.onComplete}) {
     for (var element in uploads) {
       element.notify = notifyListeners;
     }
   }
-  final Networkable _network;
-
-  final void Function(dynamic msg)? _onSnack;
-  final void Function()? _onComplete;
+  final Networkable network;
+  final void Function(dynamic msg)? onSnack;
+  final void Function()? onComplete;
 
   List<ImageUploader> uploads = [ImageUploader()];
   void didChooseImage(int index, String path) async {
@@ -66,21 +62,21 @@ final class CreateHumanVm extends ChangeNotifier {
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
-    create(nameController.text, uploads[0].url, _gender?.serval, _age?.serval, _figure?.serval);
+    _create(nameController.text, uploads[0].url, _gender?.serval, _age?.serval, _figure?.serval);
   }
 
-  void create(String name, String? image, String? gender, String? age, String? figure) async {
+  void _create(String name, String? image, String? gender, String? age, String? figure) async {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.boxCreateHuman(name, image, gender, age, figure), null);
+      final result = await network.reqRes(Api.boxCreateHuman(name, image, gender, age, figure), null);
       submiting = false;
       switch (result) {
         case Ok():
           final res = result.value;
           if (res.success) {
-            _onSnack?.call(res.message);
-            _onComplete?.call();
+            onSnack?.call(res.message);
+            onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -89,7 +85,7 @@ final class CreateHumanVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      _onSnack?.call(err);
+      onSnack?.call(err);
     }
   }
 

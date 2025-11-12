@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 final class RegisterVm extends ChangeNotifier {
-  RegisterVm({required Networkable network, void Function(dynamic msg)? onSnack, void Function()? onComplete})
-    : _network = network,
-      _onSnack = onSnack,
-      _onComplete = onComplete {
+  RegisterVm({required this.network, this.onSnack, this.onComplete}) {
     // accountController.text = 'ts00';
     // codeController.text = '123456';
     // confirmController.text = '123456';
   }
-  final Networkable _network;
-
-  final void Function(dynamic msg)? _onSnack;
-  final void Function()? _onComplete;
+  final Networkable network;
+  final void Function(dynamic msg)? onSnack;
+  final void Function()? onComplete;
 
   final accountController = TextEditingController();
   bool get accountShowClear => accountController.text.isNotEmpty;
@@ -54,21 +50,21 @@ final class RegisterVm extends ChangeNotifier {
   void submitAction() {
     FocusManager.instance.primaryFocus?.unfocus();
     if (_submiting) return;
-    register(accountController.text, codeController.text);
+    _register(accountController.text, codeController.text);
   }
 
-  void register(String account, String code) async {
+  void _register(String account, String code) async {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.accountRegister(account, code));
+      final result = await network.reqRes(Api.accountRegister(account, code));
       submiting = false;
       switch (result) {
         case Ok():
           final res = result.value;
           if (res.success) {
-            _onSnack?.call(res.message);
-            _onComplete?.call();
+            onSnack?.call(res.message);
+            onComplete?.call();
           } else {
             throw HttpError.operation;
           }
@@ -77,7 +73,7 @@ final class RegisterVm extends ChangeNotifier {
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
-      _onSnack?.call(err);
+      onSnack?.call(err);
     }
   }
 }
