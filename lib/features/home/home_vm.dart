@@ -20,7 +20,7 @@ final class HomeVm extends ChangeNotifier {
     }
     try {
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.getAllChips(), Box.fromApi);
+      final result = await _network.reqRes(Api.boxGetAll(), Box.fromApi);
       switch (result) {
         case Ok():
           final res = result.value;

@@ -15,6 +15,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> {
   late final vm = DetailVm(
+    box: widget.box,
     network: widget.network,
     onSnack: (msg) => context.showSnack(msg),
     onComplete: () {
@@ -41,7 +42,10 @@ class _DetailPageState extends State<DetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('detail')),
+      appBar: AppBar(
+        title: Text(widget.box.boxName),
+        actions: [IconButton(onPressed: vm.deleteAction, icon: Icon(Icons.delete))],
+      ),
       body: ListenableBuilder(
         listenable: vm,
         builder: (context, child) => SizedBox.expand(

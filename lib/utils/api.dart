@@ -28,9 +28,9 @@ final class Api extends Endpoint {
         encoding: ReqEncoding.json,
       );
 
-  Api.getAllChips() : super('/MeetAgain-memoryBoxes/getMemoryBoxesByUserId', ReqMethod.get);
+  Api.boxGetAll() : super('/MeetAgain-memoryBoxes/getMemoryBoxesByUserId', ReqMethod.get);
 
-  Api.createHuman(String name, String? image, String? gender, String? age, String? figure)
+  Api.boxCreateHuman(String name, String? image, String? gender, String? age, String? figure)
     : super(
         '/MeetAgain-memoryBoxes/createMemoryBox',
         ReqMethod.post,
@@ -45,7 +45,7 @@ final class Api extends Endpoint {
         encoding: ReqEncoding.json,
       );
 
-  Api.createPet(
+  Api.boxCreatePet(
     String name,
     String? image1,
     String? image2,
@@ -64,6 +64,14 @@ final class Api extends Endpoint {
           'tail': ?tail,
           'character': [?personality],
         },
+        encoding: ReqEncoding.json,
+      );
+
+  Api.boxDelete(String boxId)
+    : super(
+        '/MeetAgain-memoryBoxes/deleteMemoryBox',
+        ReqMethod.post,
+        parameters: {'boxId': boxId},
         encoding: ReqEncoding.json,
       );
 }

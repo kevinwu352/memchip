@@ -73,7 +73,7 @@ final class CreateHumanVm extends ChangeNotifier {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await _network.reqRes(Api.createHuman(name, image, gender, age, figure), null);
+      final result = await _network.reqRes(Api.boxCreateHuman(name, image, gender, age, figure), null);
       submiting = false;
       switch (result) {
         case Ok():
