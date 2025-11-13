@@ -30,6 +30,7 @@ class PreviewedView extends StatelessWidget {
               ],
             ),
           ),
+
           Expanded(
             child: MediaQuery.removePadding(
               context: context,
@@ -46,6 +47,7 @@ class PreviewedView extends StatelessWidget {
               ),
             ),
           ),
+
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: MyColors.orange400),
             onPressed: () {},
