@@ -13,6 +13,31 @@
 //   "canEdit": true
 // }
 
+enum BoxStatus {
+  unknown,
+  activated,
+  previewed,
+  generating,
+  generated;
+
+  factory BoxStatus.fromIndex(int i) => i >= 0 && i < 5 ? BoxStatus.values[i] : unknown;
+
+  int get stack {
+    switch (this) {
+      case unknown:
+        return 0;
+      case activated:
+        return 1;
+      case previewed:
+        return 2;
+      case generating:
+        return 2;
+      case generated:
+        return 3;
+    }
+  }
+}
+
 class Box {
   String id;
   String userId;
@@ -22,7 +47,7 @@ class Box {
   String gender;
   String ageStage;
   String bodyType;
-  int status;
+  BoxStatus status;
   bool canEdit;
   DateTime createdTime;
   DateTime updatedTime;
@@ -51,7 +76,7 @@ class Box {
     final gender = json['gender'] as String;
     final ageStage = json['ageStage'] as String;
     final bodyType = json['bodyType'] as String;
-    final status = json['status'] as int;
+    final status = BoxStatus.fromIndex(json['status'] as int);
     final canEdit = json['canEdit'] as bool;
     final createdTime = DateTime.parse(json['createdTime'] as String);
     final updatedTime = DateTime.parse(json['updatedTime'] as String);
