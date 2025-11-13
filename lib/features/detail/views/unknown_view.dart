@@ -21,11 +21,7 @@ class UnknownView extends StatelessWidget {
 
         Container(
           margin: EdgeInsets.fromLTRB(20, 0, 20, kSafeBot + 15),
-          child: ActionView(
-            info: 'The colors the gradient should obtain at each of the stops.',
-            title: 'Done',
-            action: action,
-          ),
+          child: ActionView(info: '111', title: 'Activate', action: action),
         ),
       ],
     );
