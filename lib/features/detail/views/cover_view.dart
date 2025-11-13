@@ -14,7 +14,7 @@ class CoverView extends StatelessWidget {
         fit: StackFit.expand,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(55),
+            borderRadius: BorderRadius.circular(50 + 5),
             child: CachedNetworkImage(
               imageUrl: url,
               fit: BoxFit.cover,

@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initScreenMetrics(context);
     initSafeMetrics(context);
 
     final language = context.select((Defaults v) => v.language);
