@@ -160,15 +160,9 @@ class _CreatePetPageState extends State<CreatePetPage> {
                     FieldView(
                       title: AppLocalizations.of(context)!.create_personality_title,
                       child: CharView(
-                        children: [
-                          ...Personality.values.map(
-                            (e) => CharEntryView(
-                              title: e.title(context),
-                              selected: e == vm.personality,
-                              action: () => vm.personality = e,
-                            ),
-                          ),
-                        ],
+                        items: Personality.values.map((e) => e.title(context)).toList(),
+                        selected: vm.personality?.index,
+                        onSelect: (value) => vm.personality = Personality.fromIndex(value),
                       ),
                     ),
                   ],

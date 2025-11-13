@@ -49,7 +49,7 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.box.boxName),
-        actions: [IconButton(onPressed: vm.deleteAction, icon: Icon(Icons.delete))],
+        actions: [IconButton(onPressed: deleteAction, icon: Icon(Icons.delete))],
       ),
       body: ListenableBuilder(
         listenable: vm,
@@ -70,8 +70,8 @@ class _DetailPageState extends State<DetailPage> {
                     // return Text('abc');
                     return SelectionView(
                       items: ['data 1', 'data 2', 'data 3', 'data 4', 'data 5'],
-                      selected: 'data 2',
-                      onSelect: (str) {},
+                      selected: 1,
+                      onSelect: (value) {},
                     );
                   },
                 );
@@ -79,6 +79,20 @@ class _DetailPageState extends State<DetailPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void deleteAction() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('AlertDialog Title'),
+        content: const Text('AlertDialog description'),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK')),
+        ],
       ),
     );
   }

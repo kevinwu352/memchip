@@ -2,19 +2,14 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 class SelectionView extends StatelessWidget {
-  const SelectionView({super.key, required this.items, required this.selected, required this.onSelect});
+  const SelectionView({super.key, required this.items, this.selected, required this.onSelect});
   final List<String> items;
-  final String selected;
-  final void Function(String str) onSelect;
+  final int? selected;
+  final void Function(int value) onSelect;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // color: MyColors.violet00,
-      // decoration: ShapeDecoration(
-      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-      //   color: Colors.red,
-      // ),
       padding: EdgeInsets.fromLTRB(36, 0, 36, kSafeBot + 10),
       width: double.infinity,
       child: Column(
@@ -51,23 +46,23 @@ class SelectionView extends StatelessWidget {
               spacing: 20,
               runSpacing: 20,
               children: [
-                ...items.map(
+                ...items.indexed.map(
                   (e) => ActionChip(
                     shape: StadiumBorder(
-                      side: BorderSide(color: selected == e ? MyColors.orange500 : MyColors.gray700, width: 2),
+                      side: BorderSide(color: selected == e.$1 ? MyColors.orange500 : MyColors.gray700, width: 2),
                     ),
-                    backgroundColor: selected == e ? MyColors.orange400 : MyColors.white100,
-                    label: Text(e),
+                    backgroundColor: selected == e.$1 ? MyColors.orange400 : MyColors.white100,
+                    label: Text(e.$2),
                     labelStyle: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: selected == e ? MyColors.white100 : MyColors.gray700,
+                      color: selected == e.$1 ? MyColors.white100 : MyColors.gray700,
                     ),
                     padding: EdgeInsets.zero,
                     labelPadding: EdgeInsets.symmetric(horizontal: 10),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
-                    onPressed: () => onSelect(e),
+                    onPressed: () => onSelect(e.$1),
                   ),
                 ),
               ],

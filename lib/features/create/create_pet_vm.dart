@@ -195,6 +195,8 @@ enum Personality {
   naughty,
   tame;
 
+  factory Personality.fromIndex(int i) => Personality.values[i];
+
   String title(BuildContext context) {
     switch (this) {
       case playful:

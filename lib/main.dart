@@ -60,6 +60,12 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
           titleTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
       ),
       // theme: ThemeData(colorScheme: MySchemes.light),
       // darkTheme: ThemeData(colorScheme: MySchemes.dark),

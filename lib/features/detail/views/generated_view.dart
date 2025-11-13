@@ -13,17 +13,19 @@ class GeneratedView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            width: 335,
-            height: 405,
-            margin: EdgeInsets.only(top: 30),
-            decoration: BoxDecoration(
-              border: Border.all(color: MyColors.violet300, width: 12),
-              borderRadius: BorderRadius.circular(35),
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(25 - 5),
-              child: Container(color: Colors.green),
+          Center(
+            child: Container(
+              width: 335,
+              height: 405,
+              margin: EdgeInsets.only(top: 30),
+              decoration: BoxDecoration(
+                border: Border.all(color: MyColors.violet300, width: 12),
+                borderRadius: BorderRadius.circular(35),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25 - 5),
+                child: Container(color: Colors.green),
+              ),
             ),
           ),
 
