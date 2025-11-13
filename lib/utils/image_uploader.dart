@@ -22,10 +22,10 @@ class ImageUploader {
     reset();
     this.path = path;
     this.notify = notify;
-    getUploadParas(path);
+    _getUploadParas(path);
   }
 
-  void getUploadParas(String path) async {
+  void _getUploadParas(String path) async {
     try {
       uploading = true;
       notify?.call();
@@ -40,9 +40,9 @@ class ImageUploader {
       final response = await get(uri).timeout(Duration(seconds: 15));
       if (response.statusCode >= 200 && response.statusCode < 300) {
         final json = jsonDecode(response.body);
-        final paras = Paras.fromApi(json);
+        final paras = _Paras.fromApi(json);
         // print('upload: paras success');
-        uploadImage(path, paras);
+        _uploadImage(path, paras);
       } else {
         throw HttpError.status;
       }
@@ -54,7 +54,7 @@ class ImageUploader {
     }
   }
 
-  void uploadImage(String path, Paras paras) async {
+  void _uploadImage(String path, _Paras paras) async {
     try {
       var request = MultipartRequest('POST', Uri.parse(paras.server));
       request.fields['token'] = paras.token;
@@ -80,15 +80,15 @@ class ImageUploader {
   }
 }
 
-class Paras {
+class _Paras {
   String server;
   String token;
   String key;
   String url;
 
-  Paras({required this.server, required this.token, required this.key, required this.url});
+  _Paras({required this.server, required this.token, required this.key, required this.url});
 
-  factory Paras.fromApi(Map<String, dynamic> json) {
+  factory _Paras.fromApi(Map<String, dynamic> json) {
     final url = json['fileURL'] as String;
 
     final options = json['uploadFileOptions'] as Map;
@@ -98,6 +98,6 @@ class Paras {
     final token = data['token'] as String;
     final key = data['key'] as String;
 
-    return Paras(server: server, token: token, key: key, url: url);
+    return _Paras(server: server, token: token, key: key, url: url);
   }
 }

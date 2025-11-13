@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import '/core/core.dart';
 
-enum Statu { unknown, downloading, waiting, downloaded, failed }
+enum VDStatus { unknown, downloading, waiting, downloaded, failed }
 
 class VideoDownloader extends ChangeNotifier {
   Future<void> init() async {
@@ -12,22 +12,22 @@ class VideoDownloader extends ChangeNotifier {
   }
 
   void enqueue(String url) {
-    final statu = statuOf(url);
-    if (kDebugMode) debugPrint('enqueue: $url, ${statu.name}');
-    switch (statu) {
-      case Statu.unknown:
-        statuChanged?.call(Statu.unknown, url);
+    final status = statusOf(url);
+    if (kDebugMode) debugPrint('enqueue: $url, ${status.name}');
+    switch (status) {
+      case VDStatus.unknown:
+        statusChanged?.call(VDStatus.unknown, url);
         _queue.insert(0, url);
-        statuChanged?.call(Statu.waiting, url);
-      case Statu.downloading:
-        statuChanged?.call(Statu.downloading, url);
-      case Statu.waiting:
+        statusChanged?.call(VDStatus.waiting, url);
+      case VDStatus.downloading:
+        statusChanged?.call(VDStatus.downloading, url);
+      case VDStatus.waiting:
         _queue.remove(url);
         _queue.insert(0, url);
-        statuChanged?.call(Statu.waiting, url);
-      case Statu.downloaded:
-        statuChanged?.call(Statu.downloaded, url);
-      case Statu.failed:
+        statusChanged?.call(VDStatus.waiting, url);
+      case VDStatus.downloaded:
+        statusChanged?.call(VDStatus.downloaded, url);
+      case VDStatus.failed:
         break;
     }
   }
@@ -39,7 +39,7 @@ class VideoDownloader extends ChangeNotifier {
     String url = _queue.removeAt(0);
     if (kDebugMode) debugPrint('run: start, $url');
     _ongoing = url;
-    statuChanged?.call(Statu.downloading, url);
+    statusChanged?.call(VDStatus.downloading, url);
 
     try {
       final uri = Uri.parse(url);
@@ -51,9 +51,9 @@ class VideoDownloader extends ChangeNotifier {
       } else {
         if (kDebugMode) debugPrint('run: failed, $url, ${response.statusCode}');
       }
-      statuChanged?.call(response.statusCode == 200 ? Statu.downloaded : Statu.failed, url);
+      statusChanged?.call(response.statusCode == 200 ? VDStatus.downloaded : VDStatus.failed, url);
     } catch (e) {
-      statuChanged?.call(Statu.failed, url);
+      statusChanged?.call(VDStatus.failed, url);
     }
 
     _ongoing = null;
@@ -62,17 +62,17 @@ class VideoDownloader extends ChangeNotifier {
 
   final List<String> _queue = [];
   String? _ongoing;
-  void Function(Statu, String)? statuChanged;
+  void Function(VDStatus, String)? statusChanged;
 
-  Statu statuOf(String url) {
+  VDStatus statusOf(String url) {
     if (_ongoing == url) {
-      return Statu.downloading;
+      return VDStatus.downloading;
     } else if (_queue.contains(url)) {
-      return Statu.waiting;
+      return VDStatus.waiting;
     } else if (fileExistSync(pathOf(url))) {
-      return Statu.downloaded;
+      return VDStatus.downloaded;
     }
-    return Statu.unknown;
+    return VDStatus.unknown;
   }
 
   String pathOf(String url) => pathmk('downloads', '${url.md5}.mp4');
