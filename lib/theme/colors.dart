@@ -30,6 +30,7 @@ abstract final class MyColors {
   static const orange200 = Color(0xFFFFC59D);
   static const orange300 = Color(0xFFFBB383);
   static const orange400 = Color(0xFFFEA263);
+  static const orange500 = Color(0xFFFF8D28);
 
   static const logo = Color(0xFFC8122D);
 }

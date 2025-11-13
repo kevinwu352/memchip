@@ -7,6 +7,7 @@ import 'views/unknown_view.dart';
 import 'views/activated_view.dart';
 import 'views/previewed_view.dart';
 import 'views/generated_view.dart';
+import 'views/selection_view.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key, required this.box, required this.network});
@@ -59,7 +60,23 @@ class _DetailPageState extends State<DetailPage> {
             UnknownView(url: vm.box.coverImage, action: () {}),
             ActivatedView(url: vm.box.coverImage, action: () {}),
             PreviewedView(action: () {}),
-            GeneratedView(url: '', action: () {}),
+            GeneratedView(
+              url: '',
+              action: () {
+                showModalBottomSheet(
+                  backgroundColor: MyColors.violet00,
+                  context: context,
+                  builder: (context) {
+                    // return Text('abc');
+                    return SelectionView(
+                      items: ['data 1', 'data 2', 'data 3', 'data 4', 'data 5'],
+                      selected: 'data 2',
+                      onSelect: (str) {},
+                    );
+                  },
+                );
+              },
+            ),
           ],
         ),
       ),
