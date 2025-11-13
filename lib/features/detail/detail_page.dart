@@ -3,6 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '/pch.dart';
 import 'detail_vm.dart';
+import 'views/unknown_view.dart';
+import 'views/activated_view.dart';
+import 'views/previewed_view.dart';
+import 'views/generated_view.dart';
 
 class DetailPage extends StatefulWidget {
   const DetailPage({super.key, required this.box, required this.network});
@@ -48,13 +52,15 @@ class _DetailPageState extends State<DetailPage> {
       ),
       body: ListenableBuilder(
         listenable: vm,
-        builder: (context, child) => SizedBox.expand(
-          child: Column(
-            children: [
-              //
-              Text('data: ${widget.box.boxName}'),
-            ],
-          ),
+        builder: (context, child) => IndexedStack(
+          index: vm.box.status.stack,
+          sizing: StackFit.expand,
+          children: [
+            UnknownView(url: vm.box.coverImage, action: () {}),
+            ActivatedView(url: vm.box.coverImage, action: () {}),
+            PreviewedView(),
+            GeneratedView(),
+          ],
         ),
       ),
     );

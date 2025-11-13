@@ -3,8 +3,8 @@ import '/pch.dart';
 import 'cover_view.dart';
 import 'action_view.dart';
 
-class UnknownView extends StatelessWidget {
-  const UnknownView({super.key, required this.url, required this.action});
+class ActivatedView extends StatelessWidget {
+  const ActivatedView({super.key, required this.url, required this.action});
   final String url;
   final void Function() action;
 
