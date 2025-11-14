@@ -19,21 +19,9 @@ final class HomeVm extends ChangeNotifier {
       return;
     }
     try {
-      // await Future.delayed(Duration(seconds: 60));
       final result = await network.reqRes(Api.boxGetAll(), Box.fromApi);
-      switch (result) {
-        case Ok():
-          final res = result.value;
-          if (res.success) {
-            // onSnack?.call(res.message);
-            final list = res.getList<Box>();
-            boxes = list ?? [];
-          } else {
-            throw HttpError.operation;
-          }
-        case Error():
-          throw result.error;
-      }
+      final list = result.val.getLst<Box>();
+      boxes = list ?? [];
     } catch (e) {
       // final err = e is HttpError ? e : HttpError.unknown;
       // onSnack?.call(err);

@@ -28,6 +28,11 @@ class Res {
     return Res(code: code, message: message);
   }
 
+  Res get checked => switch (code) {
+    200 => this,
+    _ => throw HttpError.operation,
+  };
+
   bool get success => code == 200;
   bool get suc => switch (code) {
     200 => true,
@@ -35,7 +40,16 @@ class Res {
   };
 
   T? getObject<T>() => data is T ? data as T : null;
+  T? getObj<T>() => switch (code) {
+    200 => data is T ? data as T : null,
+    _ => throw HttpError.operation,
+  };
+
   List<T>? getList<T>() => data is List ? (data as List).whereType<T>().toList() : null;
+  List<T>? getLst<T>() => switch (code) {
+    200 => data is List ? (data as List).whereType<T>().toList() : null,
+    _ => throw HttpError.operation,
+  };
 }
 
 // null

@@ -25,11 +25,9 @@ final class DetailVm extends ChangeNotifier {
       deleting = true;
       final result = await network.reqRes(Api.boxDelete(id));
       deleting = false;
-      final res = result.val;
-      if (res.suc) {
-        onSnack?.call(res.message);
-        onComplete?.call();
-      }
+      final res = result.val.checked;
+      onSnack?.call(res.message);
+      onComplete?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
