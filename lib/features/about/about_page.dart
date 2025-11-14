@@ -76,12 +76,10 @@ class AboutPage extends StatelessWidget {
                         secures.accessToken = null;
                         final defaults = context.read<Defaults>();
                         defaults.user = null;
-                        Future.delayed(Duration(seconds: 1), () {
-                          if (context.mounted) {
-                            context.read<EventBus>().fire(type: EventType.accountLogout);
-                            context.go(Routes.home);
-                          }
-                        });
+                        Future.delayed(
+                          Duration(seconds: 1),
+                          () => context.mounted ? context.fire(EventType.accountLogout).go(Routes.home) : null,
+                        );
                       },
                       child: Text(
                         AppLocalizations.of(context)!.about_logout_btn,

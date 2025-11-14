@@ -23,20 +23,12 @@ final class DetailVm extends ChangeNotifier {
   void _delete(String id) async {
     try {
       deleting = true;
-      // await Future.delayed(Duration(seconds: 60));
       final result = await network.reqRes(Api.boxDelete(id));
       deleting = false;
-      switch (result) {
-        case Ok():
-          final res = result.value;
-          if (res.success) {
-            onSnack?.call(res.message);
-            onComplete?.call();
-          } else {
-            throw HttpError.operation;
-          }
-        case Error():
-          throw result.error;
+      final res = result.val;
+      if (res.suc) {
+        onSnack?.call(res.message);
+        onComplete?.call();
       }
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;

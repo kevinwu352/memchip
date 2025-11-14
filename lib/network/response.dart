@@ -29,6 +29,10 @@ class Res {
   }
 
   bool get success => code == 200;
+  bool get suc => switch (code) {
+    200 => true,
+    _ => throw HttpError.operation,
+  };
 
   T? getObject<T>() => data is T ? data as T : null;
   List<T>? getList<T>() => data is List ? (data as List).whereType<T>().toList() : null;

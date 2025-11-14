@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import '/pch.dart';
 import 'views/section_view.dart';
 import 'views/field_view.dart';
@@ -23,14 +22,8 @@ class _CreatePetPageState extends State<CreatePetPage> {
   late final vm = CreatePetVm(
     network: widget.network,
     onSnack: (msg) => context.showSnack(msg),
-    onComplete: () {
-      Future.delayed(Duration(seconds: 1), () {
-        if (mounted) {
-          context.read<EventBus>().fire(type: EventType.boxCreated);
-          context.go(Routes.home);
-        }
-      });
-    },
+    onComplete: () =>
+        Future.delayed(Duration(seconds: 1), () => mounted ? context.fire(EventType.boxCreated).go(Routes.home) : null),
   );
 
   @override

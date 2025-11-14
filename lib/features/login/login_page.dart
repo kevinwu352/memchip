@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import '/pch.dart';
 import 'login_vm.dart';
 
@@ -21,14 +20,10 @@ class _LoginPageState extends State<LoginPage> {
     secures: widget.secures,
     defaults: widget.defaults,
     onSnack: (msg) => context.showSnack(msg),
-    onComplete: () {
-      Future.delayed(Duration(seconds: 1), () {
-        if (mounted) {
-          context.read<EventBus>().fire(type: EventType.accountLogin);
-          context.go(Routes.home);
-        }
-      });
-    },
+    onComplete: () => Future.delayed(
+      Duration(seconds: 1),
+      () => mounted ? context.fire(EventType.accountLogin).go(Routes.home) : null,
+    ),
   );
 
   @override

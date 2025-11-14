@@ -33,6 +33,12 @@ sealed class Result<T> {
         return Result.error((this as Error).error);
     }
   }
+
+  /// Get value
+  T get val => switch (this) {
+    Ok() => (this as Ok<T>).value,
+    Error() => throw (this as Error<T>).error,
+  };
 }
 
 /// Subclass of Result for values

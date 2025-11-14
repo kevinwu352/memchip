@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import '/pch.dart';
 import 'detail_vm.dart';
 import 'views/unknown_view.dart';
@@ -23,14 +22,8 @@ class _DetailPageState extends State<DetailPage> {
     box: widget.box,
     network: widget.network,
     onSnack: (msg) => context.showSnack(msg),
-    onComplete: () {
-      Future.delayed(Duration(seconds: 1), () {
-        if (mounted) {
-          context.read<EventBus>().fire(type: EventType.boxDeleted);
-          context.pop();
-        }
-      });
-    },
+    onComplete: () =>
+        Future.delayed(Duration(seconds: 1), () => mounted ? context.fire(EventType.boxDeleted).pop() : null),
   );
 
   @override

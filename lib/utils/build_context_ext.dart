@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/network/network.dart';
+import 'event_bus.dart';
 
 extension BuildContextExt on BuildContext {
-  void showSnack(dynamic msg) {
+  BuildContext showSnack(dynamic msg) {
     String? info;
     if (msg is String) {
       info = msg;
@@ -13,5 +15,11 @@ extension BuildContextExt on BuildContext {
       ScaffoldMessenger.of(this).hideCurrentSnackBar();
       ScaffoldMessenger.of(this).showSnackBar(SnackBar(content: Text(info), behavior: SnackBarBehavior.floating));
     }
+    return this;
+  }
+
+  BuildContext fire(EventType type) {
+    read<EventBus>().fire(type: type);
+    return this;
   }
 }
