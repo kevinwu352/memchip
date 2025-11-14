@@ -3,17 +3,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '/pch.dart';
 
 class PreviewedView extends StatelessWidget {
-  const PreviewedView({
-    super.key,
-    required this.items,
-    required this.selected,
-    required this.onSelect,
-    required this.action,
-  });
+  const PreviewedView({super.key, required this.items, this.selected, this.onSelect, this.action});
   final List<String> items;
-  final List<int> selected;
-  final void Function(int value) onSelect;
-  final void Function() action;
+  final int? selected;
+  final void Function(int value)? onSelect;
+  final void Function()? action;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +45,7 @@ class PreviewedView extends StatelessWidget {
                   mainAxisSpacing: 20,
                 ),
                 itemBuilder: (context, index) =>
-                    _EntryView(url: items[index], selected: selected.contains(index), action: () => onSelect(index)),
+                    _EntryView(url: items[index], selected: selected == index, action: () => onSelect?.call(index)),
               ),
             ),
           ),

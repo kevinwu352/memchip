@@ -96,16 +96,6 @@ final class DetailVm extends ChangeNotifier {
     }
   }
 
-  List<int> selected = [];
-  void selectAction(int index) {
-    if (selected.contains(index)) {
-      selected.remove(index);
-    } else {
-      selected.add(index);
-    }
-    notifyListeners();
-  }
-
   var _generating = false;
   bool get generating => _generating;
   set generating(bool value) {
@@ -113,25 +103,46 @@ final class DetailVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  void generateAction() {
-    if (_generating) return;
-    if (_gests.isEmpty) {
-      _getGests();
+  int? selectedPreview;
+  void selectAction(int index) {
+    if (selectedPreview == index) {
+      selectedPreview = null;
     } else {
-      _generate();
+      selectedPreview = index;
     }
+    notifyListeners();
   }
 
-  void _getGests() async {
+  bool get generateEnabled => selectedPreview != null;
+
+  void generateAction() async {
+    if (_generating) return;
+    generating = true;
+
+    // if (box.isHuman) {
+    //   if (_gests.isEmpty) {
+    //     await _getGests();
+    //   } else {
+    //     _generate();
+    //   }
+    // } else {
+    //   _generate();
+    // }
+  }
+
+  Future<void> _getGests() async {
     try {
       final result = await network.reqRes(Api.boxGetGests(), init: Gest.fromApi, key: 'availableActions');
       final list = result.val.getLst<Gest>();
       _gests = list ?? [];
+      print(_gests);
     } catch (e) {
       // final err = e is HttpError ? e : HttpError.unknown;
       // onSnack?.call(err);
     }
   }
 
-  void _generate() {}
+  void _generate() {
+    print('_generate');
+  }
 }

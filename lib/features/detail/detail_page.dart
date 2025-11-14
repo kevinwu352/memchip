@@ -55,27 +55,11 @@ class _DetailPageState extends State<DetailPage> {
             ActivatedView(url: vm.box.coverImage, doing: vm.previewing, action: vm.previewAction),
             PreviewedView(
               items: vm.box.previewImages,
-              selected: vm.selected,
+              selected: vm.selectedPreview,
               onSelect: vm.selectAction,
-              action: vm.generateAction,
+              action: vm.generateEnabled ? vm.generateAction : null,
             ),
-            GeneratedView(
-              url: '',
-              action: () {
-                showModalBottomSheet(
-                  backgroundColor: MyColors.violet00,
-                  context: context,
-                  builder: (context) {
-                    // return Text('abc');
-                    return SelectionView(
-                      items: ['data 1', 'data 2', 'data 3', 'data 4', 'data 5'],
-                      selected: 1,
-                      onSelect: (value) {},
-                    );
-                  },
-                );
-              },
-            ),
+            GeneratedView(url: '', action: () {}),
           ],
         ),
       ),
@@ -154,6 +138,21 @@ class _DetailPageState extends State<DetailPage> {
           ),
         ],
       ),
+    );
+  }
+
+  void selectAction() {
+    showModalBottomSheet(
+      backgroundColor: MyColors.violet00,
+      context: context,
+      builder: (context) {
+        // return Text('abc');
+        return SelectionView(
+          items: ['data 1', 'data 2', 'data 3', 'data 4', 'data 5'],
+          selected: 1,
+          onSelect: (value) {},
+        );
+      },
     );
   }
 }
