@@ -3,7 +3,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '/pch.dart';
 
 class PreviewedView extends StatelessWidget {
-  const PreviewedView({super.key, required this.action});
+  const PreviewedView({
+    super.key,
+    required this.items,
+    required this.selected,
+    required this.onSelect,
+    required this.action,
+  });
+  final List<String> items;
+  final List<int> selected;
+  final void Function(int value) onSelect;
   final void Function() action;
 
   @override
@@ -35,21 +44,22 @@ class PreviewedView extends StatelessWidget {
               context: context,
               removeBottom: true,
               child: GridView.builder(
-                itemCount: 7,
+                itemCount: items.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                   mainAxisExtent: 200,
                 ),
-                itemBuilder: (context, index) => _EntryView(url: '', selected: index == 2, action: action),
+                itemBuilder: (context, index) =>
+                    _EntryView(url: items[index], selected: selected.contains(index), action: () => onSelect(index)),
               ),
             ),
           ),
 
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: MyColors.orange400),
-            onPressed: () {},
+            onPressed: action,
             child: Text(
               AppLocalizations.of(context)!.detail_generate_btn,
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
@@ -62,7 +72,7 @@ class PreviewedView extends StatelessWidget {
 }
 
 class _EntryView extends StatelessWidget {
-  const _EntryView({super.key, required this.url, required this.selected, required this.action});
+  const _EntryView({required this.url, required this.selected, required this.action});
   final String url;
   final bool selected;
   final void Function() action;
@@ -88,7 +98,7 @@ class _EntryView extends StatelessWidget {
                         imageUrl: url,
                         fit: BoxFit.cover,
                         placeholder: (context, url) => Container(color: Colors.white),
-                        errorWidget: (context, url, error) => Container(color: Colors.red),
+                        errorWidget: (context, url, error) => Container(color: Colors.white),
                       ),
                     ),
                     if (selected) Image.asset('assets/images/detail_check_mask.png', fit: BoxFit.fill),

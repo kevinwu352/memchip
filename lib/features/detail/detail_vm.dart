@@ -93,4 +93,28 @@ final class DetailVm extends ChangeNotifier {
       onSnack?.call(err);
     }
   }
+
+  List<int> selected = [];
+  void selectAction(int index) {
+    if (selected.contains(index)) {
+      selected.remove(index);
+    } else {
+      selected.add(index);
+    }
+    notifyListeners();
+  }
+
+  var _generating = false;
+  bool get generating => _generating;
+  set generating(bool value) {
+    _generating = value;
+    notifyListeners();
+  }
+
+  void generateAction() {
+    if (_generating) return;
+    _generate();
+  }
+
+  void _generate() {}
 }
