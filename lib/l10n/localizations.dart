@@ -644,17 +644,17 @@ abstract class AppLocalizations {
   /// **'Create'**
   String get create_create_btn;
 
-  /// No description provided for @detail_delete_title.
+  /// No description provided for @detail_delete_alert_title.
   ///
   /// In en, this message translates to:
   /// **'Warning'**
-  String get detail_delete_title;
+  String get detail_delete_alert_title;
 
-  /// No description provided for @detail_delete_info.
+  /// No description provided for @detail_delete_alert_info.
   ///
   /// In en, this message translates to:
   /// **'Are you sure to delete this item?'**
-  String get detail_delete_info;
+  String get detail_delete_alert_info;
 
   /// No description provided for @detail_activate_info.
   ///
@@ -667,6 +667,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Activate'**
   String get detail_activate_btn;
+
+  /// No description provided for @detail_activate_alert_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter serial number:'**
+  String get detail_activate_alert_title;
 }
 
 class _AppLocalizationsDelegate

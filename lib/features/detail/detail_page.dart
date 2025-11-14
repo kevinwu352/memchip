@@ -82,8 +82,8 @@ class _DetailPageState extends State<DetailPage> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog.adaptive(
-        title: Text(AppLocalizations.of(context)!.detail_delete_title),
-        content: Text(AppLocalizations.of(context)!.detail_delete_info),
+        title: Text(AppLocalizations.of(context)!.detail_delete_alert_title),
+        content: Text(AppLocalizations.of(context)!.detail_delete_alert_info),
         actions: [
           TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(AppLocalizations.of(context)!.cancel)),
           TextButton(
@@ -101,8 +101,9 @@ class _DetailPageState extends State<DetailPage> {
   void activateAction() {
     showAdaptiveDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) => AlertDialog.adaptive(
-        title: Text(AppLocalizations.of(context)!.detail_delete_title),
+        title: Text(AppLocalizations.of(context)!.detail_activate_alert_title),
         content: Material(
           color: Colors.transparent,
           child: TextField(

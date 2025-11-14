@@ -101,8 +101,9 @@
   "create_personality_tame": "Tame",
   "create_create_btn": "Create",
 
-  "detail_delete_title": "Warning",
-  "detail_delete_info": "Are you sure to delete this item?",
+  "detail_delete_alert_title": "Warning",
+  "detail_delete_alert_info": "Are you sure to delete this item?",
   "detail_activate_info": "No character yet",
-  "detail_activate_btn": "Activate"
+  "detail_activate_btn": "Activate",
+  "detail_activate_alert_title": "Enter serial number:"
 }

@@ -294,14 +294,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get create_create_btn => 'Create';
 
   @override
-  String get detail_delete_title => '警告';
+  String get detail_delete_alert_title => '警告';
 
   @override
-  String get detail_delete_info => '确定要删除这一项吗？';
+  String get detail_delete_alert_info => '确定要删除这一项吗？';
 
   @override
   String get detail_activate_info => '目前没有已激活的角色';
 
   @override
   String get detail_activate_btn => '激活';
+
+  @override
+  String get detail_activate_alert_title => '输入序列号：';
 }

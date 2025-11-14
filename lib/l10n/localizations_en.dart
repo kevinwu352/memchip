@@ -294,14 +294,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get create_create_btn => 'Create';
 
   @override
-  String get detail_delete_title => 'Warning';
+  String get detail_delete_alert_title => 'Warning';
 
   @override
-  String get detail_delete_info => 'Are you sure to delete this item?';
+  String get detail_delete_alert_info => 'Are you sure to delete this item?';
 
   @override
   String get detail_activate_info => 'No character yet';
 
   @override
   String get detail_activate_btn => 'Activate';
+
+  @override
+  String get detail_activate_alert_title => 'Enter serial number:';
 }
