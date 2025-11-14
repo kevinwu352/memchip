@@ -19,12 +19,11 @@ class PreviewedView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Select Image',
+                  AppLocalizations.of(context)!.detail_generate_title,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: MyColors.gray800),
                 ),
                 Text(
-                  // 'Please choose one',
-                  'Please choose one image from the following to create a holographic projection.',
+                  AppLocalizations.of(context)!.detail_generate_info,
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: MyColors.gray500),
                 ),
               ],
@@ -51,7 +50,10 @@ class PreviewedView extends StatelessWidget {
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: MyColors.orange400),
             onPressed: () {},
-            child: Text('Confirm', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+            child: Text(
+              AppLocalizations.of(context)!.detail_generate_btn,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            ),
           ),
         ],
       ),

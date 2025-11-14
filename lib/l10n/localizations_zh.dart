@@ -313,4 +313,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get detail_preview_btn => '生成预览图';
+
+  @override
+  String get detail_generate_title => '选择预览图';
+
+  @override
+  String get detail_generate_info => '请从下列图片中选择一张制作全息影像';
+
+  @override
+  String get detail_generate_btn => '生成全息影像';
 }

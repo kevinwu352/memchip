@@ -313,4 +313,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get detail_preview_btn => 'Generate Preview';
+
+  @override
+  String get detail_generate_title => 'Select preview image';
+
+  @override
+  String get detail_generate_info =>
+      'Please select one image from below to create a your chips.';
+
+  @override
+  String get detail_generate_btn => 'Generate Chips';
 }

@@ -685,6 +685,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Generate Preview'**
   String get detail_preview_btn;
+
+  /// No description provided for @detail_generate_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Select preview image'**
+  String get detail_generate_title;
+
+  /// No description provided for @detail_generate_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select one image from below to create a your chips.'**
+  String get detail_generate_info;
+
+  /// No description provided for @detail_generate_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Chips'**
+  String get detail_generate_btn;
 }
 
 class _AppLocalizationsDelegate
