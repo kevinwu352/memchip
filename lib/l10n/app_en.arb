@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
 
+  "alert_title": "Attention",
   "confirm": "Confirm",
   "cancel": "Cancel",
 
@@ -98,5 +99,8 @@
   "create_personality_solo": "Solo",
   "create_personality_naughty": "Naughty",
   "create_personality_tame": "Tame",
-  "create_create_btn": "Create"
+  "create_create_btn": "Create",
+
+  "detail_delete_title": "Warning",
+  "detail_delete_info": "Are you sure to delete this item?"
 }

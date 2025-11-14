@@ -79,12 +79,19 @@ class _DetailPageState extends State<DetailPage> {
   void deleteAction() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('AlertDialog Title'),
-        content: const Text('AlertDialog description'),
+      barrierDismissible: false,
+      builder: (context) => AlertDialog.adaptive(
+        title: Text(AppLocalizations.of(context)!.detail_delete_title),
+        content: Text(AppLocalizations.of(context)!.detail_delete_info),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Cancel')),
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('OK')),
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(AppLocalizations.of(context)!.cancel)),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              vm.deleteAction();
+            },
+            child: Text(AppLocalizations.of(context)!.confirm),
+          ),
         ],
       ),
     );

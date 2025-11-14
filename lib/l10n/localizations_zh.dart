@@ -9,6 +9,9 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
+  String get alert_title => '提示';
+
+  @override
   String get confirm => '确定';
 
   @override
@@ -289,4 +292,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get create_create_btn => 'Create';
+
+  @override
+  String get detail_delete_title => '警告';
+
+  @override
+  String get detail_delete_info => '确定要删除这一项吗？';
 }

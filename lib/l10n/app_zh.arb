@@ -1,6 +1,7 @@
 {
   "@@locale": "zh",
 
+  "alert_title": "提示",
   "confirm": "确定",
   "cancel": "取消",
 
@@ -98,5 +99,8 @@
   "create_personality_solo": "Solo",
   "create_personality_naughty": "Naughty",
   "create_personality_tame": "Tame",
-  "create_create_btn": "Create"
+  "create_create_btn": "Create",
+
+  "detail_delete_title": "警告",
+  "detail_delete_info": "确定要删除这一项吗？"
 }

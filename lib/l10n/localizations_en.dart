@@ -9,6 +9,9 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
+  String get alert_title => 'Attention';
+
+  @override
   String get confirm => 'Confirm';
 
   @override
@@ -289,4 +292,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get create_create_btn => 'Create';
+
+  @override
+  String get detail_delete_title => 'Warning';
+
+  @override
+  String get detail_delete_info => 'Are you sure to delete this item?';
 }

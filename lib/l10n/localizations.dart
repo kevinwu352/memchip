@@ -98,6 +98,12 @@ abstract class AppLocalizations {
     Locale('zh'),
   ];
 
+  /// No description provided for @alert_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Attention'**
+  String get alert_title;
+
   /// No description provided for @confirm.
   ///
   /// In en, this message translates to:
@@ -637,6 +643,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create'**
   String get create_create_btn;
+
+  /// No description provided for @detail_delete_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get detail_delete_title;
+
+  /// No description provided for @detail_delete_info.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure to delete this item?'**
+  String get detail_delete_info;
 }
 
 class _AppLocalizationsDelegate
