@@ -102,7 +102,13 @@ class _HomePageState extends State<HomePage> {
   StreamSubscription? boxesSub;
   void _subscribeBoxesChange() {
     boxesSub = context.read<EventBus>().listen(
-      type: [EventType.accountLogin, EventType.accountLogout, EventType.boxCreated, EventType.boxDeleted],
+      type: [
+        EventType.accountLogin,
+        EventType.accountLogout,
+        EventType.boxCreated,
+        EventType.boxDeleted,
+        EventType.boxUpdated,
+      ],
       onEvent: (event) => vm.getAllChips(),
     );
   }

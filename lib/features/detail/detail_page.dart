@@ -41,7 +41,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.box.boxName),
+        title: Text(vm.box.boxName),
         actions: [IconButton(onPressed: deleteAction, icon: Icon(Icons.delete))],
       ),
       resizeToAvoidBottomInset: false,
@@ -52,7 +52,7 @@ class _DetailPageState extends State<DetailPage> {
           sizing: StackFit.expand,
           children: [
             UnknownView(url: vm.box.coverImage, doing: vm.activating, action: activateAction),
-            ActivatedView(url: vm.box.coverImage, doing: vm.previewing, action: () {}),
+            ActivatedView(url: vm.box.coverImage, doing: vm.previewing, action: vm.previewAction),
             PreviewedView(action: () {}),
             GeneratedView(
               url: '',

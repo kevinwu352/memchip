@@ -59,10 +59,10 @@ final class HttpClient implements Networkable {
       switch (api.method) {
         case ReqMethod.get:
           final uri = Uri(scheme: 'https', host: host, path: api.path, queryParameters: api.query());
-          response = await get(uri, headers: api.heads(headers)).timeout(Duration(seconds: 15));
+          response = await get(uri, headers: api.heads(headers)).timeout(Duration(seconds: 120));
         case ReqMethod.post:
           final uri = Uri(scheme: 'https', host: host, path: api.path);
-          response = await post(uri, headers: api.heads(headers), body: api.body()).timeout(Duration(seconds: 15));
+          response = await post(uri, headers: api.heads(headers), body: api.body()).timeout(Duration(seconds: 120));
       }
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return response;

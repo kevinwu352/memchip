@@ -82,4 +82,12 @@ final class Api extends Endpoint {
         parameters: {'boxId': boxId, 'code': code},
         encoding: ReqEncoding.json,
       );
+
+  Api.boxPreview(String boxId)
+    : super(
+        '/MeetAgain-memoryBoxes/generatePreview',
+        ReqMethod.post,
+        parameters: {'boxId': boxId},
+        encoding: ReqEncoding.json,
+      );
 }

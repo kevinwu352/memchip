@@ -73,4 +73,24 @@ final class DetailVm extends ChangeNotifier {
     _previewing = value;
     notifyListeners();
   }
+
+  void previewAction() {
+    if (_previewing) return;
+    _preview(box.id);
+  }
+
+  void _preview(String id) async {
+    try {
+      previewing = true;
+      final result = await network.reqRes(Api.boxPreview(id));
+      previewing = false;
+      final res = result.val.checked;
+      onSnack?.call(res.message);
+      box.status = BoxStatus.previewed;
+      notifyListeners();
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknown;
+      onSnack?.call(err);
+    }
+  }
 }
