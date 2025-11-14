@@ -47,7 +47,7 @@ class _DetailPageState extends State<DetailPage> {
       body: ListenableBuilder(
         listenable: vm,
         builder: (context, child) => IndexedStack(
-          index: 3, //vm.box.status.stack,
+          index: vm.box.status.stack,
           sizing: StackFit.expand,
           children: [
             UnknownView(url: vm.box.coverImage, action: () {}),

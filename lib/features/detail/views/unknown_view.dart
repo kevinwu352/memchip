@@ -21,7 +21,11 @@ class UnknownView extends StatelessWidget {
 
         Container(
           margin: EdgeInsets.fromLTRB(20, 0, 20, kSafeBot + 15),
-          child: ActionView(info: '111', title: 'Activate', action: action),
+          child: ActionView(
+            info: AppLocalizations.of(context)!.detail_activate_info,
+            button: AppLocalizations.of(context)!.detail_activate_btn,
+            action: action,
+          ),
         ),
       ],
     );

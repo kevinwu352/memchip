@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 class ActionView extends StatelessWidget {
-  const ActionView({super.key, required this.info, required this.title, required this.action});
+  const ActionView({super.key, required this.info, required this.button, required this.action});
 
   final String info;
-  final String title;
+  final String button;
   final void Function() action;
 
   @override
@@ -32,7 +32,7 @@ class ActionView extends StatelessWidget {
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: MyColors.orange400),
             onPressed: action,
-            child: Text(title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+            child: Text(button, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
           ),
         ],
       ),

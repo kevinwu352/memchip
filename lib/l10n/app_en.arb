@@ -102,5 +102,7 @@
   "create_create_btn": "Create",
 
   "detail_delete_title": "Warning",
-  "detail_delete_info": "Are you sure to delete this item?"
+  "detail_delete_info": "Are you sure to delete this item?",
+  "detail_activate_info": "No character yet",
+  "detail_activate_btn": "Activate"
 }

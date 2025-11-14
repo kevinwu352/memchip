@@ -298,4 +298,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get detail_delete_info => '确定要删除这一项吗？';
+
+  @override
+  String get detail_activate_info => '目前没有已激活的角色';
+
+  @override
+  String get detail_activate_btn => '激活';
 }

@@ -102,5 +102,7 @@
   "create_create_btn": "Create",
 
   "detail_delete_title": "警告",
-  "detail_delete_info": "确定要删除这一项吗？"
+  "detail_delete_info": "确定要删除这一项吗？",
+  "detail_activate_info": "目前没有已激活的角色",
+  "detail_activate_btn": "激活"
 }

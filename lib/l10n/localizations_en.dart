@@ -298,4 +298,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get detail_delete_info => 'Are you sure to delete this item?';
+
+  @override
+  String get detail_activate_info => 'No character yet';
+
+  @override
+  String get detail_activate_btn => 'Activate';
 }

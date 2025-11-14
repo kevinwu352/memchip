@@ -655,6 +655,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure to delete this item?'**
   String get detail_delete_info;
+
+  /// No description provided for @detail_activate_info.
+  ///
+  /// In en, this message translates to:
+  /// **'No character yet'**
+  String get detail_activate_info;
+
+  /// No description provided for @detail_activate_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get detail_activate_btn;
 }
 
 class _AppLocalizationsDelegate

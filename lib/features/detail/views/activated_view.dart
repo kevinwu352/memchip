@@ -23,7 +23,7 @@ class ActivatedView extends StatelessWidget {
           margin: EdgeInsets.fromLTRB(20, 0, 20, kSafeBot + 15),
           child: ActionView(
             info: 'The colors the gradient should obtain at each of the stops.',
-            title: 'Preview',
+            button: 'Preview',
             action: action,
           ),
         ),
