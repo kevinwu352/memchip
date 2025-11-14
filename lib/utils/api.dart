@@ -90,4 +90,6 @@ final class Api extends Endpoint {
         parameters: {'boxId': boxId},
         encoding: ReqEncoding.json,
       );
+
+  Api.boxGetGests() : super('/MeetAgain-memoryBoxes/getAvailableActions', ReqMethod.get);
 }

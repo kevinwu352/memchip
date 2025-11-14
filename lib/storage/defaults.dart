@@ -2,10 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import '/core/core.dart';
-import '/models/user.dart';
 import 'hive_ext.dart';
+import '/models/user.dart';
+import '/models/gest.dart';
 
-enum _Keys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey }
+enum _Keys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey, kGestsKey }
 
 final class Defaults extends ChangeNotifier {
   late Box<Object> _box;
@@ -26,8 +27,9 @@ final class Defaults extends ChangeNotifier {
     final languageVal = _box.getList(_Keys.kLanguageCodeKey.name)?.whereType<String>().toList() ?? [];
     _language = languageVal.isNotEmpty ? Locale(languageVal[0], languageVal.elementAtOrNull(1)) : null;
 
-    final userVal = _box.getMap(_Keys.kCurrentUserKey.name);
-    _user = userVal != null ? User.fromJson(userVal) : null;
+    _user = _box.getObject(_Keys.kCurrentUserKey.name, User.fromJson);
+
+    _gests = _box.getObjectList<Gest>(_Keys.kGestsKey.name, Gest.fromJson)?.whereType<Gest>().toList() ?? [];
   }
 
   late ThemeMode _theme;
@@ -52,6 +54,14 @@ final class Defaults extends ChangeNotifier {
   set user(User? value) {
     _user = value;
     _box.setValue(_Keys.kCurrentUserKey.name, value?.toJson());
+    notifyListeners();
+  }
+
+  List<Gest> _gests = [];
+  List<Gest> get gests => _gests;
+  set gests(List<Gest> value) {
+    _gests = value;
+    _box.setValue(_Keys.kGestsKey.name, _gests.map((e) => e.toJson()));
     notifyListeners();
   }
 }

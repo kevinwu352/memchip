@@ -45,7 +45,7 @@ final class HttpClient implements Networkable {
   Future<Result<Res>> reqRes<T>(Endpoint api, {T Function(Map<String, dynamic>)? init, String? key}) async {
     try {
       final response = await _req(api);
-      final res = await compute((message) => parse(message, init), response.body);
+      final res = await compute((message) => parse(message, init: init, key: key), response.body);
       return Result.ok(res);
     } catch (e) {
       final error = e is HttpError ? e : HttpError.unknown;
