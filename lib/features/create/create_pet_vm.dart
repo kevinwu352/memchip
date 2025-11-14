@@ -93,10 +93,7 @@ final class CreatePetVm extends ChangeNotifier {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await network.reqRes(
-        Api.boxCreatePet(name, image1, image2, gender, species, tail, personality),
-        null,
-      );
+      final result = await network.reqRes(Api.boxCreatePet(name, image1, image2, gender, species, tail, personality));
       submiting = false;
       switch (result) {
         case Ok():

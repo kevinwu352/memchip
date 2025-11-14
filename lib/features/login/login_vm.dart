@@ -68,7 +68,7 @@ final class LoginVm extends ChangeNotifier {
     try {
       sending = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await network.reqRes(Api.accountSendCode(email), null);
+      final result = await network.reqRes(Api.accountSendCode(email));
       sending = false;
       switch (result) {
         case Ok():
@@ -126,7 +126,7 @@ final class LoginVm extends ChangeNotifier {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await network.reqRes(Api.accountLogin(account, code), User.fromApi);
+      final result = await network.reqRes(Api.accountLogin(account, code), init: User.fromApi);
       submiting = false;
       switch (result) {
         case Ok():
@@ -154,7 +154,7 @@ final class LoginVm extends ChangeNotifier {
     try {
       submiting = true;
       // await Future.delayed(Duration(seconds: 60));
-      final result = await network.reqRes(Api.accountCheckCode(account, code), User.fromApi);
+      final result = await network.reqRes(Api.accountCheckCode(account, code), init: User.fromApi);
       submiting = false;
       switch (result) {
         case Ok():

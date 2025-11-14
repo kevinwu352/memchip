@@ -7,6 +7,7 @@ export '/theme/theme.dart';
 
 export '/models/user.dart';
 export '/models/box.dart';
+export '/models/gest.dart';
 
 export '/utils/event_bus.dart';
 export '/utils/api.dart';

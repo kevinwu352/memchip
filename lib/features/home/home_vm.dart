@@ -19,7 +19,7 @@ final class HomeVm extends ChangeNotifier {
       return;
     }
     try {
-      final result = await network.reqRes(Api.boxGetAll(), Box.fromApi);
+      final result = await network.reqRes(Api.boxGetAll(), init: Box.fromApi);
       final list = result.val.getLst<Box>();
       boxes = list ?? [];
     } catch (e) {

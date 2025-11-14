@@ -9,7 +9,7 @@ final kCurrentHost = 'apiuniapp.paoxiaokeji.com';
 
 abstract class Networkable {
   Future<Result<Response>> reqRaw(Endpoint api);
-  Future<Result<Res>> reqRes<T>(Endpoint api, [T Function(Map<String, dynamic>)? init]);
+  Future<Result<Res>> reqRes<T>(Endpoint api, {T Function(Map<String, dynamic>)? init, String? key});
 }
 
 final class HttpClient implements Networkable {
@@ -42,7 +42,7 @@ final class HttpClient implements Networkable {
   }
 
   @override
-  Future<Result<Res>> reqRes<T>(Endpoint api, [T Function(Map<String, dynamic>)? init]) async {
+  Future<Result<Res>> reqRes<T>(Endpoint api, {T Function(Map<String, dynamic>)? init, String? key}) async {
     try {
       final response = await _req(api);
       final res = await compute((message) => parse(message, init), response.body);
