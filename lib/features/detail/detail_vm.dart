@@ -4,11 +4,12 @@ import '/pch.dart';
 List<Gest> _gests = [];
 
 final class DetailVm extends ChangeNotifier {
-  DetailVm({required this.box, required this.network, this.onSnack, this.onComplete});
+  DetailVm({required this.box, required this.network, this.onSnack, this.onComplete, this.onSelectGest});
   final Box box;
   final Networkable network;
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
+  final Future<bool?> Function()? onSelectGest;
 
   var _deleting = false;
   bool get deleting => _deleting;
@@ -116,18 +117,44 @@ final class DetailVm extends ChangeNotifier {
   bool get generateEnabled => selectedPreview != null;
 
   void generateAction() async {
-    if (_generating) return;
+    if (_generating) {
+      print('generating:yes, return');
+      return;
+    } else {
+      print('generating:no, continue');
+    }
     generating = true;
 
-    // if (box.isHuman) {
-    //   if (_gests.isEmpty) {
-    //     await _getGests();
-    //   } else {
-    //     _generate();
-    //   }
-    // } else {
-    //   _generate();
-    // }
+    if (box.isHuman) {
+      if (_gests.isEmpty) {
+        print('human:yes, has-gest:no, to-retrive');
+        await _getGests();
+        if (_gests.isEmpty) {
+          print('human:yes, has-gest:no, to-retrive, got:${_gests.length}, return');
+          generating = false;
+          return;
+        } else {
+          print('human:yes, has-gest:no, to-retrive, got:${_gests.length}, continue');
+        }
+      } else {
+        print('human:yes, has-gest:yes, continue');
+      }
+
+      print('human:yes, to-select');
+      final confirmed = await onSelectGest?.call();
+      if (confirmed == true) {
+        print('human:yes, to-select, got:$confirmed, continue');
+      } else {
+        print('human:yes, to-select, got:$confirmed, return');
+        generating = false;
+        return;
+      }
+    }
+
+    print('to-generate');
+    await _generate();
+    print('to-generate, done');
+    _generating = false;
   }
 
   Future<void> _getGests() async {
@@ -135,14 +162,12 @@ final class DetailVm extends ChangeNotifier {
       final result = await network.reqRes(Api.boxGetGests(), init: Gest.fromApi, key: 'availableActions');
       final list = result.val.getLst<Gest>();
       _gests = list ?? [];
-      print(_gests);
-    } catch (e) {
-      // final err = e is HttpError ? e : HttpError.unknown;
-      // onSnack?.call(err);
-    }
+    } catch (e) {}
   }
 
-  void _generate() {
+  List<Gest> get gests => _gests;
+
+  Future<void> _generate() async {
     print('_generate');
   }
 }

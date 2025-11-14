@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import '/pch.dart';
 
-class SelectionView extends StatelessWidget {
-  const SelectionView({super.key, required this.items, this.selected, required this.onSelect});
-  final List<String> items;
-  final int? selected;
-  final void Function(int value) onSelect;
+class SelectionView extends StatefulWidget {
+  const SelectionView({super.key, required this.items, required this.action});
+  final List<Gest> items;
+  final void Function(List<int> value) action;
+
+  @override
+  State<SelectionView> createState() => _SelectionViewState();
+}
+
+class _SelectionViewState extends State<SelectionView> {
+  List<int> selected = [];
 
   @override
   Widget build(BuildContext context) {
@@ -46,23 +52,26 @@ class SelectionView extends StatelessWidget {
               spacing: 20,
               runSpacing: 20,
               children: [
-                ...items.indexed.map(
+                ...widget.items.indexed.map(
                   (e) => ActionChip(
                     shape: StadiumBorder(
-                      side: BorderSide(color: selected == e.$1 ? MyColors.orange500 : MyColors.gray700, width: 2),
+                      side: BorderSide(
+                        color: selected.contains(e.$1) ? MyColors.orange500 : MyColors.gray700,
+                        width: 2,
+                      ),
                     ),
-                    backgroundColor: selected == e.$1 ? MyColors.orange400 : MyColors.white100,
-                    label: Text(e.$2),
+                    backgroundColor: selected.contains(e.$1) ? MyColors.orange400 : MyColors.white100,
+                    label: Text(e.$2.action),
                     labelStyle: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: selected == e.$1 ? MyColors.white100 : MyColors.gray700,
+                      color: selected.contains(e.$1) ? MyColors.white100 : MyColors.gray700,
                     ),
                     padding: EdgeInsets.zero,
                     labelPadding: EdgeInsets.symmetric(horizontal: 10),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
-                    onPressed: () => onSelect(e.$1),
+                    onPressed: () => selectAction(e.$1),
                   ),
                 ),
               ],
@@ -88,5 +97,14 @@ class SelectionView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void selectAction(int index) {
+    if (selected.contains(index)) {
+      selected.remove(index);
+    } else {
+      selected.add(index);
+    }
+    setState(() {});
   }
 }

@@ -24,6 +24,7 @@ class _DetailPageState extends State<DetailPage> {
     onSnack: (msg) => context.showSnack(msg),
     onComplete: () =>
         Future.delayed(Duration(seconds: 1), () => mounted ? context.fire(EventType.boxDeleted).pop() : null),
+    onSelectGest: selectAction,
   );
 
   @override
@@ -141,17 +142,13 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  void selectAction() {
-    showModalBottomSheet(
+  Future<bool?> selectAction() {
+    return showModalBottomSheet<bool>(
       backgroundColor: MyColors.violet00,
       context: context,
       builder: (context) {
         // return Text('abc');
-        return SelectionView(
-          items: ['data 1', 'data 2', 'data 3', 'data 4', 'data 5'],
-          selected: 1,
-          onSelect: (value) {},
-        );
+        return SelectionView(items: vm.gests, action: (value) {});
       },
     );
   }

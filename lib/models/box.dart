@@ -57,6 +57,8 @@ class Box {
   DateTime createdTime;
   DateTime updatedTime;
 
+  bool isHuman = true;
+
   Box({
     required this.id,
     required this.userId,
