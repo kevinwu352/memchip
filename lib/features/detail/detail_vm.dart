@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '/pch.dart';
 
+List<Gest> _gests = [];
+
 final class DetailVm extends ChangeNotifier {
-  DetailVm({required this.box, required this.network, required this.defaults, this.onSnack, this.onComplete});
+  DetailVm({required this.box, required this.network, this.onSnack, this.onComplete});
   final Box box;
   final Networkable network;
-  final Defaults defaults;
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
 
@@ -114,7 +115,7 @@ final class DetailVm extends ChangeNotifier {
 
   void generateAction() {
     if (_generating) return;
-    if (defaults.gests.isEmpty) {
+    if (_gests.isEmpty) {
       _getGests();
     } else {
       _generate();
@@ -125,7 +126,7 @@ final class DetailVm extends ChangeNotifier {
     try {
       final result = await network.reqRes(Api.boxGetGests(), init: Gest.fromApi, key: 'availableActions');
       final list = result.val.getLst<Gest>();
-      defaults.gests = list ?? [];
+      _gests = list ?? [];
     } catch (e) {
       // final err = e is HttpError ? e : HttpError.unknown;
       // onSnack?.call(err);

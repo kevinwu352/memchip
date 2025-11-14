@@ -4,9 +4,8 @@ import 'package:hive/hive.dart';
 import '/core/core.dart';
 import 'hive_ext.dart';
 import '/models/user.dart';
-import '/models/gest.dart';
 
-enum _Keys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey, kGestsKey }
+enum _Keys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey }
 
 final class Defaults extends ChangeNotifier {
   late Box<Object> _box;
@@ -28,8 +27,6 @@ final class Defaults extends ChangeNotifier {
     _language = languageVal.isNotEmpty ? Locale(languageVal[0], languageVal.elementAtOrNull(1)) : null;
 
     _user = _box.getObject(_Keys.kCurrentUserKey.name, User.fromJson);
-
-    _gests = _box.getObjectList<Gest>(_Keys.kGestsKey.name, Gest.fromJson)?.whereType<Gest>().toList() ?? [];
   }
 
   late ThemeMode _theme;
@@ -54,14 +51,6 @@ final class Defaults extends ChangeNotifier {
   set user(User? value) {
     _user = value;
     _box.setValue(_Keys.kCurrentUserKey.name, value?.toJson());
-    notifyListeners();
-  }
-
-  List<Gest> _gests = [];
-  List<Gest> get gests => _gests;
-  set gests(List<Gest> value) {
-    _gests = value;
-    _box.setValue(_Keys.kGestsKey.name, _gests.map((e) => e.toJson()));
     notifyListeners();
   }
 }

@@ -65,8 +65,7 @@ GoRouter router() => GoRouter(
     ),
     GoRoute(
       path: Routes.detail,
-      builder: (context, state) =>
-          DetailPage(box: GoRouterState.of(context).extra as Box, network: context.read(), defaults: context.read()),
+      builder: (context, state) => DetailPage(box: GoRouterState.of(context).extra as Box, network: context.read()),
     ),
   ],
 );
