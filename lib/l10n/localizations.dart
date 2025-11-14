@@ -673,6 +673,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter serial number:'**
   String get detail_activate_alert_title;
+
+  /// No description provided for @detail_preview_info.
+  ///
+  /// In en, this message translates to:
+  /// **'No preview yet'**
+  String get detail_preview_info;
+
+  /// No description provided for @detail_preview_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate Preview'**
+  String get detail_preview_btn;
 }
 
 class _AppLocalizationsDelegate

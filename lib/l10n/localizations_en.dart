@@ -307,4 +307,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get detail_activate_alert_title => 'Enter serial number:';
+
+  @override
+  String get detail_preview_info => 'No preview yet';
+
+  @override
+  String get detail_preview_btn => 'Generate Preview';
 }

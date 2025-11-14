@@ -105,5 +105,7 @@
   "detail_delete_alert_info": "Are you sure to delete this item?",
   "detail_activate_info": "No character yet",
   "detail_activate_btn": "Activate",
-  "detail_activate_alert_title": "Enter serial number:"
+  "detail_activate_alert_title": "Enter serial number:",
+  "detail_preview_info": "No preview yet",
+  "detail_preview_btn": "Generate Preview"
 }

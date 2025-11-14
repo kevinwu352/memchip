@@ -66,4 +66,11 @@ final class DetailVm extends ChangeNotifier {
       onSnack?.call(err);
     }
   }
+
+  var _previewing = false;
+  bool get previewing => _previewing;
+  set previewing(bool value) {
+    _previewing = value;
+    notifyListeners();
+  }
 }

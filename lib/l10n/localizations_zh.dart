@@ -307,4 +307,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get detail_activate_alert_title => '输入序列号：';
+
+  @override
+  String get detail_preview_info => '目前没有预览图';
+
+  @override
+  String get detail_preview_btn => '生成预览图';
 }
