@@ -74,4 +74,12 @@ final class Api extends Endpoint {
         parameters: {'boxId': boxId},
         encoding: ReqEncoding.json,
       );
+
+  Api.boxActivate(String boxId, String code)
+    : super(
+        '/MeetAgain-memoryBoxes/activateMemoryBox',
+        ReqMethod.post,
+        parameters: {'boxId': boxId, 'code': code},
+        encoding: ReqEncoding.json,
+      );
 }

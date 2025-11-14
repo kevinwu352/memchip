@@ -38,4 +38,32 @@ final class DetailVm extends ChangeNotifier {
   void serialChanged(String value) {
     notifyListeners();
   }
+
+  var _activating = false;
+  bool get activating => _activating;
+  set activating(bool value) {
+    _activating = value;
+    notifyListeners();
+  }
+
+  void activateAction() {
+    if (_activating) return;
+    if (serialController.text.isEmpty) return;
+    _activate(box.id, serialController.text);
+  }
+
+  void _activate(String id, String code) async {
+    try {
+      activating = true;
+      final result = await network.reqRes(Api.boxActivate(id, code));
+      activating = false;
+      final res = result.val.checked;
+      onSnack?.call(res.message);
+      box.status = BoxStatus.activated;
+      notifyListeners();
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknown;
+      onSnack?.call(err);
+    }
+  }
 }

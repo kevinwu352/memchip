@@ -51,7 +51,7 @@ class _DetailPageState extends State<DetailPage> {
           index: vm.box.status.stack,
           sizing: StackFit.expand,
           children: [
-            UnknownView(url: vm.box.coverImage, action: activateAction),
+            UnknownView(url: vm.box.coverImage, doing: vm.activating, action: activateAction),
             ActivatedView(url: vm.box.coverImage, action: () {}),
             PreviewedView(action: () {}),
             GeneratedView(
@@ -99,6 +99,9 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   void activateAction() {
+    if (vm.activating) return;
+    vm.serialController.text = '';
+
     showAdaptiveDialog(
       context: context,
       barrierDismissible: false,
@@ -106,29 +109,32 @@ class _DetailPageState extends State<DetailPage> {
         title: Text(AppLocalizations.of(context)!.detail_activate_alert_title),
         content: Material(
           color: Colors.transparent,
-          child: TextField(
-            controller: vm.serialController,
-            onChanged: vm.serialChanged,
-            onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
-            autocorrect: false,
-            textCapitalization: TextCapitalization.none,
-            enableSuggestions: false,
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: MyColors.gray100,
-              hintText: 'A1B2C3D4',
-              hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyColors.gray300, width: 1),
-                borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: TextField(
+              controller: vm.serialController,
+              onChanged: vm.serialChanged,
+              onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+              autocorrect: false,
+              textCapitalization: TextCapitalization.none,
+              enableSuggestions: false,
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: MyColors.gray100,
+                hintText: 'A1B2C3D4',
+                hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: MyColors.gray300, width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: MyColors.violet200, width: 1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                constraints: BoxConstraints(maxHeight: 40),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: MyColors.violet200, width: 1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 8),
-              constraints: BoxConstraints(maxHeight: 40),
             ),
           ),
         ),
@@ -137,6 +143,7 @@ class _DetailPageState extends State<DetailPage> {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
+              vm.activateAction();
             },
             child: Text(AppLocalizations.of(context)!.confirm),
           ),

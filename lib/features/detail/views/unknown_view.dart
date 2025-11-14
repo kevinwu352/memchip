@@ -4,8 +4,9 @@ import 'cover_view.dart';
 import 'action_view.dart';
 
 class UnknownView extends StatelessWidget {
-  const UnknownView({super.key, required this.url, required this.action});
+  const UnknownView({super.key, required this.url, required this.doing, required this.action});
   final String url;
+  final bool doing;
   final void Function() action;
 
   @override
@@ -24,6 +25,7 @@ class UnknownView extends StatelessWidget {
           child: ActionView(
             info: AppLocalizations.of(context)!.detail_activate_info,
             button: AppLocalizations.of(context)!.detail_activate_btn,
+            doing: doing,
             action: action,
           ),
         ),

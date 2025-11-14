@@ -24,6 +24,7 @@ class ActivatedView extends StatelessWidget {
           child: ActionView(
             info: 'The colors the gradient should obtain at each of the stops.',
             button: 'Preview',
+            doing: false,
             action: action,
           ),
         ),
