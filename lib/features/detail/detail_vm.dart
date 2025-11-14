@@ -35,4 +35,9 @@ final class DetailVm extends ChangeNotifier {
       onSnack?.call(err);
     }
   }
+
+  final serialController = TextEditingController();
+  void serialChanged(String value) {
+    notifyListeners();
+  }
 }

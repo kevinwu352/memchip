@@ -44,13 +44,14 @@ class _DetailPageState extends State<DetailPage> {
         title: Text(widget.box.boxName),
         actions: [IconButton(onPressed: deleteAction, icon: Icon(Icons.delete))],
       ),
+      resizeToAvoidBottomInset: false,
       body: ListenableBuilder(
         listenable: vm,
         builder: (context, child) => IndexedStack(
           index: vm.box.status.stack,
           sizing: StackFit.expand,
           children: [
-            UnknownView(url: vm.box.coverImage, action: () {}),
+            UnknownView(url: vm.box.coverImage, action: activateAction),
             ActivatedView(url: vm.box.coverImage, action: () {}),
             PreviewedView(action: () {}),
             GeneratedView(
@@ -77,7 +78,7 @@ class _DetailPageState extends State<DetailPage> {
   }
 
   void deleteAction() {
-    showDialog(
+    showAdaptiveDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog.adaptive(
@@ -89,6 +90,52 @@ class _DetailPageState extends State<DetailPage> {
             onPressed: () {
               Navigator.of(context).pop();
               vm.deleteAction();
+            },
+            child: Text(AppLocalizations.of(context)!.confirm),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void activateAction() {
+    showAdaptiveDialog(
+      context: context,
+      builder: (context) => AlertDialog.adaptive(
+        title: Text(AppLocalizations.of(context)!.detail_delete_title),
+        content: Material(
+          color: Colors.transparent,
+          child: TextField(
+            controller: vm.serialController,
+            onChanged: vm.serialChanged,
+            onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
+            autocorrect: false,
+            textCapitalization: TextCapitalization.none,
+            enableSuggestions: false,
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray800),
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: MyColors.gray100,
+              hintText: 'A1B2C3D4',
+              hintStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray400),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyColors.gray300, width: 1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: MyColors.violet200, width: 1),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              contentPadding: EdgeInsets.symmetric(horizontal: 8),
+              constraints: BoxConstraints(maxHeight: 40),
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(AppLocalizations.of(context)!.cancel)),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
             },
             child: Text(AppLocalizations.of(context)!.confirm),
           ),
