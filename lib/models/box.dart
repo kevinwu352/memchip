@@ -8,6 +8,10 @@
 //   "ageStage": "青年",
 //   "bodyType": "标准",
 //   "status": 0,
+//   "previewImages": [
+//     "https://cdn.paoxiaokeji.com/meetAgain/doubaoImage/2025-11-14/1763101584767-yql6h3.png",
+//     "https://cdn.paoxiaokeji.com/meetAgain/doubaoImage/2025-11-14/1763101584882-gi9mvj.png"
+//   ],
 //   "createdTime": "2025-11-06T06:06:11.208Z",
 //   "updatedTime": "2025-11-06T06:06:11.208Z",
 //   "canEdit": true
@@ -48,6 +52,7 @@ class Box {
   String ageStage;
   String bodyType;
   BoxStatus status;
+  List<String> previewImages;
   bool canEdit;
   DateTime createdTime;
   DateTime updatedTime;
@@ -62,6 +67,7 @@ class Box {
     required this.ageStage,
     required this.bodyType,
     required this.status,
+    required this.previewImages,
     required this.canEdit,
     required this.createdTime,
     required this.updatedTime,
@@ -77,6 +83,8 @@ class Box {
     final ageStage = json['ageStage'] as String;
     final bodyType = json['bodyType'] as String;
     final status = BoxStatus.fromIndex(json['status'] as int);
+    final previewImagesVal = json['previewImages'];
+    List<String> previewImages = previewImagesVal is List ? previewImagesVal.whereType<String>().toList() : [];
     final canEdit = json['canEdit'] as bool;
     final createdTime = DateTime.parse(json['createdTime'] as String);
     final updatedTime = DateTime.parse(json['updatedTime'] as String);
@@ -90,6 +98,7 @@ class Box {
       ageStage: ageStage,
       bodyType: bodyType,
       status: status,
+      previewImages: previewImages,
       canEdit: canEdit,
       createdTime: createdTime,
       updatedTime: updatedTime,
