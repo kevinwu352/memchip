@@ -49,7 +49,6 @@ class PreviewedView extends StatelessWidget {
                   crossAxisCount: 2,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
-                  mainAxisExtent: 200,
                 ),
                 itemBuilder: (context, index) =>
                     _EntryView(url: items[index], selected: selected.contains(index), action: () => onSelect(index)),
@@ -79,45 +78,22 @@ class _EntryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: SizedBox(
-        width: 150,
-        height: double.infinity,
-        child: Column(
-          children: [
-            Expanded(
-              child: GestureDetector(
-                onTap: action,
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(35 + 2),
-                      child: CachedNetworkImage(
-                        imageUrl: url,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => Container(color: Colors.white),
-                        errorWidget: (context, url, error) => Container(color: Colors.white),
-                      ),
-                    ),
-                    if (selected) Image.asset('assets/images/detail_check_mask.png', fit: BoxFit.fill),
-                  ],
-                ),
-              ),
+    return GestureDetector(
+      onTap: action,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(35 + 2),
+            child: CachedNetworkImage(
+              imageUrl: url,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Container(color: Colors.white),
+              errorWidget: (context, url, error) => Container(color: Colors.white),
             ),
-            Container(
-              height: 50,
-              alignment: Alignment.center,
-              child: GestureDetector(
-                onTap: action,
-                child: Image.asset(
-                  selected ? 'assets/images/detail_check_on.png' : 'assets/images/detail_check_off.png',
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+          if (selected) Image.asset('assets/images/detail_check_mask.png', fit: BoxFit.fill),
+        ],
       ),
     );
   }
