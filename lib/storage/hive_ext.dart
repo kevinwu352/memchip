@@ -27,10 +27,8 @@ extension HiveBoxExt<E> on Box<E> {
 
   // ================================================================================
 
-  T? getObject<T>(String? key, T Function(Map<String, dynamic>) init) {
-    final map = getMap(key);
-    return map != null ? init(map) : null;
-  }
+  T? getObject<T>(String? key, T Function(Map<String, dynamic>) init) =>
+      withValue(getMap(key), (v) => v != null ? init(v) : null);
 
   // ================================================================================
 
