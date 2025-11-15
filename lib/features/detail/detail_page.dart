@@ -52,22 +52,22 @@ class _DetailPageState extends State<DetailPage> {
           index: vm.box.status.stack,
           sizing: StackFit.expand,
           children: [
-            UnknownView(url: vm.box.coverImage, doing: vm.activating, action: activateAction),
-            ActivatedView(url: vm.box.coverImage, doing: vm.previewing, action: vm.previewAction),
+            UnknownView(url: vm.box.coverImage, doing: vm.activating, onPressed: activateAction),
+            ActivatedView(url: vm.box.coverImage, doing: vm.previewing, onPressed: vm.previewAction),
             PreviewedView(
               items: vm.box.previewImages,
               selected: vm.selectedPreview,
-              onSelect: vm.selectAction,
-              action: vm.generateEnabled ? vm.generateAction : null,
+              onSelected: vm.selectAction,
+              onPressed: vm.generateEnabled ? vm.generateAction : null,
             ),
-            GeneratedView(url: '', action: () {}),
+            GeneratedView(url: '', onPressed: () {}),
           ],
         ),
       ),
     );
   }
 
-  void deleteAction() {
+  void _delete() {
     showAdaptiveDialog(
       context: context,
       barrierDismissible: false,
@@ -148,7 +148,7 @@ class _DetailPageState extends State<DetailPage> {
       context: context,
       builder: (context) {
         // return Text('abc');
-        return SelectionView(items: vm.gests, action: (value) {});
+        return SelectionView(items: vm.gests, onSelected: (value) {});
       },
     );
   }

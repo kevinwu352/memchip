@@ -12,7 +12,7 @@ class RoundSelView extends StatelessWidget {
     this.selectedColor = MyColors.orange400,
     required this.itemBuilder,
     required this.selected,
-    required this.selectAction,
+    required this.onSelected,
   });
   final int count;
   final int per;
@@ -22,7 +22,7 @@ class RoundSelView extends StatelessWidget {
   final Color selectedColor;
   final Widget Function(int i) itemBuilder;
   final int? selected;
-  final void Function(int i) selectAction;
+  final void Function(int i) onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class RoundSelView extends StatelessWidget {
                       bottom: r != rows - 1 ? pad : 0,
                     ),
                     child: GestureDetector(
-                      onTap: () => selectAction(r * cols + c),
+                      onTap: () => onSelected(r * cols + c),
                       child: Container(
                         height: height,
                         decoration: BoxDecoration(
@@ -73,7 +73,6 @@ class RoundSelEntryView extends StatelessWidget {
     required this.lead,
     required this.trail,
   });
-
   final Axis axis;
   final bool compact;
   final double spacing;

@@ -21,7 +21,7 @@ class SectionView extends StatelessWidget {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: MyColors.gray700),
             ),
           ),
-          Column(spacing: 12, crossAxisAlignment: CrossAxisAlignment.start, children: children),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, spacing: 12, children: children),
         ],
       ),
     );

@@ -50,7 +50,7 @@ class _CreateHumanPageState extends State<CreateHumanPage> {
                   children: [
                     UploadView(
                       images: vm.uploads,
-                      imageChoosed: vm.didChooseImage,
+                      onChoosed: vm.didChooseImage,
                       info: AppLocalizations.of(context)!.create_image_info_human,
                     ),
                   ],
@@ -101,7 +101,7 @@ class _CreateHumanPageState extends State<CreateHumanPage> {
                           ),
                           trail: Image.asset(Gender.fromIndex(i).image),
                         ),
-                        selectAction: (i) => vm.gender = Gender.fromIndex(i),
+                        onSelected: (i) => vm.gender = Gender.fromIndex(i),
                       ),
                     ),
 
@@ -143,7 +143,7 @@ class _CreateHumanPageState extends State<CreateHumanPage> {
                           ),
                           trail: Image.asset(Figure.fromIndex(i).image),
                         ),
-                        selectAction: (i) => vm.figure = Figure.fromIndex(i),
+                        onSelected: (i) => vm.figure = Figure.fromIndex(i),
                       ),
                     ),
                   ],

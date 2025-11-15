@@ -4,10 +4,10 @@ import 'cover_view.dart';
 import 'action_view.dart';
 
 class ActivatedView extends StatelessWidget {
-  const ActivatedView({super.key, required this.url, required this.doing, required this.action});
+  const ActivatedView({super.key, required this.url, required this.doing, required this.onPressed});
   final String url;
   final bool doing;
-  final void Function() action;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class ActivatedView extends StatelessWidget {
             info: AppLocalizations.of(context)!.detail_preview_info,
             button: AppLocalizations.of(context)!.detail_preview_btn,
             doing: doing,
-            action: action,
+            onPressed: onPressed,
           ),
         ),
       ],

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 class ActionView extends StatelessWidget {
-  const ActionView({super.key, required this.info, required this.button, required this.doing, required this.action});
+  const ActionView({super.key, required this.info, required this.button, required this.doing, required this.onPressed});
   final String info;
   final String button;
   final bool doing;
-  final void Function() action;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ActionView extends StatelessWidget {
           ),
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: MyColors.orange400),
-            onPressed: action,
+            onPressed: onPressed,
             child: doing
                 ? CircularProgressIndicator.adaptive(backgroundColor: MyColors.white100)
                 : Text(button, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),

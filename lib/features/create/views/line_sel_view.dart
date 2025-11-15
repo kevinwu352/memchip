@@ -3,7 +3,6 @@ import '/pch.dart';
 
 class LineSelView extends StatelessWidget {
   const LineSelView({super.key, required this.children});
-
   final List<Widget> children;
 
   @override
@@ -18,17 +17,17 @@ class LineSelEntryView extends StatelessWidget {
     required this.icon,
     required this.name,
     required this.selected,
-    required this.action,
+    required this.onSelected,
   });
   final String icon;
   final String name;
   final bool selected;
-  final void Function() action;
+  final void Function() onSelected;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: action,
+      onTap: onSelected,
       child: Container(
         decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: MyColors.violet100, width: 1)),

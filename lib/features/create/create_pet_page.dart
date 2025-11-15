@@ -52,7 +52,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                   children: [
                     UploadView(
                       images: vm.uploads,
-                      imageChoosed: vm.didChooseImage,
+                      onChoosed: vm.didChooseImage,
                       info: AppLocalizations.of(context)!.create_image_info_pet,
                     ),
                   ],
@@ -103,7 +103,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                           ),
                           trail: Image.asset(Gender.fromIndex(i).image),
                         ),
-                        selectAction: (i) => vm.gender = Gender.fromIndex(i),
+                        onSelected: (i) => vm.gender = Gender.fromIndex(i),
                       ),
                     ),
 
@@ -126,7 +126,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: MyColors.white100),
                           ),
                         ),
-                        selectAction: (i) => vm.species = Species.fromIndex(i),
+                        onSelected: (i) => vm.species = Species.fromIndex(i),
                       ),
                     ),
 
@@ -138,13 +138,13 @@ class _CreatePetPageState extends State<CreatePetPage> {
                             icon: 'assets/images/create_tail_yes.png',
                             name: 'With tail',
                             selected: vm.withTail == true,
-                            action: () => vm.withTail = true,
+                            onSelected: () => vm.withTail = true,
                           ),
                           LineSelEntryView(
                             icon: 'assets/images/create_tail_no.png',
                             name: 'No tail',
                             selected: vm.withTail == false,
-                            action: () => vm.withTail = false,
+                            onSelected: () => vm.withTail = false,
                           ),
                         ],
                       ),
@@ -155,7 +155,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
                       child: CharView(
                         items: Personality.values.map((e) => e.title(context)).toList(),
                         selected: vm.personality?.index,
-                        onSelect: (value) => vm.personality = Personality.fromIndex(value),
+                        onSelected: (value) => vm.personality = Personality.fromIndex(value),
                       ),
                     ),
                   ],

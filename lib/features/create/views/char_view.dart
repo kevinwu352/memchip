@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 class CharView extends StatelessWidget {
-  const CharView({super.key, required this.items, this.selected, required this.onSelect});
+  const CharView({super.key, required this.items, this.selected, required this.onSelected});
   final List<String> items;
   final int? selected;
-  final void Function(int value) onSelect;
+  final void Function(int value) onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class CharView extends StatelessWidget {
               labelPadding: EdgeInsets.symmetric(horizontal: 7),
               materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
               visualDensity: VisualDensity.compact,
-              onPressed: () => onSelect(e.$1),
+              onPressed: () => onSelected(e.$1),
             ),
           ),
         ],

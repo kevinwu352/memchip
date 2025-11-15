@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 class SelectionView extends StatefulWidget {
-  const SelectionView({super.key, required this.items, required this.action});
+  const SelectionView({super.key, required this.items, required this.onSelected});
   final List<Gest> items;
-  final void Function(List<int> value) action;
+  final void Function(List<int> value) onSelected;
 
   @override
   State<SelectionView> createState() => _SelectionViewState();
 }
 
 class _SelectionViewState extends State<SelectionView> {
-  List<int> selected = [];
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,22 +54,22 @@ class _SelectionViewState extends State<SelectionView> {
                   (e) => ActionChip(
                     shape: StadiumBorder(
                       side: BorderSide(
-                        color: selected.contains(e.$1) ? MyColors.orange500 : MyColors.gray700,
+                        color: _selected.contains(e.$1) ? MyColors.orange500 : MyColors.gray700,
                         width: 2,
                       ),
                     ),
-                    backgroundColor: selected.contains(e.$1) ? MyColors.orange400 : MyColors.white100,
+                    backgroundColor: _selected.contains(e.$1) ? MyColors.orange400 : MyColors.white100,
                     label: Text(e.$2.action),
                     labelStyle: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: selected.contains(e.$1) ? MyColors.white100 : MyColors.gray700,
+                      color: _selected.contains(e.$1) ? MyColors.white100 : MyColors.gray700,
                     ),
                     padding: EdgeInsets.zero,
                     labelPadding: EdgeInsets.symmetric(horizontal: 10),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
-                    onPressed: () => selectAction(e.$1),
+                    onPressed: () => _select(e.$1),
                   ),
                 ),
               ],
@@ -99,11 +97,12 @@ class _SelectionViewState extends State<SelectionView> {
     );
   }
 
-  void selectAction(int index) {
-    if (selected.contains(index)) {
-      selected.remove(index);
+  final List<int> _selected = [];
+  void _select(int index) {
+    if (_selected.contains(index)) {
+      _selected.remove(index);
     } else {
-      selected.add(index);
+      _selected.add(index);
     }
     setState(() {});
   }

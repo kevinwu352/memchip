@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 class GeneratedView extends StatelessWidget {
-  const GeneratedView({super.key, required this.url, required this.action});
+  const GeneratedView({super.key, required this.url, required this.onPressed});
   final String url;
-  final void Function() action;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class GeneratedView extends StatelessWidget {
 
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: MyColors.orange400),
-            onPressed: action,
+            onPressed: onPressed,
             child: Text('Confirm', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
           ),
         ],

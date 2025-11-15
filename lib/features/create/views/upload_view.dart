@@ -7,9 +7,9 @@ import '/pch.dart';
 import '/utils/image_uploader.dart';
 
 class UploadView extends StatelessWidget {
-  const UploadView({super.key, required this.images, required this.imageChoosed, required this.info});
+  const UploadView({super.key, required this.images, required this.onChoosed, required this.info});
   final List<ImageUploader> images;
-  final void Function(int index, String path) imageChoosed;
+  final void Function(int index, String path) onChoosed;
   final String info;
 
   @override
@@ -88,7 +88,7 @@ class UploadView extends StatelessWidget {
     // print('path:${file?.path}, name:${file?.name}, mime:${file?.mimeType}, length:${file?.length()}');
     final path = file?.path;
     if (path != null && path.isNotEmpty) {
-      imageChoosed(index, path);
+      onChoosed(index, path);
     }
   }
 }

@@ -21,7 +21,7 @@ class CategoryPage extends StatelessWidget {
                   cover: it.cover,
                   info: it.info(context),
                   button: it.button(context),
-                  action: () => context.push(it.route),
+                  onPressed: () => context.push(it.route),
                 ),
               ),
             ],
@@ -74,12 +74,11 @@ enum _Entry {
 }
 
 class _EntryView extends StatelessWidget {
-  const _EntryView({required this.cover, required this.info, required this.button, required this.action});
-
+  const _EntryView({required this.cover, required this.info, required this.button, required this.onPressed});
   final String cover;
   final String info;
   final String button;
-  final void Function() action;
+  final void Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +97,7 @@ class _EntryView extends StatelessWidget {
             ),
             FilledButton(
               style: FilledButton.styleFrom(backgroundColor: MyColors.orange400, visualDensity: VisualDensity.compact),
-              onPressed: action,
+              onPressed: onPressed,
               child: Text(button, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
             ),
           ],
