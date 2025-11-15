@@ -13,7 +13,7 @@ final class Secures extends ChangeNotifier {
     // await _raw?.write(key: _Keys.kBoardedVersionKey.name, value: null);
     // await _raw?.write(key: _Keys.kLastUsernameKey.name, value: null);
     // await _raw?.write(key: _Keys.kAccessTokenKey.name, value: null);
-    if (kDebugMode) debugPrint('${await _raw?.readAll()}');
+    if (kDebugMode) debugPrint('Secures: ${await _raw?.readAll()}');
 
     _boardedVersion = await _raw?.read(key: _Keys.kBoardedVersionKey.name);
     _lastUsername = await _raw?.read(key: _Keys.kLastUsernameKey.name);

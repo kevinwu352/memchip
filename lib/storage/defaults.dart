@@ -18,7 +18,7 @@ final class Defaults extends ChangeNotifier {
   Future<void> load() async {
     // await _box.setValue(_Keys.kThemeCodeKey.name, null);
     // await _box.setValue(_Keys.kLanguageCodeKey.name, null);
-    if (kDebugMode) debugPrint('${_box.toMap()}');
+    if (kDebugMode) debugPrint('Defaults: ${_box.toMap()}');
 
     final themeVal = _box.getString(_Keys.kThemeCodeKey.name);
     _theme = ThemeMode.values.firstWhere((e) => e.name == themeVal, orElse: () => ThemeMode.system);
@@ -26,7 +26,11 @@ final class Defaults extends ChangeNotifier {
     final languageVal = _box.getList(_Keys.kLanguageCodeKey.name)?.whereType<String>().toList() ?? [];
     _language = languageVal.isNotEmpty ? Locale(languageVal[0], languageVal.elementAtOrNull(1)) : null;
 
-    _user = _box.getObject(_Keys.kCurrentUserKey.name, User.fromJson);
+    try {
+      _user = _box.getObject(_Keys.kCurrentUserKey.name, User.fromJson);
+    } catch (e) {
+      if (kDebugMode) debugPrint('Defaults: load `user` failed, $e');
+    }
   }
 
   late ThemeMode _theme;

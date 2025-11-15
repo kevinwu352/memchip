@@ -246,7 +246,10 @@ class _EntryView extends StatelessWidget {
                       Image.asset('assets/images/home_entry_time.png'),
                       Expanded(
                         child: Text(
-                          GetTimeAgo.parse(box.createdTime, locale: AppLocalizations.of(context)!.localeName),
+                          GetTimeAgo.parse(
+                            box.createdTime,
+                            locale: AppLocalizations.of(context)!.localeName.startsWith('zh') ? 'zh' : 'en',
+                          ),
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: MyColors.gray500),
                         ),
