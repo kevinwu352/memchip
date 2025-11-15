@@ -150,7 +150,7 @@ class _CreateHumanPageState extends State<CreateHumanPage> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 26, horizontal: 24),
+                  padding: EdgeInsets.symmetric(vertical: 26, horizontal: 24),
                   child: Row(
                     spacing: 12,
                     children: [
@@ -169,7 +169,7 @@ class _CreateHumanPageState extends State<CreateHumanPage> {
                           onPressed: vm.submitEnabled ? vm.submitAction : null,
                           style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
                           child: vm.submiting
-                              ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
+                              ? CircularProgressIndicator.adaptive(backgroundColor: MyColors.white100)
                               : Text(
                                   AppLocalizations.of(context)!.create_create_btn,
                                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),

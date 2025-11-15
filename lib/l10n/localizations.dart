@@ -260,6 +260,18 @@ abstract class AppLocalizations {
   /// **'Register'**
   String get register_submit_btn;
 
+  /// No description provided for @home_nickname_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nickname'**
+  String get home_nickname_empty;
+
+  /// No description provided for @home_phomail_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get home_phomail_empty;
+
   /// No description provided for @home_section_title.
   ///
   /// In en, this message translates to:
@@ -277,18 +289,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New Chip'**
   String get home_new_btn;
-
-  /// No description provided for @account_nickname_empty.
-  ///
-  /// In en, this message translates to:
-  /// **'Nickname'**
-  String get account_nickname_empty;
-
-  /// No description provided for @account_phomail_empty.
-  ///
-  /// In en, this message translates to:
-  /// **'N/A'**
-  String get account_phomail_empty;
 
   /// No description provided for @about_page_title.
   ///

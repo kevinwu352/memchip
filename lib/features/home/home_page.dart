@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     vm.dispose();
-    boxesSub?.cancel();
+    _boxesSub?.cancel();
     super.dispose();
   }
 
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
               ),
 
               Container(
-                padding: EdgeInsets.fromLTRB(30, 20, 30, 10),
+                margin: EdgeInsets.fromLTRB(30, 20, 30, 10),
                 width: double.infinity,
                 child: Text(
                   AppLocalizations.of(context)!.home_section_title,
@@ -57,30 +57,27 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
 
-              if (vm.boxes.isEmpty)
-                Expanded(
-                  child: Padding(padding: const EdgeInsets.only(top: 50), child: _EmptyView()),
-                )
-              else
-                Expanded(
-                  child: GridView.builder(
-                    padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                      childAspectRatio: 139 / 247,
-                    ),
-                    itemCount: vm.boxes.length,
-                    itemBuilder: (context, index) => _EntryView(
-                      box: vm.boxes[index],
-                      onTap: () => context.push(Routes.detail, extra: vm.boxes[index]),
-                    ),
-                  ),
-                ),
+              Expanded(
+                child: vm.boxes.isEmpty
+                    ? Padding(padding: EdgeInsets.only(top: 50), child: _EmptyView())
+                    : GridView.builder(
+                        padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                          childAspectRatio: 139 / 247,
+                        ),
+                        itemCount: vm.boxes.length,
+                        itemBuilder: (context, index) => _EntryView(
+                          box: vm.boxes[index],
+                          onTap: () => context.push(Routes.detail, extra: vm.boxes[index]),
+                        ),
+                      ),
+              ),
 
               Container(
-                padding: EdgeInsets.fromLTRB(30, 0, 30, kSafeBot + 24),
+                margin: EdgeInsets.fromLTRB(30, 0, 30, kSafeBot + 24),
                 width: double.infinity,
                 child: FilledButton.icon(
                   style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
@@ -99,9 +96,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  StreamSubscription? boxesSub;
+  StreamSubscription? _boxesSub;
   void _subscribeBoxesChange() {
-    boxesSub = context.read<EventBus>().listen(
+    _boxesSub = context.read<EventBus>().listen(
       type: [
         EventType.accountLogin,
         EventType.accountLogout,
@@ -116,7 +113,6 @@ class _HomePageState extends State<HomePage> {
 
 class _HeaderView extends StatelessWidget {
   const _HeaderView({this.avatarUrl, this.nickname, this.phomail});
-
   final String? avatarUrl;
   final String? nickname;
   final String? phomail;
@@ -130,12 +126,12 @@ class _HeaderView extends StatelessWidget {
           child: avatarUrl != null
               ? CachedNetworkImage(
                   imageUrl: avatarUrl ?? '',
-                  placeholder: (context, url) => Image.asset('assets/images/account_avatar.png'),
-                  errorWidget: (context, url, error) => Image.asset('assets/images/account_avatar.png'),
+                  placeholder: (context, url) => Image.asset('assets/images/home_avatar.png'),
+                  errorWidget: (context, url, error) => Image.asset('assets/images/home_avatar.png'),
                   width: 48,
                   height: 48,
                 )
-              : Image.asset('assets/images/account_avatar.png', width: 48, height: 48),
+              : Image.asset('assets/images/home_avatar.png', width: 48, height: 48),
         ),
 
         SizedBox(width: 12),
@@ -147,14 +143,14 @@ class _HeaderView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      nickname ?? AppLocalizations.of(context)!.account_nickname_empty,
+                      nickname ?? AppLocalizations.of(context)!.home_nickname_empty,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: MyColors.gray800),
                     ),
                   ),
                   IconButton(
                     onPressed: () => context.push(Routes.about),
-                    icon: Image.asset('assets/images/account_more.png'),
+                    icon: Image.asset('assets/images/home_more.png'),
                     style: IconButton.styleFrom(
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       padding: EdgeInsets.zero,
@@ -166,11 +162,11 @@ class _HeaderView extends StatelessWidget {
 
               Row(
                 children: [
-                  Image.asset('assets/images/account_phomail.png'),
+                  Image.asset('assets/images/home_phomail.png'),
                   SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                      phomail ?? AppLocalizations.of(context)!.account_phomail_empty,
+                      phomail ?? AppLocalizations.of(context)!.home_phomail_empty,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.gray600),
                     ),
@@ -211,7 +207,7 @@ class _EntryView extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        color: Colors.white,
+        color: MyColors.white100,
         shadowColor: Colors.black.withValues(alpha: 0.3),
         elevation: 4,
         clipBehavior: Clip.hardEdge,
@@ -221,16 +217,14 @@ class _EntryView extends StatelessWidget {
               child: CachedNetworkImage(
                 imageUrl: box.coverImage,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(color: Colors.white),
-                errorWidget: (context, url, error) => Container(color: Colors.white),
+                placeholder: (context, url) => Container(color: MyColors.white100),
+                errorWidget: (context, url, error) => Container(color: MyColors.white100),
               ),
             ),
             Container(
               height: 60,
-              width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 12),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(

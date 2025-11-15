@@ -54,10 +54,10 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       locale: language,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: MyColors.white100,
         appBarTheme: AppBarThemeData(
           backgroundColor: MyColors.violet300,
-          foregroundColor: Colors.white,
+          foregroundColor: MyColors.white100,
           titleTextStyle: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
         pageTransitionsTheme: PageTransitionsTheme(

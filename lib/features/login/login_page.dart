@@ -48,11 +48,10 @@ class _LoginPageState extends State<LoginPage> {
             padding: EdgeInsets.fromLTRB(30, kSafeTop, 30, kSafeBot),
             child: Column(
               children: [
-                Container(padding: EdgeInsets.only(top: 30), child: Image.asset('assets/images/login_logo.png')),
+                Container(margin: EdgeInsets.only(top: 30), child: Image.asset('assets/images/login_logo.png')),
 
                 Container(
-                  padding: EdgeInsets.only(top: 80),
-                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 80),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -69,8 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 Container(
-                  padding: EdgeInsets.only(top: 10),
-                  width: double.infinity,
+                  margin: EdgeInsets.only(top: 10),
                   alignment: Alignment.centerLeft,
                   child: CupertinoSlidingSegmentedControl(
                     children: Method.values.toMap(
@@ -84,16 +82,14 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     groupValue: vm.method,
-                    onValueChanged: (value) {
-                      if (value != null) vm.method = value;
-                    },
+                    onValueChanged: (value) => value != null ? vm.method = value : null,
                     thumbColor: MyColors.violet300,
                     backgroundColor: MyColors.gray300,
                   ),
                 ),
 
                 Container(
-                  padding: EdgeInsets.only(top: 30),
+                  margin: EdgeInsets.only(top: 30),
                   child: Column(
                     spacing: 20,
                     children: [
@@ -177,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     onPressed: vm.sendEnabled ? vm.sendAction : null,
                                     child: vm.sending
-                                        ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
+                                        ? CircularProgressIndicator.adaptive(backgroundColor: MyColors.white100)
                                         : Text(
                                             AppLocalizations.of(context)!.login_code_send_btn(vm.sendSeconds),
                                             style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
@@ -191,7 +187,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 Container(
-                  padding: EdgeInsets.only(top: 20),
+                  margin: EdgeInsets.only(top: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -199,7 +195,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
                         onPressed: vm.submitEnabled ? vm.submitAction : null,
                         child: vm.submiting
-                            ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
+                            ? CircularProgressIndicator.adaptive(backgroundColor: MyColors.white100)
                             : Text(
                                 AppLocalizations.of(context)!.login_submit_btn,
                                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),

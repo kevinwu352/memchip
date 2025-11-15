@@ -87,26 +87,21 @@ class _EntryView extends StatelessWidget {
       aspectRatio: 280 / 202,
       child: Container(
         decoration: BoxDecoration(image: DecorationImage(image: AssetImage(cover))),
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                info,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: MyColors.white80),
-              ),
-              FilledButton(
-                style: FilledButton.styleFrom(
-                  backgroundColor: MyColors.orange400,
-                  visualDensity: VisualDensity.compact,
-                ),
-                onPressed: action,
-                child: Text(button, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
-              ),
-            ],
-          ),
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              info,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: MyColors.white80),
+            ),
+            FilledButton(
+              style: FilledButton.styleFrom(backgroundColor: MyColors.orange400, visualDensity: VisualDensity.compact),
+              onPressed: action,
+              child: Text(button, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
+            ),
+          ],
         ),
       ),
     );

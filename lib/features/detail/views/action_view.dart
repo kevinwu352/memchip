@@ -3,7 +3,6 @@ import '/pch.dart';
 
 class ActionView extends StatelessWidget {
   const ActionView({super.key, required this.info, required this.button, required this.doing, required this.action});
-
   final String info;
   final String button;
   final bool doing;

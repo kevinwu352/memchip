@@ -100,7 +100,7 @@ class _DetailPageState extends State<DetailPage> {
         content: Material(
           color: Colors.transparent,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: EdgeInsets.symmetric(vertical: 8),
             child: TextField(
               controller: vm.serialController,
               onChanged: vm.serialChanged,

@@ -38,11 +38,11 @@ class _RegisterPageState extends State<RegisterPage> {
         listenable: vm,
         builder: (context, child) => SizedBox.expand(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30),
+            padding: EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.only(top: 30),
+                  margin: EdgeInsets.only(top: 30),
                   child: Column(
                     spacing: 20,
                     children: [
@@ -156,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
 
                 Container(
-                  padding: EdgeInsets.only(top: 20),
+                  margin: EdgeInsets.only(top: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -164,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
                         onPressed: vm.submitEnabled ? vm.submitAction : null,
                         child: vm.submiting
-                            ? CircularProgressIndicator.adaptive(backgroundColor: Colors.white)
+                            ? CircularProgressIndicator.adaptive(backgroundColor: MyColors.white100)
                             : Text(
                                 AppLocalizations.of(context)!.register_submit_btn,
                                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),

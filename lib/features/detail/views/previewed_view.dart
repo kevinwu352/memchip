@@ -82,8 +82,8 @@ class _EntryView extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: url,
               fit: BoxFit.cover,
-              placeholder: (context, url) => Container(color: Colors.white),
-              errorWidget: (context, url, error) => Container(color: Colors.white),
+              placeholder: (context, url) => Container(color: MyColors.white100),
+              errorWidget: (context, url, error) => Container(color: MyColors.white100),
             ),
           ),
           if (selected) Image.asset('assets/images/detail_check_mask.png', fit: BoxFit.fill),

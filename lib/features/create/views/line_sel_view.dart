@@ -20,7 +20,6 @@ class LineSelEntryView extends StatelessWidget {
     required this.selected,
     required this.action,
   });
-
   final String icon;
   final String name;
   final bool selected;
@@ -44,7 +43,7 @@ class LineSelEntryView extends StatelessWidget {
               icon,
               width: 16,
               height: 16,
-              color: Colors.white,
+              color: MyColors.white100,
               colorBlendMode: selected ? BlendMode.srcIn : BlendMode.dst,
             ),
             Text(

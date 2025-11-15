@@ -32,12 +32,11 @@
   "register_confirm_title": "Confirm Password",
   "register_submit_btn": "Register",
 
+  "home_nickname_empty": "Nickname",
+  "home_phomail_empty": "N/A",
   "home_section_title": "My Chips",
   "home_empty_info": "No chips yet",
   "home_new_btn": "New Chip",
-
-  "account_nickname_empty": "Nickname",
-  "account_phomail_empty": "N/A",
 
   "about_page_title": "About Us",
   "about_line_license_title": "Open Source Licenses",

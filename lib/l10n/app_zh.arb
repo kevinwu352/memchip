@@ -32,12 +32,11 @@
   "register_confirm_title": "Confirm Password",
   "register_submit_btn": "Register",
 
+  "home_nickname_empty": "用户昵称",
+  "home_phomail_empty": "暂无",
   "home_section_title": "My Chips zh",
   "home_empty_info": "No chips yet zh",
   "home_new_btn": "New Chip zh",
-
-  "account_nickname_empty": "用户昵称",
-  "account_phomail_empty": "暂无",
 
   "about_page_title": "About Us",
   "about_line_license_title": "Open Source Licenses",

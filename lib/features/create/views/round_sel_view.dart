@@ -14,7 +14,6 @@ class RoundSelView extends StatelessWidget {
     required this.selected,
     required this.selectAction,
   });
-
   final int count;
   final int per;
   final double height;
@@ -84,7 +83,7 @@ class RoundSelEntryView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: EdgeInsets.symmetric(horizontal: 8),
       child: axis == Axis.horizontal
           ? Row(
               mainAxisAlignment: compact ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,

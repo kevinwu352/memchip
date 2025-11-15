@@ -3,7 +3,6 @@ import '/pch.dart';
 
 class CharView extends StatelessWidget {
   const CharView({super.key, required this.items, this.selected, required this.onSelect});
-
   final List<String> items;
   final int? selected;
   final void Function(int value) onSelect;

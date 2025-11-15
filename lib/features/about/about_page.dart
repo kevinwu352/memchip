@@ -43,62 +43,65 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.about_page_title)),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.separated(
-              itemCount: _Kind.values.length,
-              separatorBuilder: (context, index) => Divider(height: 1, thickness: 1, indent: 30, endIndent: 30),
-              itemBuilder: (context, index) => ListTile(
-                title: Text(_Kind.fromIndex(index).title(context)),
-                titleTextStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray600),
-                trailing: Icon(Icons.adaptive.arrow_forward, size: 14),
-                iconColor: MyColors.gray300,
-                dense: true,
-                contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                onTap: () => context.push(Routes.web(_Kind.fromIndex(index).url)),
+      body: SizedBox.expand(
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.separated(
+                itemCount: _Kind.values.length,
+                separatorBuilder: (context, index) => Divider(height: 1, thickness: 1, indent: 30, endIndent: 30),
+                itemBuilder: (context, index) => ListTile(
+                  title: Text(_Kind.fromIndex(index).title(context)),
+                  titleTextStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray600),
+                  trailing: Icon(Icons.adaptive.arrow_forward, size: 14),
+                  iconColor: MyColors.gray300,
+                  dense: true,
+                  contentPadding: EdgeInsets.symmetric(horizontal: 30),
+                  onTap: () => context.push(Routes.web(_Kind.fromIndex(index).url)),
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(40, 0, 40, kSafeBot),
-            child: Column(
-              children: [
-                if (context.read<Secures>().logined)
-                  Container(
-                    padding: EdgeInsets.only(bottom: 40),
-                    width: double.infinity,
-                    child: FilledButton(
-                      style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
-                      onPressed: () {
-                        final secures = context.read<Secures>();
-                        secures.lastUsername = null;
-                        secures.accessToken = null;
-                        final defaults = context.read<Defaults>();
-                        defaults.user = null;
-                        Future.delayed(
-                          Duration(seconds: 1),
-                          () => context.mounted ? context.fire(EventType.accountLogout).go(Routes.home) : null,
-                        );
-                      },
-                      child: Text(
-                        AppLocalizations.of(context)!.about_logout_btn,
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+
+            Container(
+              margin: EdgeInsets.fromLTRB(40, 0, 40, kSafeBot),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (context.read<Secures>().logined)
+                    Container(
+                      margin: EdgeInsets.only(bottom: 40),
+                      child: FilledButton(
+                        style: FilledButton.styleFrom(backgroundColor: MyColors.violet300),
+                        onPressed: () {
+                          final secures = context.read<Secures>();
+                          secures.lastUsername = null;
+                          secures.accessToken = null;
+                          final defaults = context.read<Defaults>();
+                          defaults.user = null;
+                          Future.delayed(
+                            Duration(seconds: 1),
+                            () => context.mounted ? context.fire(EventType.accountLogout).go(Routes.home) : null,
+                          );
+                        },
+                        child: Text(
+                          AppLocalizations.of(context)!.about_logout_btn,
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                        ),
                       ),
                     ),
+                  Container(
+                    margin: EdgeInsets.only(bottom: 24),
+                    child: Text(
+                      AppLocalizations.of(context)!.about_version(kCurrentAppVersion),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
+                    ),
                   ),
-
-                Container(
-                  padding: EdgeInsets.only(bottom: 24),
-                  child: Text(
-                    AppLocalizations.of(context)!.about_version(kCurrentAppVersion),
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: MyColors.gray500),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -98,6 +98,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get register_submit_btn => 'Register';
 
   @override
+  String get home_nickname_empty => '用户昵称';
+
+  @override
+  String get home_phomail_empty => '暂无';
+
+  @override
   String get home_section_title => 'My Chips zh';
 
   @override
@@ -105,12 +111,6 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get home_new_btn => 'New Chip zh';
-
-  @override
-  String get account_nickname_empty => '用户昵称';
-
-  @override
-  String get account_phomail_empty => '暂无';
 
   @override
   String get about_page_title => 'About Us';

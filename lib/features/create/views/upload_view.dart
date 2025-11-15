@@ -46,7 +46,7 @@ class UploadView extends StatelessWidget {
                               child: Image.file(File(e.$2.path!), fit: BoxFit.cover),
                             ),
                           ),
-                        if (e.$2.uploading) CircularProgressIndicator.adaptive(backgroundColor: Colors.white),
+                        if (e.$2.uploading) CircularProgressIndicator.adaptive(backgroundColor: MyColors.white100),
                         // if (e.$2.success != null) Text(e.$2.success == true ? 'success' : 'failed'),
                       ],
                     ),

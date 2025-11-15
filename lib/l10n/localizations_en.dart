@@ -98,6 +98,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get register_submit_btn => 'Register';
 
   @override
+  String get home_nickname_empty => 'Nickname';
+
+  @override
+  String get home_phomail_empty => 'N/A';
+
+  @override
   String get home_section_title => 'My Chips';
 
   @override
@@ -105,12 +111,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get home_new_btn => 'New Chip';
-
-  @override
-  String get account_nickname_empty => 'Nickname';
-
-  @override
-  String get account_phomail_empty => 'N/A';
 
   @override
   String get about_page_title => 'About Us';
