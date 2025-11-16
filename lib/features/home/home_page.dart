@@ -15,29 +15,56 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteAware {
   late final vm = HomeVm(network: widget.network);
 
   @override
   void initState() {
     super.initState();
     vm.getAllChips();
-    WidgetsBinding.instance.addObserver(this);
     _subscribeBoxesChange();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    kRouteOb.subscribe(this, ModalRoute.of(context)!);
   }
 
   @override
   void dispose() {
     vm.dispose();
-    WidgetsBinding.instance.removeObserver(this);
     _boxesSub?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    kRouteOb.unsubscribe(this);
     super.dispose();
+  }
+
+  StreamSubscription? _boxesSub;
+  void _subscribeBoxesChange() {
+    _boxesSub = context.read<EventBus>().listen(
+      type: [
+        EventType.accountLogin,
+        EventType.accountLogout,
+        EventType.boxCreated,
+        EventType.boxDeleted,
+        EventType.boxUpdated,
+      ],
+      onEvent: (event) => vm.getAllChips(),
+    );
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     print('app-state: ${state.name}');
+  }
+
+  @override
+  void didPopNext() {
+    super.didPopNext();
+    print('route: did appear');
   }
 
   @override
@@ -101,20 +128,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
           ),
         ),
       ),
-    );
-  }
-
-  StreamSubscription? _boxesSub;
-  void _subscribeBoxesChange() {
-    _boxesSub = context.read<EventBus>().listen(
-      type: [
-        EventType.accountLogin,
-        EventType.accountLogout,
-        EventType.boxCreated,
-        EventType.boxDeleted,
-        EventType.boxUpdated,
-      ],
-      onEvent: (event) => vm.getAllChips(),
     );
   }
 }

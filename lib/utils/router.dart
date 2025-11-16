@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '/core/core.dart';
@@ -30,8 +31,11 @@ abstract final class Routes {
   static const detail = '/detail';
 }
 
+final RouteObserver<ModalRoute<void>> kRouteOb = RouteObserver<ModalRoute<void>>();
+
 GoRouter router() => GoRouter(
   initialLocation: Routes.home,
+  observers: [kRouteOb],
   routes: [
     GoRoute(
       path: '/web/:url',
