@@ -15,21 +15,29 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   late final vm = HomeVm(network: widget.network);
 
   @override
   void initState() {
     super.initState();
     vm.getAllChips();
+    WidgetsBinding.instance.addObserver(this);
     _subscribeBoxesChange();
   }
 
   @override
   void dispose() {
     vm.dispose();
+    WidgetsBinding.instance.removeObserver(this);
     _boxesSub?.cancel();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print('app-state: ${state.name}');
   }
 
   @override
