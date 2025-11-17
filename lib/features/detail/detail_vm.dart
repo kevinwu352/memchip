@@ -4,12 +4,12 @@ import '/pch.dart';
 List<Gest> _gests = [];
 
 final class DetailVm extends ChangeNotifier {
-  DetailVm({required this.box, required this.network, this.onSnack, this.onComplete, this.onSelectGest});
+  DetailVm({required this.box, required this.network, this.onSnack, this.onComplete, this.onShowSelect});
   final Box box;
   final Networkable network;
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
-  final Future<bool?> Function()? onSelectGest;
+  final Future<bool?> Function()? onShowSelect;
 
   var _deleting = false;
   bool get deleting => _deleting;
@@ -141,7 +141,7 @@ final class DetailVm extends ChangeNotifier {
       }
 
       print('human:yes, to-select');
-      final confirmed = await onSelectGest?.call();
+      final confirmed = await onShowSelect?.call();
       if (confirmed == true) {
         print('human:yes, to-select, got:$confirmed, continue');
       } else {

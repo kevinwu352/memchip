@@ -24,7 +24,7 @@ class _DetailPageState extends State<DetailPage> {
     onSnack: (msg) => context.showSnack(msg),
     onComplete: () =>
         Future.delayed(Duration(seconds: 1), () => mounted ? context.fire(EventType.boxDeleted).pop() : null),
-    onSelectGest: selectAction,
+    onShowSelect: _showSelect,
   );
 
   @override
@@ -43,7 +43,7 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(vm.box.boxName),
-        actions: [IconButton(onPressed: deleteAction, icon: Icon(Icons.delete))],
+        actions: [IconButton(onPressed: _delete, icon: Icon(Icons.delete))],
       ),
       resizeToAvoidBottomInset: false,
       body: ListenableBuilder(
@@ -52,7 +52,7 @@ class _DetailPageState extends State<DetailPage> {
           index: vm.box.status.stack,
           sizing: StackFit.expand,
           children: [
-            UnknownView(url: vm.box.coverImage, doing: vm.activating, onPressed: activateAction),
+            UnknownView(url: vm.box.coverImage, doing: vm.activating, onPressed: _activate),
             ActivatedView(url: vm.box.coverImage, doing: vm.previewing, onPressed: vm.previewAction),
             PreviewedView(
               items: vm.box.previewImages,
@@ -88,7 +88,7 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  void activateAction() {
+  void _activate() {
     if (vm.activating) return;
     vm.serialController.text = '';
 
@@ -142,7 +142,7 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  Future<bool?> selectAction() {
+  Future<bool?> _showSelect() {
     return showModalBottomSheet<bool>(
       backgroundColor: MyColors.violet00,
       context: context,
