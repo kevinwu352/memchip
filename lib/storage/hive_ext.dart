@@ -24,6 +24,7 @@ extension HiveBoxExt<E> on Box<E> {
   Map<String, Object?>? getMap(String? key) => getValue(key).asOr<Map>()?.map((k, v) => MapEntry(k.toString(), v));
 
   List<Object?>? getList(String? key) => getValue(key).asOr<List>();
+  List<T>? getListOf<T>(String? key) => getValue(key).asOr<List>()?.whereType<T>().toList();
 
   // ================================================================================
 

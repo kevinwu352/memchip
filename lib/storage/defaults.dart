@@ -20,11 +20,15 @@ final class Defaults extends ChangeNotifier {
     // await _box.setValue(_Keys.kLanguageCodeKey.name, null);
     if (kDebugMode) debugPrint('Defaults: ${_box.toMap()}');
 
-    final themeVal = _box.getString(_Keys.kThemeCodeKey.name);
-    _theme = ThemeMode.values.firstWhere((e) => e.name == themeVal, orElse: () => ThemeMode.system);
+    _theme = withValue(
+      _box.getString(_Keys.kThemeCodeKey.name),
+      (v) => ThemeMode.values.firstWhere((e) => e.name == v, orElse: () => ThemeMode.system),
+    );
 
-    final languageVal = _box.getList(_Keys.kLanguageCodeKey.name)?.whereType<String>().toList() ?? [];
-    _language = languageVal.isNotEmpty ? Locale(languageVal[0], languageVal.elementAtOrNull(1)) : null;
+    _language = withValue(
+      _box.getListOf<String>(_Keys.kLanguageCodeKey.name) ?? [],
+      (v) => v.isNotEmpty ? Locale(v[0], v.elementAtOrNull(1)) : null,
+    );
 
     try {
       _user = _box.getObject(_Keys.kCurrentUserKey.name, User.fromJson);
