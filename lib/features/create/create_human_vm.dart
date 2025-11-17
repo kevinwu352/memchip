@@ -68,24 +68,15 @@ final class CreateHumanVm extends ChangeNotifier {
   void _create(String name, String? image, String? gender, String? age, String? figure) async {
     try {
       submiting = true;
-      // await Future.delayed(Duration(seconds: 60));
       final result = await network.reqRes(Api.boxCreateHuman(name, image, gender, age, figure));
-      submiting = false;
-      switch (result) {
-        case Ok():
-          final res = result.value;
-          if (res.success) {
-            onSnack?.call(res.message);
-            onComplete?.call();
-          } else {
-            throw HttpError.operation;
-          }
-        case Error():
-          throw result.error;
-      }
+      final res = result.val.checked;
+      onSnack?.call(res.message);
+      onComplete?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
+    } finally {
+      submiting = false;
     }
   }
 

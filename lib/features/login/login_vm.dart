@@ -67,24 +67,15 @@ final class LoginVm extends ChangeNotifier {
   void _sendCode(String email) async {
     try {
       sending = true;
-      // await Future.delayed(Duration(seconds: 60));
       final result = await network.reqRes(Api.accountSendCode(email));
-      sending = false;
-      switch (result) {
-        case Ok():
-          final res = result.value;
-          if (res.success) {
-            onSnack?.call(res.message);
-            _startCounting();
-          } else {
-            throw HttpError.operation;
-          }
-        case Error():
-          throw result.error;
-      }
+      final res = result.val.checked;
+      onSnack?.call(res.message);
+      _startCounting();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
+    } finally {
+      sending = false;
     }
   }
 
@@ -125,56 +116,38 @@ final class LoginVm extends ChangeNotifier {
   void _login(String account, String code) async {
     try {
       submiting = true;
-      // await Future.delayed(Duration(seconds: 60));
       final result = await network.reqRes(Api.accountLogin(account, code), init: User.fromApi);
-      submiting = false;
-      switch (result) {
-        case Ok():
-          final res = result.value;
-          if (res.success) {
-            onSnack?.call(res.message);
-            final user = res.getObject<User>();
-            secures.lastUsername = user?.account;
-            secures.accessToken = user?.token;
-            defaults.user = user;
-            onComplete?.call();
-          } else {
-            throw HttpError.operation;
-          }
-        case Error():
-          throw result.error;
-      }
+      final res = result.val;
+      final user = res.getObj<User>();
+      onSnack?.call(res.message);
+      secures.lastUsername = user?.account;
+      secures.accessToken = user?.token;
+      defaults.user = user;
+      onComplete?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
+    } finally {
+      submiting = false;
     }
   }
 
   void _check(String account, String code) async {
     try {
       submiting = true;
-      // await Future.delayed(Duration(seconds: 60));
       final result = await network.reqRes(Api.accountCheckCode(account, code), init: User.fromApi);
-      submiting = false;
-      switch (result) {
-        case Ok():
-          final res = result.value;
-          if (res.success) {
-            onSnack?.call(res.message);
-            final user = res.getObject<User>();
-            secures.lastUsername = user?.account;
-            secures.accessToken = user?.token;
-            defaults.user = user;
-            onComplete?.call();
-          } else {
-            throw HttpError.operation;
-          }
-        case Error():
-          throw result.error;
-      }
+      final res = result.val;
+      final user = res.getObj<User>();
+      onSnack?.call(res.message);
+      secures.lastUsername = user?.account;
+      secures.accessToken = user?.token;
+      defaults.user = user;
+      onComplete?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
+    } finally {
+      submiting = false;
     }
   }
 
