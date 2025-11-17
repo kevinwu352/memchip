@@ -254,7 +254,7 @@ class _EntryView extends StatelessWidget {
                       Image.asset('assets/images/home_entry_paw.png'),
                       Expanded(
                         child: Text(
-                          box.boxName,
+                          box.name,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: MyColors.gray700),
                         ),

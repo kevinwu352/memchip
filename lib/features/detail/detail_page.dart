@@ -43,7 +43,7 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(vm.box.boxName),
+        title: Text(vm.box.name),
         actions: [IconButton(onPressed: _delete, icon: Icon(Icons.delete))],
       ),
       resizeToAvoidBottomInset: false,

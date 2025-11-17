@@ -1,21 +1,45 @@
 // {
 //   "_id": "690c3ad3286f7cfef644c9a3",
 //   "userId": "68fee0e3bd0220da8825d0a3",
+//   "type": 1,
+//   "status": 0,
+//
 //   "boxName": "gju",
+//   "name": "tfD",
+//
 //   "coverImage": "https://cdn.paoxiaokeji.com/upload/1762409159052-24982.png",
 //   "frontImage": "https://cdn.paoxiaokeji.com/upload/1762409159052-24982.png",
+//   "photos": [
+//     "https://cdn.paoxiaokeji.com/upload/1763023106498-60214.png",
+//     "https://cdn.paoxiaokeji.com/upload/1763023128000-53460.png"
+//   ],
+//
 //   "gender": "female",
+//
 //   "ageStage": "青年",
 //   "bodyType": "标准",
-//   "status": 0,
+//
+//   "species": "狗",
+//   "character": [
+//     "贪吃"
+//   ],
+//   "tail": true,
+//
 //   "previewImages": [
 //     "https://cdn.paoxiaokeji.com/meetAgain/doubaoImage/2025-11-14/1763101584767-yql6h3.png",
 //     "https://cdn.paoxiaokeji.com/meetAgain/doubaoImage/2025-11-14/1763101584882-gi9mvj.png"
 //   ],
 //   "createdTime": "2025-11-06T06:06:11.208Z",
-//   "updatedTime": "2025-11-06T06:06:11.208Z",
 //   "canEdit": true
 // }
+
+enum BoxType {
+  pet,
+  human,
+  unknown;
+
+  factory BoxType.fromApi(int i) => i >= 0 && i <= 1 ? BoxType.values[i] : unknown;
+}
 
 enum BoxStatus {
   unknown,
@@ -24,7 +48,7 @@ enum BoxStatus {
   generating,
   generated;
 
-  factory BoxStatus.fromIndex(int i) => i >= 0 && i < 5 ? BoxStatus.values[i] : unknown;
+  factory BoxStatus.fromApi(int i) => i >= 0 && i < 5 ? BoxStatus.values[i] : unknown;
 
   int get stack {
     switch (this) {
@@ -45,65 +69,63 @@ enum BoxStatus {
 class Box {
   String id;
   String userId;
-  String boxName;
+  BoxType type;
+  BoxStatus status;
+  String name;
   String coverImage;
   String frontImage;
-  String gender;
-  String ageStage;
-  String bodyType;
-  BoxStatus status;
   List<String> previewImages;
-  bool canEdit;
   DateTime createdTime;
-  DateTime updatedTime;
 
   bool isHuman = true;
 
   Box({
     required this.id,
     required this.userId,
-    required this.boxName,
+    required this.type,
+    required this.status,
+    required this.name,
     required this.coverImage,
     required this.frontImage,
-    required this.gender,
-    required this.ageStage,
-    required this.bodyType,
-    required this.status,
     required this.previewImages,
-    required this.canEdit,
     required this.createdTime,
-    required this.updatedTime,
   });
 
   factory Box.fromApi(Map<String, dynamic> json) {
     final id = json['_id'] as String;
     final userId = json['userId'] as String;
-    final boxName = json['boxName'] as String;
-    final coverImage = json['coverImage'] as String;
-    final frontImage = json['frontImage'] as String;
-    final gender = json['gender'] as String;
-    final ageStage = json['ageStage'] as String;
-    final bodyType = json['bodyType'] as String;
-    final status = BoxStatus.fromIndex(json['status'] as int);
+    final type = BoxType.fromApi(json['type'] as int);
+    final status = BoxStatus.fromApi(json['status'] as int);
+
+    final name1 = json['name'];
+    final name2 = json['boxName'];
+    final name = name1 is String
+        ? name1
+        : name2 is String
+        ? name2
+        : '';
+
+    final cover = json['coverImage'];
+    final front = json['frontImage'];
+    final photosVal = json['photos'];
+    List<String> photos = photosVal is List ? photosVal.whereType<String>().toList() : [];
+    final coverImage = cover is String ? cover : (photos.elementAtOrNull(0) ?? '');
+    final frontImage = front is String ? front : (photos.elementAtOrNull(1) ?? '');
+
     final previewImagesVal = json['previewImages'];
     List<String> previewImages = previewImagesVal is List ? previewImagesVal.whereType<String>().toList() : [];
-    final canEdit = json['canEdit'] as bool;
+
     final createdTime = DateTime.parse(json['createdTime'] as String);
-    final updatedTime = DateTime.parse(json['updatedTime'] as String);
     return Box(
       id: id,
       userId: userId,
-      boxName: boxName,
+      type: type,
+      status: status,
+      name: name,
       coverImage: coverImage,
       frontImage: frontImage,
-      gender: gender,
-      ageStage: ageStage,
-      bodyType: bodyType,
-      status: status,
       previewImages: previewImages,
-      canEdit: canEdit,
       createdTime: createdTime,
-      updatedTime: updatedTime,
     );
   }
 }
