@@ -126,7 +126,7 @@ final class DetailVm extends ChangeNotifier {
     generating = true;
 
     try {
-      if (box.isHuman) {
+      if (box.type == BoxType.human) {
         print('human:true, has-gest:${_gests.isNotEmpty}, ${_gests.isNotEmpty ? 'continue' : 'to-retrive'}');
         if (_gests.isEmpty) {
           final result = await network.reqRes(Api.boxGetGests(), init: Gest.fromApi, key: 'availableActions');

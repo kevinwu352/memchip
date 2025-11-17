@@ -1,3 +1,5 @@
+import '/core/core.dart';
+
 // {
 //   "_id": "690c3ad3286f7cfef644c9a3",
 //   "userId": "68fee0e3bd0220da8825d0a3",
@@ -38,7 +40,7 @@ enum BoxType {
   human,
   unknown;
 
-  factory BoxType.fromApi(int i) => i >= 0 && i <= 1 ? BoxType.values[i] : unknown;
+  factory BoxType.fromApi(int i) => i >= 0 && i < 2 ? BoxType.values[i] : unknown;
 }
 
 enum BoxStatus {
@@ -77,8 +79,6 @@ class Box {
   List<String> previewImages;
   DateTime createdTime;
 
-  bool isHuman = true;
-
   Box({
     required this.id,
     required this.userId,
@@ -96,25 +96,11 @@ class Box {
     final userId = json['userId'] as String;
     final type = BoxType.fromApi(json['type'] as int);
     final status = BoxStatus.fromApi(json['status'] as int);
-
-    final name1 = json['name'];
-    final name2 = json['boxName'];
-    final name = name1 is String
-        ? name1
-        : name2 is String
-        ? name2
-        : '';
-
-    final cover = json['coverImage'];
-    final front = json['frontImage'];
-    final photosVal = json['photos'];
-    List<String> photos = photosVal is List ? photosVal.whereType<String>().toList() : [];
-    final coverImage = cover is String ? cover : (photos.elementAtOrNull(0) ?? '');
-    final frontImage = front is String ? front : (photos.elementAtOrNull(1) ?? '');
-
-    final previewImagesVal = json['previewImages'];
-    List<String> previewImages = previewImagesVal is List ? previewImagesVal.whereType<String>().toList() : [];
-
+    final name = [json['name'], json['boxName']].whereType<String>().firstOrNull ?? '';
+    final photos = json.getListOf<String>('photos');
+    final coverImage = [json['coverImage'], photos?.elementAtOrNull(0)].whereType<String>().firstOrNull ?? '';
+    final frontImage = [json['frontImage'], photos?.elementAtOrNull(1)].whereType<String>().firstOrNull ?? '';
+    final previewImages = json.getListOf<String>('previewImages') ?? [];
     final createdTime = DateTime.parse(json['createdTime'] as String);
     return Box(
       id: id,

@@ -35,18 +35,13 @@ class User {
   );
 
   factory User.fromApi(Map<String, dynamic> json) {
-    final token = json.getString('token') ?? '';
-    final userInfo = json.getMap('userInfo');
-    final id = userInfo?.getString('_id') ?? '';
+    final token = json['token'] as String;
+    final userInfo = json['userInfo'] as Map;
+    final id = userInfo['_id'] as String;
     final account =
-        [
-          userInfo?.getString('email'),
-          userInfo?.getString('phoneNumber'),
-          userInfo?.getString('username'),
-        ].firstWhere((e) => e is String) ??
-        '';
-    final nickname = userInfo?.getString('nickname') ?? '';
-    final avatarUrl = userInfo?.getString('avatarUrl') ?? '';
+        [userInfo['email'], userInfo['phoneNumber'], userInfo['username']].whereType<String>().firstOrNull ?? '';
+    final nickname = userInfo['nickname'] as String;
+    final avatarUrl = userInfo['avatarUrl'] as String;
     return User(token: token, id: id, account: account, nickname: nickname, avatarUrl: avatarUrl);
   }
 
