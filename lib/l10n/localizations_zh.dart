@@ -322,4 +322,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get detail_generate_btn => '生成全息影像';
+
+  @override
+  String get detail_generate_sel_title => '爱好';
+
+  @override
+  String get detail_generate_sel_info => '爱好（选择后会呈现相应的全息影像）';
+
+  @override
+  String get detail_generate_sel_btn => '确认选择';
 }

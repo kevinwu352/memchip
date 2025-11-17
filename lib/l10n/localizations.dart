@@ -703,6 +703,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Generate Chips'**
   String get detail_generate_btn;
+
+  /// No description provided for @detail_generate_sel_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Hobby'**
+  String get detail_generate_sel_title;
+
+  /// No description provided for @detail_generate_sel_info.
+  ///
+  /// In en, this message translates to:
+  /// **'After selection, the corresponding hobby will be displayed.'**
+  String get detail_generate_sel_info;
+
+  /// No description provided for @detail_generate_sel_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get detail_generate_sel_btn;
 }
 
 class _AppLocalizationsDelegate

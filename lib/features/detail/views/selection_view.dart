@@ -33,11 +33,11 @@ class _SelectionViewState extends State<SelectionView> {
               spacing: 10,
               children: [
                 Text(
-                  'Hobby',
+                  AppLocalizations.of(context)!.detail_generate_sel_title,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: MyColors.gray700),
                 ),
                 Text(
-                  'After selection, the corresponding holographic image will be displayed.',
+                  AppLocalizations.of(context)!.detail_generate_sel_info,
                   style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: MyColors.gray500),
                 ),
               ],
@@ -59,6 +59,7 @@ class _SelectionViewState extends State<SelectionView> {
                       ),
                     ),
                     backgroundColor: _selected.contains(e.$1) ? MyColors.orange400 : MyColors.white100,
+                    avatar: Text(e.$2.icon),
                     label: Text(e.$2.action),
                     labelStyle: TextStyle(
                       fontSize: 12,
@@ -90,7 +91,10 @@ class _SelectionViewState extends State<SelectionView> {
               padding: EdgeInsets.symmetric(horizontal: 70),
             ),
             onPressed: () => Navigator.of(context).pop(_selected.map((e) => widget.items[e]).toList()),
-            child: Text('Confirm', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+            child: Text(
+              AppLocalizations.of(context)!.detail_generate_sel_btn,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            ),
           ),
         ],
       ),

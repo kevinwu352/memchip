@@ -54,13 +54,16 @@ class _DetailPageState extends State<DetailPage> {
           sizing: StackFit.expand,
           children: [
             UnknownView(url: vm.box.coverImage, doing: vm.activating, onPressed: _activate),
+
             ActivatedView(url: vm.box.coverImage, doing: vm.previewing, onPressed: vm.previewAction),
+
             PreviewedView(
               items: vm.box.previewImages,
               selected: vm.selectedPreview,
               onSelected: vm.selectPreview,
               onPressed: vm.generateEnabled ? vm.generateAction : null,
             ),
+
             GeneratedView(url: '', onPressed: () {}),
           ],
         ),
