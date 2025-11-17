@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '/pch.dart';
+import 'gest.dart';
 
 List<Gest> _gests = [];
 
@@ -9,7 +10,7 @@ final class DetailVm extends ChangeNotifier {
   final Networkable network;
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
-  final Future<bool?> Function()? onShowSelect;
+  final Future<List<Gest>?> Function()? onShowSelect;
 
   var _deleting = false;
   bool get deleting => _deleting;
@@ -27,25 +28,26 @@ final class DetailVm extends ChangeNotifier {
     try {
       deleting = true;
       final result = await network.reqRes(Api.boxDelete(id));
-      deleting = false;
       final res = result.val.checked;
       onSnack?.call(res.message);
       onComplete?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
+    } finally {
+      deleting = false;
     }
-  }
-
-  final serialController = TextEditingController();
-  void serialChanged(String value) {
-    notifyListeners();
   }
 
   var _activating = false;
   bool get activating => _activating;
   set activating(bool value) {
     _activating = value;
+    notifyListeners();
+  }
+
+  final serialController = TextEditingController();
+  void serialChanged(String value) {
     notifyListeners();
   }
 
@@ -59,14 +61,14 @@ final class DetailVm extends ChangeNotifier {
     try {
       activating = true;
       final result = await network.reqRes(Api.boxActivate(id, code));
-      activating = false;
       final res = result.val.checked;
       onSnack?.call(res.message);
       box.status = BoxStatus.activated;
-      notifyListeners();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
+    } finally {
+      activating = false;
     }
   }
 
@@ -86,14 +88,14 @@ final class DetailVm extends ChangeNotifier {
     try {
       previewing = true;
       final result = await network.reqRes(Api.boxPreview(id));
-      previewing = false;
       final res = result.val.checked;
       onSnack?.call(res.message);
       box.status = BoxStatus.previewed;
-      notifyListeners();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
+    } finally {
+      previewing = false;
     }
   }
 
@@ -105,7 +107,7 @@ final class DetailVm extends ChangeNotifier {
   }
 
   int? selectedPreview;
-  void selectAction(int index) {
+  void selectPreview(int index) {
     if (selectedPreview == index) {
       selectedPreview = null;
     } else {
@@ -116,56 +118,45 @@ final class DetailVm extends ChangeNotifier {
 
   bool get generateEnabled => selectedPreview != null;
 
+  List<Gest> get gests => _gests;
+
   void generateAction() async {
-    if (_generating) {
-      print('generating:yes, return');
-      return;
-    } else {
-      print('generating:no, continue');
-    }
+    print('generating:$_generating, ${_generating ? 'return' : 'continue'}');
+    if (_generating) return;
     generating = true;
 
-    if (box.isHuman) {
-      if (_gests.isEmpty) {
-        print('human:yes, has-gest:no, to-retrive');
-        await _getGests();
+    try {
+      if (box.isHuman) {
+        print('human:true, has-gest:${_gests.isNotEmpty}, ${_gests.isNotEmpty ? 'continue' : 'to-retrive'}');
         if (_gests.isEmpty) {
-          print('human:yes, has-gest:no, to-retrive, got:${_gests.length}, return');
+          final result = await network.reqRes(Api.boxGetGests(), init: Gest.fromApi, key: 'availableActions');
+          _gests = result.val.getLst<Gest>() ?? [];
+          print('human:true, has-gest:${_gests.isNotEmpty}, ${_gests.isNotEmpty ? 'continue' : 'failed and return'}');
+          if (_gests.isEmpty) {
+            generating = false;
+            return;
+          }
+        }
+
+        print('human:true, to-select');
+        final list = await onShowSelect?.call() ?? [];
+        print('human:true, selected-gest:${list.isNotEmpty}, ${list.isNotEmpty ? 'continue' : 'return'}');
+        if (list.isEmpty) {
           generating = false;
           return;
-        } else {
-          print('human:yes, has-gest:no, to-retrive, got:${_gests.length}, continue');
         }
-      } else {
-        print('human:yes, has-gest:yes, continue');
       }
 
-      print('human:yes, to-select');
-      final confirmed = await onShowSelect?.call();
-      if (confirmed == true) {
-        print('human:yes, to-select, got:$confirmed, continue');
-      } else {
-        print('human:yes, to-select, got:$confirmed, return');
-        generating = false;
-        return;
-      }
+      print('to-generate');
+      await _generate();
+      print('to-generate, done');
+    } catch (e) {
+      final err = e is HttpError ? e : HttpError.unknown;
+      onSnack?.call(err);
+    } finally {
+      generating = false;
     }
-
-    print('to-generate');
-    await _generate();
-    print('to-generate, done');
-    _generating = false;
   }
-
-  Future<void> _getGests() async {
-    try {
-      final result = await network.reqRes(Api.boxGetGests(), init: Gest.fromApi, key: 'availableActions');
-      final list = result.val.getLst<Gest>();
-      _gests = list ?? [];
-    } catch (e) {}
-  }
-
-  List<Gest> get gests => _gests;
 
   Future<void> _generate() async {
     print('_generate');

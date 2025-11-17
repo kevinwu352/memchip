@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import '/pch.dart';
+import '../gest.dart';
 
 class SelectionView extends StatefulWidget {
-  const SelectionView({super.key, required this.items, required this.onSelected});
+  const SelectionView({super.key, required this.items});
   final List<Gest> items;
-  final void Function(List<int> value) onSelected;
 
   @override
   State<SelectionView> createState() => _SelectionViewState();
@@ -79,7 +79,7 @@ class _SelectionViewState extends State<SelectionView> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 5),
             child: Text(
-              '2/3',
+              '${_selected.length}/3',
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: MyColors.gray500),
             ),
           ),
@@ -89,7 +89,7 @@ class _SelectionViewState extends State<SelectionView> {
               backgroundColor: MyColors.orange400,
               padding: EdgeInsets.symmetric(horizontal: 70),
             ),
-            onPressed: () {},
+            onPressed: () => Navigator.of(context).pop(_selected.map((e) => widget.items[e]).toList()),
             child: Text('Confirm', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
           ),
         ],
@@ -102,7 +102,9 @@ class _SelectionViewState extends State<SelectionView> {
     if (_selected.contains(index)) {
       _selected.remove(index);
     } else {
-      _selected.add(index);
+      if (_selected.length < 3) {
+        _selected.add(index);
+      }
     }
     setState(() {});
   }

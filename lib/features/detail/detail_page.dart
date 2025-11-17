@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '/pch.dart';
 import 'detail_vm.dart';
+import 'gest.dart';
 import 'views/unknown_view.dart';
 import 'views/activated_view.dart';
 import 'views/previewed_view.dart';
@@ -57,7 +58,7 @@ class _DetailPageState extends State<DetailPage> {
             PreviewedView(
               items: vm.box.previewImages,
               selected: vm.selectedPreview,
-              onSelected: vm.selectAction,
+              onSelected: vm.selectPreview,
               onPressed: vm.generateEnabled ? vm.generateAction : null,
             ),
             GeneratedView(url: '', onPressed: () {}),
@@ -91,7 +92,6 @@ class _DetailPageState extends State<DetailPage> {
   void _activate() {
     if (vm.activating) return;
     vm.serialController.text = '';
-
     showAdaptiveDialog(
       context: context,
       barrierDismissible: false,
@@ -142,14 +142,11 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  Future<bool?> _showSelect() {
-    return showModalBottomSheet<bool>(
+  Future<List<Gest>?> _showSelect() {
+    return showModalBottomSheet<List<Gest>>(
       backgroundColor: MyColors.violet00,
       context: context,
-      builder: (context) {
-        // return Text('abc');
-        return SelectionView(items: vm.gests, onSelected: (value) {});
-      },
+      builder: (context) => SelectionView(items: vm.gests),
     );
   }
 }
