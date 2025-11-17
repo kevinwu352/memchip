@@ -2,8 +2,26 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 final class HomeVm extends ChangeNotifier {
-  HomeVm({required this.network});
+  HomeVm({required this.network, required this.defaults});
   final Networkable network;
+  final Defaults defaults;
+
+  var _updating = false;
+  DateTime? _userUpdatedTime;
+  void updateUser() async {
+    if (!tokenValid) return;
+    if (timeValid(_userUpdatedTime, Duration(hours: 6))) return;
+    if (_updating) return;
+    try {
+      _updating = true;
+      final result = await network.reqRes(Api.accountGetUser(), init: User.fromApi);
+      final user = result.val.getObj<User>();
+      defaults.user = user;
+      _userUpdatedTime = DateTime.now();
+    } finally {
+      _updating = false;
+    }
+  }
 
   List<Box> _boxes = [];
   List<Box> get boxes => _boxes;

@@ -8,19 +8,21 @@ import '/pch.dart';
 import 'home_vm.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.network});
+  const HomePage({super.key, required this.network, required this.defaults});
   final Networkable network;
+  final Defaults defaults;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteAware {
-  late final vm = HomeVm(network: widget.network);
+  late final vm = HomeVm(network: widget.network, defaults: widget.defaults);
 
   @override
   void initState() {
     super.initState();
+    vm.updateUser();
     vm.getAllChips();
     _subscribeBoxesChange();
     WidgetsBinding.instance.addObserver(this);
@@ -34,7 +36,6 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
 
   @override
   void dispose() {
-    vm.dispose();
     _boxesSub?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     kRouteOb.unsubscribe(this);
@@ -59,6 +60,9 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
     print('app-state: ${state.name}');
+    if (state == AppLifecycleState.resumed) {
+      vm.updateUser();
+    }
   }
 
   @override
