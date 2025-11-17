@@ -93,9 +93,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
               ),
 
               Expanded(
-                child: vm.boxes.isEmpty
-                    ? Padding(padding: EdgeInsets.only(top: 50), child: _EmptyView())
-                    : GridView.builder(
+                child: vm.boxes.isNotEmpty
+                    ? GridView.builder(
                         padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -108,7 +107,10 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
                           box: vm.boxes[index],
                           onTap: () => context.push(Routes.detail, extra: vm.boxes[index]),
                         ),
-                      ),
+                      )
+                    : vm.getting
+                    ? CircularProgressIndicator.adaptive()
+                    : Padding(padding: EdgeInsets.only(top: 50), child: _EmptyView()),
               ),
 
               Container(

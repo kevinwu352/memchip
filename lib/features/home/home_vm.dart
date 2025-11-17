@@ -22,15 +22,14 @@ final class HomeVm extends ChangeNotifier {
   void getAllChips() async {
     // print('valid: ${(network as HttpClient).token}');
     if (_getting) return;
-    if (!tokenValid) {
-      boxes = [];
-      return;
-    }
     try {
       getting = true;
-      final result = await network.reqRes(Api.boxGetAll(), init: Box.fromApi);
-      final list = result.val.getLst<Box>();
-      boxes = list ?? [];
+      if (tokenValid) {
+        final result = await network.reqRes(Api.boxGetAll(), init: Box.fromApi);
+        boxes = result.val.getLst<Box>() ?? [];
+      } else {
+        boxes = [];
+      }
     } catch (e) {
       // final err = e is HttpError ? e : HttpError.unknown;
       // onSnack?.call(err);
