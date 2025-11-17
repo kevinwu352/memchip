@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
   void initState() {
     super.initState();
     vm.updateUser();
-    vm.getAllChips();
+    vm.loadChips();
     _subscribeBoxesChange();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
         EventType.boxDeleted,
         EventType.boxUpdated,
       ],
-      onEvent: (event) => vm.getAllChips(),
+      onEvent: (event) => vm.loadChips(),
     );
   }
 
@@ -62,6 +62,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
     print('app-state: ${state.name}');
     if (state == AppLifecycleState.resumed) {
       vm.updateUser();
+      vm.loadChips();
     }
   }
 
@@ -112,7 +113,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
                           onTap: () => context.push(Routes.detail, extra: vm.boxes[index]),
                         ),
                       )
-                    : vm.getting
+                    : vm.loading
                     ? CircularProgressIndicator.adaptive()
                     : Padding(padding: EdgeInsets.only(top: 50), child: _EmptyView()),
               ),

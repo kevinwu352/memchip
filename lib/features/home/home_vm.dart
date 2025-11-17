@@ -23,6 +23,13 @@ final class HomeVm extends ChangeNotifier {
     }
   }
 
+  var _loading = false;
+  bool get loading => _loading;
+  set loading(bool value) {
+    _loading = value;
+    notifyListeners();
+  }
+
   List<Box> _boxes = [];
   List<Box> get boxes => _boxes;
   set boxes(List<Box> value) {
@@ -30,18 +37,11 @@ final class HomeVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  var _getting = false;
-  bool get getting => _getting;
-  set getting(bool value) {
-    _getting = value;
-    notifyListeners();
-  }
-
-  void getAllChips() async {
+  void loadChips() async {
     // print('valid: ${(network as HttpClient).token}');
-    if (_getting) return;
+    if (_loading) return;
     try {
-      getting = true;
+      loading = true;
       if (tokenValid) {
         final result = await network.reqRes(Api.boxGetAll(), init: Box.fromApi);
         boxes = result.val.getLst<Box>() ?? [];
@@ -52,7 +52,7 @@ final class HomeVm extends ChangeNotifier {
       // final err = e is HttpError ? e : HttpError.unknown;
       // onSnack?.call(err);
     } finally {
-      getting = false;
+      loading = false;
     }
   }
 
