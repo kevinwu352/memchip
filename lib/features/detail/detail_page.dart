@@ -27,6 +27,7 @@ class _DetailPageState extends State<DetailPage> {
         Future.delayed(Duration(seconds: 1), () => mounted ? context.fire(EventType.boxDeleted).pop() : null),
     onUpdated: () => context.fire(EventType.boxUpdated),
     onShowSelect: _showSelect,
+    onShowGenerating: _showGenerating,
   );
 
   @override
@@ -152,6 +153,20 @@ class _DetailPageState extends State<DetailPage> {
       backgroundColor: MyColors.violet00,
       context: context,
       builder: (context) => SelectionView(items: vm.gests),
+    );
+  }
+
+  void _showGenerating() {
+    showAdaptiveDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog.adaptive(
+        title: Text(AppLocalizations.of(context)!.detail_generating_alert_title),
+        content: Text(AppLocalizations.of(context)!.detail_generating_alert_info),
+        actions: [
+          TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(AppLocalizations.of(context)!.confirm)),
+        ],
+      ),
     );
   }
 }

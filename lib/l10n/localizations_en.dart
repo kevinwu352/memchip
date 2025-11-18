@@ -336,4 +336,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get detail_generate_sel_btn => 'Confirm';
+
+  @override
+  String get detail_generating_alert_title => 'Success';
+
+  @override
+  String get detail_generating_alert_info =>
+      'Your character is generating. It might take 4-5 minuts. Please check it later.';
 }

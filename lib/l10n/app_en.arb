@@ -113,5 +113,7 @@
   "detail_generate_btn_ing": "Generating...",
   "detail_generate_sel_title": "Hobby",
   "detail_generate_sel_info": "After selection, the corresponding hobby will be displayed.",
-  "detail_generate_sel_btn": "Confirm"
+  "detail_generate_sel_btn": "Confirm",
+  "detail_generating_alert_title": "Success",
+  "detail_generating_alert_info": "Your character is generating. It might take 4-5 minuts. Please check it later."
 }

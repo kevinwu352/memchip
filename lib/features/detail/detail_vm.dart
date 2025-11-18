@@ -12,6 +12,7 @@ final class DetailVm extends ChangeNotifier {
     this.onDeleted,
     this.onUpdated,
     this.onShowSelect,
+    this.onShowGenerating,
   }) {
     // show selected preview when status is generating
     selectedPreview = box.previewIndex;
@@ -22,18 +23,19 @@ final class DetailVm extends ChangeNotifier {
   final void Function()? onDeleted;
   final void Function()? onUpdated;
   final Future<List<Gest>?> Function()? onShowSelect;
+  final void Function()? onShowGenerating;
 
   void cancel() {
     serialController.dispose();
   }
 
-  Future<Box?> _updateBox() async {
+  Future<void> _updateBox() async {
     try {
       final result = await network.reqRes(Api.boxGetOne(box.id), init: Box.fromApi);
       final obj = result.val.getObj<Box>();
-      return obj;
+      if (obj != null) box = obj;
     } catch (e) {
-      return null;
+      //
     }
   }
 
@@ -87,10 +89,9 @@ final class DetailVm extends ChangeNotifier {
       activating = true;
       final result = await network.reqRes(Api.boxActivate(id, code));
       final res = result.val.checked;
+      await _updateBox();
       onSnack?.call(res.message);
       onUpdated?.call();
-      final obj = await _updateBox();
-      if (obj != null) box = obj;
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
@@ -116,10 +117,9 @@ final class DetailVm extends ChangeNotifier {
       previewing = true;
       final result = await network.reqRes(Api.boxPreview(id));
       final res = result.val.checked;
+      await _updateBox();
       onSnack?.call(res.message);
       onUpdated?.call();
-      final obj = await _updateBox();
-      if (obj != null) box = obj;
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
@@ -182,10 +182,10 @@ final class DetailVm extends ChangeNotifier {
       print('to-generate');
       final result = await network.reqRes(Api.boxGenerate(box.id, box.previewImages[selectedPreview!], actions));
       final res = result.val.checked;
+      await _updateBox();
       onSnack?.call(res.message);
       onUpdated?.call();
-      final obj = await _updateBox();
-      if (obj != null) box = obj;
+      onShowGenerating?.call();
       print('to-generate, done');
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;

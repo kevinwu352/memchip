@@ -334,4 +334,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get detail_generate_sel_btn => '确认选择';
+
+  @override
+  String get detail_generating_alert_title => '操作成功';
+
+  @override
+  String get detail_generating_alert_info => '角色正在生成中. 大概会花 4-5 分钟，请待会再来查看。';
 }
