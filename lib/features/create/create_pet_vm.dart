@@ -13,6 +13,10 @@ final class CreatePetVm extends ChangeNotifier {
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
 
+  void cancel() {
+    nameController.dispose();
+  }
+
   List<ImageUploader> uploads = [ImageUploader(), ImageUploader()];
   void didChooseImage(int index, String path) async {
     uploads[index].launch(path, notifyListeners);
@@ -102,12 +106,6 @@ final class CreatePetVm extends ChangeNotifier {
     } finally {
       submiting = false;
     }
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    super.dispose();
   }
 }
 

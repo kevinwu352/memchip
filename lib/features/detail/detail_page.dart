@@ -35,7 +35,7 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   void dispose() {
-    vm.dispose();
+    vm.cancel();
     super.dispose();
   }
 

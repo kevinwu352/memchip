@@ -12,6 +12,10 @@ final class DetailVm extends ChangeNotifier {
   final void Function()? onComplete;
   final Future<List<Gest>?> Function()? onShowSelect;
 
+  void cancel() {
+    serialController.dispose();
+  }
+
   var _deleting = false;
   bool get deleting => _deleting;
   set deleting(bool value) {

@@ -13,6 +13,10 @@ final class CreateHumanVm extends ChangeNotifier {
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
 
+  void cancel() {
+    nameController.dispose();
+  }
+
   List<ImageUploader> uploads = [ImageUploader()];
   void didChooseImage(int index, String path) async {
     uploads[index].launch(path, notifyListeners);
@@ -78,12 +82,6 @@ final class CreateHumanVm extends ChangeNotifier {
     } finally {
       submiting = false;
     }
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    super.dispose();
   }
 }
 

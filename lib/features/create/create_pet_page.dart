@@ -33,7 +33,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
 
   @override
   void dispose() {
-    vm.dispose();
+    vm.cancel();
     super.dispose();
   }
 

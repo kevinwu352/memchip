@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
-    vm.dispose();
+    vm.cancel();
     super.dispose();
   }
 

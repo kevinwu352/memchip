@@ -13,6 +13,12 @@ final class LoginVm extends ChangeNotifier {
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
 
+  void cancel() {
+    accountController.dispose();
+    codeController.dispose();
+    _timer?.cancel();
+  }
+
   var _method = Method.password;
   Method get method => _method;
   set method(Method value) {
@@ -149,14 +155,6 @@ final class LoginVm extends ChangeNotifier {
     } finally {
       submiting = false;
     }
-  }
-
-  @override
-  void dispose() {
-    accountController.dispose();
-    codeController.dispose();
-    _timer?.cancel();
-    super.dispose();
   }
 }
 

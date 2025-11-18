@@ -11,6 +11,12 @@ final class RegisterVm extends ChangeNotifier {
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
 
+  void cancel() {
+    accountController.dispose();
+    codeController.dispose();
+    confirmController.dispose();
+  }
+
   final accountController = TextEditingController();
   bool get accountShowClear => accountController.text.isNotEmpty;
   void accountClear() {

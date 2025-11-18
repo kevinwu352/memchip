@@ -31,7 +31,7 @@ class _CreateHumanPageState extends State<CreateHumanPage> {
 
   @override
   void dispose() {
-    vm.dispose();
+    vm.cancel();
     super.dispose();
   }
 
