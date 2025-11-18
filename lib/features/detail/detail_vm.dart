@@ -145,6 +145,8 @@ final class DetailVm extends ChangeNotifier {
     generating = true;
 
     try {
+      List<String> actions = [];
+
       if (box.type == BoxType.human) {
         print('human:true, has-gest:${_gests.isNotEmpty}, ${_gests.isNotEmpty ? 'continue' : 'to-retrive'}');
         if (_gests.isEmpty) {
@@ -156,18 +158,24 @@ final class DetailVm extends ChangeNotifier {
             return;
           }
         }
-
         print('human:true, to-select');
         final list = await onShowSelect?.call() ?? [];
         print('human:true, selected-gest:${list.isNotEmpty}, ${list.isNotEmpty ? 'continue' : 'return'}');
-        if (list.isEmpty) {
+        if (list.isNotEmpty) {
+          actions = list.map((e) => e.action).toList();
+        } else {
           generating = false;
           return;
         }
       }
 
       print('to-generate');
-      await _generate();
+      final result = await network.reqRes(Api.boxGenerate(box.id, box.previewImages[selectedPreview!], actions));
+      final res = result.val.checked;
+      onSnack?.call(res.message);
+      onUpdated?.call();
+      final obj = await _updateBox();
+      if (obj != null) box = obj;
       print('to-generate, done');
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
@@ -175,9 +183,5 @@ final class DetailVm extends ChangeNotifier {
     } finally {
       generating = false;
     }
-  }
-
-  Future<void> _generate() async {
-    print('_generate');
   }
 }

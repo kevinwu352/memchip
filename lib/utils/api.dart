@@ -104,4 +104,12 @@ final class Api extends Endpoint {
       );
 
   Api.boxGetGests() : super('/MeetAgain-memoryBoxes/getAvailableActions', ReqMethod.get);
+
+  Api.boxGenerate(String boxId, String image, List<String> actions)
+    : super(
+        '/MeetAgain-memoryBoxes/updateToGenerateHologram',
+        ReqMethod.post,
+        parameters: {'boxId': boxId, 'generateImage': image, 'selectedActions': actions},
+        encoding: ReqEncoding.json,
+      );
 }

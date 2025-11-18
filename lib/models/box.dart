@@ -1,6 +1,8 @@
 import '/core/core.dart';
 
 // {
+//   "createdTime": "2025-11-06T06:06:11.208Z",
+//   "canEdit": true,
 //   "_id": "690c3ad3286f7cfef644c9a3",
 //   "userId": "68fee0e3bd0220da8825d0a3",
 //   "type": 1,
@@ -31,8 +33,13 @@ import '/core/core.dart';
 //     "https://cdn.paoxiaokeji.com/meetAgain/doubaoImage/2025-11-14/1763101584767-yql6h3.png",
 //     "https://cdn.paoxiaokeji.com/meetAgain/doubaoImage/2025-11-14/1763101584882-gi9mvj.png"
 //   ],
-//   "createdTime": "2025-11-06T06:06:11.208Z",
-//   "canEdit": true
+//
+//   "generateImage": "https://cdn.paoxiaokeji.com/meetAgain/doubaoImage/2025-11-18/1763434843715-16kkx8.png",
+//   "videoUrls": [{
+//     "action": "默认动作",
+//     "videoUrl": "",
+//     "isDefault": true
+//   }]
 // }
 
 enum BoxType {
@@ -69,6 +76,7 @@ enum BoxStatus {
 }
 
 class Box {
+  DateTime createdTime;
   String id;
   BoxType type;
   BoxStatus status;
@@ -76,9 +84,10 @@ class Box {
   String coverImage;
   String frontImage;
   List<String> previewImages;
-  DateTime createdTime;
+  String? generateImage;
 
   Box({
+    required this.createdTime,
     required this.id,
     required this.type,
     required this.status,
@@ -86,10 +95,11 @@ class Box {
     required this.coverImage,
     required this.frontImage,
     required this.previewImages,
-    required this.createdTime,
+    this.generateImage,
   });
 
   factory Box.fromApi(Map<String, dynamic> json) {
+    final createdTime = DateTime.parse(json['createdTime'] as String);
     final id = json['_id'] as String;
     final type = BoxType.fromApi(json['type'] as int);
     final status = BoxStatus.fromApi(json['status'] as int);
@@ -98,8 +108,9 @@ class Box {
     final coverImage = [json['coverImage'], photos?.elementAtOrNull(0)].whereType<String>().firstOrNull ?? '';
     final frontImage = [json['frontImage'], photos?.elementAtOrNull(1)].whereType<String>().firstOrNull ?? '';
     final previewImages = json.getListOf<String>('previewImages') ?? [];
-    final createdTime = DateTime.parse(json['createdTime'] as String);
+    final generateImage = withValue(json['generateImage'], (v) => v is String ? v : null);
     return Box(
+      createdTime: createdTime,
       id: id,
       type: type,
       status: status,
@@ -107,7 +118,7 @@ class Box {
       coverImage: coverImage,
       frontImage: frontImage,
       previewImages: previewImages,
-      createdTime: createdTime,
+      generateImage: generateImage,
     );
   }
 }
