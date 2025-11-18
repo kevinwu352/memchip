@@ -76,6 +76,23 @@ enum BoxStatus {
   }
 }
 
+class BoxVideo {
+  String action;
+  String videoUrl;
+  bool isDefault;
+  bool isTouch;
+
+  BoxVideo({required this.action, required this.videoUrl, required this.isDefault, required this.isTouch});
+
+  factory BoxVideo.fromApi(Map<String, dynamic> json) {
+    final action = json['action'] as String;
+    final videoUrl = json['videoUrl'] as String;
+    final isDefault = withValue(json['isDefault'], (v) => v is bool ? v : false);
+    final isTouch = withValue(json['isTouch'], (v) => v is bool ? v : false);
+    return BoxVideo(action: action, videoUrl: videoUrl, isDefault: isDefault, isTouch: isTouch);
+  }
+}
+
 class Box {
   DateTime createdTime;
   String id;
@@ -85,7 +102,8 @@ class Box {
   String coverImage;
   String frontImage;
   List<String> previewImages;
-  String? generateImage;
+  String generateImage;
+  List<BoxVideo> videoUrls;
 
   Box({
     required this.createdTime,
@@ -96,7 +114,8 @@ class Box {
     required this.coverImage,
     required this.frontImage,
     required this.previewImages,
-    this.generateImage,
+    required this.generateImage,
+    required this.videoUrls,
   });
 
   factory Box.fromApi(Map<String, dynamic> json) {
@@ -109,7 +128,13 @@ class Box {
     final coverImage = [json['coverImage'], photos?.elementAtOrNull(0)].whereType<String>().firstOrNull ?? '';
     final frontImage = [json['frontImage'], photos?.elementAtOrNull(1)].whereType<String>().firstOrNull ?? '';
     final previewImages = json.getListOf<String>('previewImages') ?? [];
-    final generateImage = withValue(json['generateImage'], (v) => v is String ? v : null);
+    final generateImage = withValue(json['generateImage'], (v) => v is String ? v : '');
+    final videoUrls =
+        json
+            .getListOf<Map>('videoUrls')
+            ?.map((e) => BoxVideo.fromApi(e.map((k, v) => MapEntry(k.toString(), v))))
+            .toList() ??
+        [];
     return Box(
       createdTime: createdTime,
       id: id,
@@ -120,8 +145,9 @@ class Box {
       frontImage: frontImage,
       previewImages: previewImages,
       generateImage: generateImage,
+      videoUrls: videoUrls,
     );
   }
 
-  int? get previewIndex => withValue(generateImage, (v) => v is String ? previewImages.indexOf(v) : null);
+  int? get previewIndex => previewImages.indexOf(generateImage);
 }
