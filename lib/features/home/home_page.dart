@@ -275,6 +275,18 @@ class _EntryView extends StatelessWidget {
                           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: MyColors.gray700),
                         ),
                       ),
+                      if (box.status == BoxStatus.generating || box.status == BoxStatus.generated)
+                        Container(
+                          width: 33,
+                          height: 17,
+                          decoration: ShapeDecoration(
+                            shape: StadiumBorder(),
+                            color: box.status == BoxStatus.generating ? MyColors.violet50 : MyColors.green,
+                          ),
+                          child: box.status == BoxStatus.generating
+                              ? Image.asset('assets/images/home_entry_doing.png')
+                              : Image.asset('assets/images/home_entry_done.png'),
+                        ),
                     ],
                   ),
                   Row(
