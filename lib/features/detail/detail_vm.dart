@@ -5,7 +5,17 @@ import 'gest.dart';
 List<Gest> _gests = [];
 
 final class DetailVm extends ChangeNotifier {
-  DetailVm({required this.box, required this.network, this.onSnack, this.onDeleted, this.onUpdated, this.onShowSelect});
+  DetailVm({
+    required this.box,
+    required this.network,
+    this.onSnack,
+    this.onDeleted,
+    this.onUpdated,
+    this.onShowSelect,
+  }) {
+    // show selected preview when status is generating
+    selectedPreview = box.previewIndex;
+  }
   Box box;
   final Networkable network;
   final void Function(dynamic msg)? onSnack;

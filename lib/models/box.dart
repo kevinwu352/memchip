@@ -38,7 +38,8 @@ import '/core/core.dart';
 //   "videoUrls": [{
 //     "action": "默认动作",
 //     "videoUrl": "",
-//     "isDefault": true
+//     "isDefault": true,
+//     "isTouch": true
 //   }]
 // }
 
@@ -121,4 +122,6 @@ class Box {
       generateImage: generateImage,
     );
   }
+
+  int? get previewIndex => withValue(generateImage, (v) => v is String ? previewImages.indexOf(v) : null);
 }
