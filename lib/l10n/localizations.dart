@@ -739,6 +739,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your character is generating. It might take 4-5 minuts. Please check it later.'**
   String get detail_generating_alert_info;
+
+  /// No description provided for @detail_generated_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'Play'**
+  String get detail_generated_btn;
 }
 
 class _AppLocalizationsDelegate

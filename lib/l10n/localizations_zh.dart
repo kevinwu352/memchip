@@ -340,4 +340,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get detail_generating_alert_info => '角色正在生成中. 大概会花 4-5 分钟，请待会再来查看。';
+
+  @override
+  String get detail_generated_btn => '开始投射';
 }

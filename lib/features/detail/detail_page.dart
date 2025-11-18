@@ -67,7 +67,7 @@ class _DetailPageState extends State<DetailPage> {
               onPressed: vm.generateEnabled ? vm.generateAction : null,
             ),
 
-            GeneratedView(url: '', onPressed: () {}),
+            GeneratedView(url: vm.box.generateImage ?? '', onPressed: () {}),
           ],
         ),
       ),

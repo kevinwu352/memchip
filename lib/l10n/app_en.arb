@@ -115,5 +115,6 @@
   "detail_generate_sel_info": "After selection, the corresponding hobby will be displayed.",
   "detail_generate_sel_btn": "Confirm",
   "detail_generating_alert_title": "Success",
-  "detail_generating_alert_info": "Your character is generating. It might take 4-5 minuts. Please check it later."
+  "detail_generating_alert_info": "Your character is generating. It might take 4-5 minuts. Please check it later.",
+  "detail_generated_btn": "Play"
 }

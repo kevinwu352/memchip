@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '/pch.dart';
 
 class GeneratedView extends StatelessWidget {
@@ -24,7 +25,12 @@ class GeneratedView extends StatelessWidget {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25 - 5),
-                child: Container(color: Colors.green),
+                child: CachedNetworkImage(
+                  imageUrl: url,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Container(color: MyColors.white100),
+                  errorWidget: (context, url, error) => Container(color: MyColors.white100),
+                ),
               ),
             ),
           ),
@@ -34,7 +40,10 @@ class GeneratedView extends StatelessWidget {
           FilledButton(
             style: FilledButton.styleFrom(backgroundColor: MyColors.orange400),
             onPressed: onPressed,
-            child: Text('Confirm', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500)),
+            child: Text(
+              AppLocalizations.of(context)!.detail_generated_btn,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+            ),
           ),
         ],
       ),
