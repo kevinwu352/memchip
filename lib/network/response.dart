@@ -1,4 +1,6 @@
 import 'dart:convert';
+import '/core/core.dart';
+
 import 'error.dart';
 
 class Res {
@@ -10,20 +12,16 @@ class Res {
 
   // Res.fromJson(Map<String, dynamic> json) : code = json['code'] as int, message = json['message'] as String;
   factory Res.fromJson(Map<String, dynamic> json) {
-    final codeVal = json['code'];
-    final code = codeVal is int
-        ? codeVal
-        : codeVal is String
-        ? int.parse(codeVal)
-        : 0;
+    final code = withValue(
+      json['code'],
+      (v) => v is int
+          ? v
+          : v is String
+          ? int.parse(v)
+          : 0,
+    );
 
-    final message1 = json['message'];
-    final message2 = json['msg'];
-    final message = message1 is String
-        ? message1
-        : message2 is String
-        ? message2
-        : '';
+    final message = [json['message'], json['msg']].whereType<String>().firstOrNull ?? '';
 
     return Res(code: code, message: message);
   }
