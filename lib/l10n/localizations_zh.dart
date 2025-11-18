@@ -9,9 +9,6 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get alert_title => '提示';
-
-  @override
   String get confirm => '确定';
 
   @override

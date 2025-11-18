@@ -98,12 +98,6 @@ abstract class AppLocalizations {
     Locale('zh'),
   ];
 
-  /// No description provided for @alert_title.
-  ///
-  /// In en, this message translates to:
-  /// **'Attention'**
-  String get alert_title;
-
   /// No description provided for @confirm.
   ///
   /// In en, this message translates to:
