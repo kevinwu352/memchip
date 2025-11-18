@@ -9,15 +9,18 @@ final class HomeVm extends ChangeNotifier {
   var _updating = false;
   DateTime? _userUpdatedTime;
   void updateUser() async {
-    if (!tokenValid) return;
     if (timeValid(_userUpdatedTime, Duration(hours: 6))) return;
     if (_updating) return;
     try {
       _updating = true;
-      final result = await network.reqRes(Api.accountGetUser(), init: User.fromApi);
-      final user = result.val.getObj<User>();
-      defaults.user = user;
-      _userUpdatedTime = DateTime.now();
+      if (tokenValid) {
+        final result = await network.reqRes(Api.accountGetUser(), init: User.fromApi);
+        final user = result.val.getObj<User>();
+        defaults.user = user;
+        _userUpdatedTime = DateTime.now();
+      } else {
+        //
+      }
     } finally {
       _updating = false;
     }
@@ -30,31 +33,25 @@ final class HomeVm extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Box> _boxes = [];
-  List<Box> get boxes => _boxes;
-  set boxes(List<Box> value) {
-    _boxes = value;
-    notifyListeners();
-  }
+  List<Box> boxes = [];
 
+  DateTime? _chipsUpdatedTime;
   void loadChips() async {
-    // print('valid: ${(network as HttpClient).token}');
+    if (timeValid(_chipsUpdatedTime, Duration(seconds: 30))) return;
     if (_loading) return;
     try {
       loading = true;
       if (tokenValid) {
         final result = await network.reqRes(Api.boxGetAll(), init: Box.fromApi);
         boxes = result.val.getLst<Box>() ?? [];
+        _chipsUpdatedTime = DateTime.now();
       } else {
         boxes = [];
       }
-    } catch (e) {
-      // final err = e is HttpError ? e : HttpError.unknown;
-      // onSnack?.call(err);
     } finally {
       loading = false;
     }
   }
 
-  bool get tokenValid => network is HttpClient && (network as HttpClient).token?.isNotEmpty == true;
+  bool get tokenValid => withValue(network, (v) => v is HttpClient && v.token?.isNotEmpty == true);
 }
