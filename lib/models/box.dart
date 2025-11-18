@@ -70,7 +70,6 @@ enum BoxStatus {
 
 class Box {
   String id;
-  String userId;
   BoxType type;
   BoxStatus status;
   String name;
@@ -81,7 +80,6 @@ class Box {
 
   Box({
     required this.id,
-    required this.userId,
     required this.type,
     required this.status,
     required this.name,
@@ -93,7 +91,6 @@ class Box {
 
   factory Box.fromApi(Map<String, dynamic> json) {
     final id = json['_id'] as String;
-    final userId = json['userId'] as String;
     final type = BoxType.fromApi(json['type'] as int);
     final status = BoxStatus.fromApi(json['status'] as int);
     final name = [json['name'], json['boxName']].whereType<String>().firstOrNull ?? '';
@@ -104,7 +101,6 @@ class Box {
     final createdTime = DateTime.parse(json['createdTime'] as String);
     return Box(
       id: id,
-      userId: userId,
       type: type,
       status: status,
       name: name,

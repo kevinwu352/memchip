@@ -6,7 +6,7 @@ List<Gest> _gests = [];
 
 final class DetailVm extends ChangeNotifier {
   DetailVm({required this.box, required this.network, this.onSnack, this.onComplete, this.onShowSelect});
-  final Box box;
+  Box box;
   final Networkable network;
   final void Function(dynamic msg)? onSnack;
   final void Function()? onComplete;
@@ -14,6 +14,16 @@ final class DetailVm extends ChangeNotifier {
 
   void cancel() {
     serialController.dispose();
+  }
+
+  Future<Box?> _updateBox() async {
+    try {
+      final result = await network.reqRes(Api.boxGetOne(box.id), init: Box.fromApi);
+      final obj = result.val.getObj<Box>();
+      return obj;
+    } catch (e) {
+      return null;
+    }
   }
 
   var _deleting = false;
@@ -67,7 +77,8 @@ final class DetailVm extends ChangeNotifier {
       final result = await network.reqRes(Api.boxActivate(id, code));
       final res = result.val.checked;
       onSnack?.call(res.message);
-      box.status = BoxStatus.activated;
+      final obj = await _updateBox();
+      if (obj != null) box = obj;
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
@@ -94,7 +105,8 @@ final class DetailVm extends ChangeNotifier {
       final result = await network.reqRes(Api.boxPreview(id));
       final res = result.val.checked;
       onSnack?.call(res.message);
-      box.status = BoxStatus.previewed;
+      final obj = await _updateBox();
+      if (obj != null) box = obj;
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);

@@ -30,7 +30,17 @@ final class Api extends Endpoint {
 
   Api.accountGetUser() : super('/MeetAgain-user/checkUserLogin', ReqMethod.get);
 
+  // ================================================================================
+
   Api.boxGetAll() : super('/MeetAgain-memoryBoxes/getMemoryBoxesByUserIdWithPet', ReqMethod.get);
+
+  Api.boxGetOne(String boxId)
+    : super(
+        '/MeetAgain-memoryBoxes/getMemoryBoxById',
+        ReqMethod.post,
+        parameters: {'boxId': boxId},
+        encoding: ReqEncoding.json,
+      );
 
   Api.boxCreateHuman(String name, String? image, String? gender, String? age, String? figure)
     : super(
