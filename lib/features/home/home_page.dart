@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
   void didPopNext() {
     super.didPopNext();
     print('route: did appear');
+    vm.loadChips();
   }
 
   @override

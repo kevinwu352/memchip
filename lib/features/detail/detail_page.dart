@@ -44,7 +44,7 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(vm.box.name),
-        actions: [IconButton(onPressed: _delete, icon: Icon(Icons.delete))],
+        actions: vm.box.status == BoxStatus.unknown ? [IconButton(onPressed: _delete, icon: Icon(Icons.delete))] : null,
       ),
       resizeToAvoidBottomInset: false,
       body: ListenableBuilder(
@@ -61,6 +61,7 @@ class _DetailPageState extends State<DetailPage> {
               items: vm.box.previewImages,
               selected: vm.selectedPreview,
               onSelected: vm.selectPreview,
+              generating: vm.box.status == BoxStatus.generating,
               onPressed: vm.generateEnabled ? vm.generateAction : null,
             ),
 

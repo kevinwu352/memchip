@@ -704,6 +704,12 @@ abstract class AppLocalizations {
   /// **'Generate Chips'**
   String get detail_generate_btn;
 
+  /// No description provided for @detail_generate_btn_ing.
+  ///
+  /// In en, this message translates to:
+  /// **'Generating...'**
+  String get detail_generate_btn_ing;
+
   /// No description provided for @detail_generate_sel_title.
   ///
   /// In en, this message translates to:

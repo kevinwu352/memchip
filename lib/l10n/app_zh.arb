@@ -110,6 +110,7 @@
   "detail_generate_title": "选择预览图",
   "detail_generate_info": "请从下列图片中选择一张制作全息影像",
   "detail_generate_btn": "生成全息影像",
+  "detail_generate_btn_ing": "生成中...",
   "detail_generate_sel_title": "爱好",
   "detail_generate_sel_info": "爱好（选择后会呈现相应的全息影像）",
   "detail_generate_sel_btn": "确认选择"

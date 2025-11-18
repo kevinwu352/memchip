@@ -37,7 +37,7 @@ final class HomeVm extends ChangeNotifier {
 
   DateTime? _chipsUpdatedTime;
   void loadChips() async {
-    if (timeValid(_chipsUpdatedTime, Duration(seconds: 30))) return;
+    if (timeValid(_chipsUpdatedTime, Duration(seconds: 10))) return;
     if (_loading) return;
     try {
       loading = true;

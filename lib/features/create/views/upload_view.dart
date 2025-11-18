@@ -82,7 +82,7 @@ class UploadView extends StatelessWidget {
   }
 
   void _chooseImage(int index, ImageSource source, BuildContext context) async {
-    Navigator.pop(context);
+    Navigator.of(context).pop();
     final picker = ImagePicker();
     final file = await picker.pickImage(source: source);
     // print('path:${file?.path}, name:${file?.name}, mime:${file?.mimeType}, length:${file?.length()}');

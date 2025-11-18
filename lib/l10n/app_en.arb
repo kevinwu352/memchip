@@ -110,6 +110,7 @@
   "detail_generate_title": "Select preview image",
   "detail_generate_info": "Please select one image from below to create a your chips.",
   "detail_generate_btn": "Generate Chips",
+  "detail_generate_btn_ing": "Generating...",
   "detail_generate_sel_title": "Hobby",
   "detail_generate_sel_info": "After selection, the corresponding hobby will be displayed.",
   "detail_generate_sel_btn": "Confirm"

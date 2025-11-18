@@ -324,6 +324,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get detail_generate_btn => '生成全息影像';
 
   @override
+  String get detail_generate_btn_ing => '生成中...';
+
+  @override
   String get detail_generate_sel_title => '爱好';
 
   @override

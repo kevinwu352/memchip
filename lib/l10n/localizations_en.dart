@@ -325,6 +325,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get detail_generate_btn => 'Generate Chips';
 
   @override
+  String get detail_generate_btn_ing => 'Generating...';
+
+  @override
   String get detail_generate_sel_title => 'Hobby';
 
   @override
