@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
         EventType.boxDeleted,
         EventType.boxUpdated,
       ],
-      onEvent: (event) => vm.loadChips(),
+      onEvent: (event) => vm.loadChips(force: true),
     );
   }
 
@@ -70,7 +70,15 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
   void didPopNext() {
     super.didPopNext();
     print('route: did appear');
+    vm.appeared = true;
     vm.loadChips();
+  }
+
+  @override
+  void didPushNext() {
+    super.didPushNext();
+    print('route: did disappear');
+    vm.appeared = false;
   }
 
   @override

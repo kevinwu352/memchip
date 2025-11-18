@@ -6,6 +6,8 @@ final class HomeVm extends ChangeNotifier {
   final Networkable network;
   final Defaults defaults;
 
+  bool appeared = true;
+
   var _updating = false;
   DateTime? _userUpdatedTime;
   void updateUser() async {
@@ -36,7 +38,11 @@ final class HomeVm extends ChangeNotifier {
   List<Box> boxes = [];
 
   DateTime? _chipsUpdatedTime;
-  void loadChips() async {
+  void loadChips({bool force = false}) async {
+    if (force) _chipsUpdatedTime = null;
+    // print('load: force:$force, $_chipsUpdatedTime');
+    // print('load: appeared:$appeared, ${appeared ? 'to-load' : 'wait'}');
+    if (!appeared) return;
     if (timeValid(_chipsUpdatedTime, Duration(seconds: 10))) return;
     if (_loading) return;
     try {
@@ -45,8 +51,10 @@ final class HomeVm extends ChangeNotifier {
         final result = await network.reqRes(Api.boxGetAll(), init: Box.fromApi);
         boxes = result.val.getLst<Box>() ?? [];
         _chipsUpdatedTime = DateTime.now();
+        // print('load: got-boxes:$_chipsUpdatedTime');
       } else {
         boxes = [];
+        // print('load: got-boxes:no');
       }
     } finally {
       loading = false;
