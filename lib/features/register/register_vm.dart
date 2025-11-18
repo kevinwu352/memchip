@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 final class RegisterVm extends ChangeNotifier {
-  RegisterVm({required this.network, this.onSnack, this.onComplete}) {
+  RegisterVm({required this.network, this.onSnack, this.onRegistered}) {
     // accountController.text = 'ts00';
     // codeController.text = '123456';
     // confirmController.text = '123456';
   }
   final Networkable network;
   final void Function(dynamic msg)? onSnack;
-  final void Function()? onComplete;
+  final void Function()? onRegistered;
 
   void cancel() {
     accountController.dispose();
@@ -65,7 +65,7 @@ final class RegisterVm extends ChangeNotifier {
       final result = await network.reqRes(Api.accountRegister(account, code));
       final res = result.val.checked;
       onSnack?.call(res.message);
-      onComplete?.call();
+      onRegistered?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);

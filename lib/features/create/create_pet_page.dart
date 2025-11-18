@@ -22,7 +22,7 @@ class _CreatePetPageState extends State<CreatePetPage> {
   late final vm = CreatePetVm(
     network: widget.network,
     onSnack: (msg) => context.showSnack(msg),
-    onComplete: () =>
+    onCreated: () =>
         Future.delayed(Duration(seconds: 1), () => mounted ? context.fire(EventType.boxCreated).go(Routes.home) : null),
   );
 

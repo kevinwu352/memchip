@@ -5,11 +5,11 @@ import 'gest.dart';
 List<Gest> _gests = [];
 
 final class DetailVm extends ChangeNotifier {
-  DetailVm({required this.box, required this.network, this.onSnack, this.onComplete, this.onShowSelect});
+  DetailVm({required this.box, required this.network, this.onSnack, this.onDeleted, this.onShowSelect});
   Box box;
   final Networkable network;
   final void Function(dynamic msg)? onSnack;
-  final void Function()? onComplete;
+  final void Function()? onDeleted;
   final Future<List<Gest>?> Function()? onShowSelect;
 
   void cancel() {
@@ -44,7 +44,7 @@ final class DetailVm extends ChangeNotifier {
       final result = await network.reqRes(Api.boxDelete(id));
       final res = result.val.checked;
       onSnack?.call(res.message);
-      onComplete?.call();
+      onDeleted?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);

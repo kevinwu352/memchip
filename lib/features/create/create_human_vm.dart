@@ -4,14 +4,14 @@ import '/utils/image_uploader.dart';
 import 'gender.dart';
 
 final class CreateHumanVm extends ChangeNotifier {
-  CreateHumanVm({required this.network, this.onSnack, this.onComplete}) {
+  CreateHumanVm({required this.network, this.onSnack, this.onCreated}) {
     for (var element in uploads) {
       element.notify = notifyListeners;
     }
   }
   final Networkable network;
   final void Function(dynamic msg)? onSnack;
-  final void Function()? onComplete;
+  final void Function()? onCreated;
 
   void cancel() {
     nameController.dispose();
@@ -75,7 +75,7 @@ final class CreateHumanVm extends ChangeNotifier {
       final result = await network.reqRes(Api.boxCreateHuman(name, image, gender, age, figure));
       final res = result.val.checked;
       onSnack?.call(res.message);
-      onComplete?.call();
+      onCreated?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);

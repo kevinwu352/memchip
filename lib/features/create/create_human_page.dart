@@ -20,7 +20,7 @@ class _CreateHumanPageState extends State<CreateHumanPage> {
   late final vm = CreateHumanVm(
     network: widget.network,
     onSnack: (msg) => context.showSnack(msg),
-    onComplete: () =>
+    onCreated: () =>
         Future.delayed(Duration(seconds: 1), () => mounted ? context.fire(EventType.boxCreated).go(Routes.home) : null),
   );
 

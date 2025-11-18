@@ -15,7 +15,7 @@ class _RegisterPageState extends State<RegisterPage> {
   late final vm = RegisterVm(
     network: widget.network,
     onSnack: (msg) => context.showSnack(msg),
-    onComplete: () => context.pop(),
+    onRegistered: () => context.pop(),
   );
 
   @override

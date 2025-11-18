@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '/pch.dart';
 
 final class LoginVm extends ChangeNotifier {
-  LoginVm({required this.network, required this.secures, required this.defaults, this.onSnack, this.onComplete}) {
+  LoginVm({required this.network, required this.secures, required this.defaults, this.onSnack, this.onLogined}) {
     // accountController.text = 'test101';
     // codeController.text = '123456';
   }
@@ -11,7 +11,7 @@ final class LoginVm extends ChangeNotifier {
   final Secures secures;
   final Defaults defaults;
   final void Function(dynamic msg)? onSnack;
-  final void Function()? onComplete;
+  final void Function()? onLogined;
 
   void cancel() {
     accountController.dispose();
@@ -129,7 +129,7 @@ final class LoginVm extends ChangeNotifier {
       secures.lastUsername = user?.account;
       secures.accessToken = user?.token;
       defaults.user = user;
-      onComplete?.call();
+      onLogined?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
@@ -148,7 +148,7 @@ final class LoginVm extends ChangeNotifier {
       secures.lastUsername = user?.account;
       secures.accessToken = user?.token;
       defaults.user = user;
-      onComplete?.call();
+      onLogined?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);

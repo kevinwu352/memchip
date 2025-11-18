@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
     secures: widget.secures,
     defaults: widget.defaults,
     onSnack: (msg) => context.showSnack(msg),
-    onComplete: () => Future.delayed(
+    onLogined: () => Future.delayed(
       Duration(seconds: 1),
       () => mounted ? context.fire(EventType.accountLogin).go(Routes.home) : null,
     ),

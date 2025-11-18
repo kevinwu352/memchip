@@ -23,7 +23,7 @@ class _DetailPageState extends State<DetailPage> {
     box: widget.box,
     network: widget.network,
     onSnack: (msg) => context.showSnack(msg),
-    onComplete: () =>
+    onDeleted: () =>
         Future.delayed(Duration(seconds: 1), () => mounted ? context.fire(EventType.boxDeleted).pop() : null),
     onShowSelect: _showSelect,
   );

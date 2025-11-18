@@ -4,14 +4,14 @@ import '/utils/image_uploader.dart';
 import 'gender.dart';
 
 final class CreatePetVm extends ChangeNotifier {
-  CreatePetVm({required this.network, this.onSnack, this.onComplete}) {
+  CreatePetVm({required this.network, this.onSnack, this.onCreated}) {
     for (var element in uploads) {
       element.notify = notifyListeners;
     }
   }
   final Networkable network;
   final void Function(dynamic msg)? onSnack;
-  final void Function()? onComplete;
+  final void Function()? onCreated;
 
   void cancel() {
     nameController.dispose();
@@ -99,7 +99,7 @@ final class CreatePetVm extends ChangeNotifier {
       final result = await network.reqRes(Api.boxCreatePet(name, image1, image2, gender, species, tail, personality));
       final res = result.val.checked;
       onSnack?.call(res.message);
-      onComplete?.call();
+      onCreated?.call();
     } catch (e) {
       final err = e is HttpError ? e : HttpError.unknown;
       onSnack?.call(err);
