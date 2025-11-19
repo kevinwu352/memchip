@@ -23,6 +23,8 @@ class _PlayPageState extends State<PlayPage> {
   @override
   void dispose() {
     widget.vdown.statusChanged = null;
+    _orders.forEach((e) => e.dispose());
+    _react?.dispose();
     super.dispose();
   }
 
@@ -31,17 +33,16 @@ class _PlayPageState extends State<PlayPage> {
   void _setUp() {
     for (var e in _videos.indexed) {
       if (widget.vdown.statusOf(e.$2.videoUrl) == VDStatus.downloaded) {
-        print('play-down: ${e.$1}, downloaded');
         e.$2.path = widget.vdown.pathOf(e.$2.videoUrl);
+        print('down: ${e.$1}, downloaded, ${e.$2.path}');
       } else {
-        print('play-down: ${e.$1}, to-download');
+        print('down: ${e.$1}, to-download');
         e.$2.path = null;
         widget.vdown.enqueue(e.$2.videoUrl);
       }
     }
-    print(
-      'play-down: (${_videos.where((e) => e.path == null).indexed.map((e) => '${e.$1}').join(',')})/${_videos.length}',
-    );
+    final downs = _videos.indexed.where((e) => e.$2.path == null).map((e) => '${e.$1}');
+    print('down: (${downs.join(',')})/${_videos.length}');
     widget.vdown.statusChanged = _downloadChanged;
     widget.vdown.run();
     _startIfPossible();
@@ -52,50 +53,67 @@ class _PlayPageState extends State<PlayPage> {
     if (video != null) {
       if (status == VDStatus.downloaded) {
         video.path = widget.vdown.pathOf(url);
-        print(
-          'play-down: (${_videos.where((e) => e.path == null).indexed.map((e) => '${e.$1}').join(',')})/${_videos.length}',
-        );
+        final downs = _videos.indexed.where((e) => e.$2.path == null).map((e) => '${e.$1}');
+        print('down: (${downs.join(',')})/${_videos.length}');
       }
     }
     _startIfPossible();
   }
 
   void _startIfPossible() async {
-    final completed = _videos.every((e) => e.path is String);
-    if (completed) {
-      print('play-down: completed, to-play');
+    if (_videos.isEmpty) return;
+    if (_videos.any((e) => e.path == null)) return;
+    print('down: completed, to-play');
 
-      List<VideoPlayerController> list = [];
-      for (var e in _videos.indexed) {
-        print('play-cret: ${e.$1}, begin');
-        final c = VideoPlayerController.file(File(e.$2.path!));
-        c.addListener(() {
-          print('completed: ${e.$1} ${c.value.isCompleted}');
-          if (c.value.isCompleted) {
-            if (_index == e.$1) {
-              _index = _index == 3 ? 0 : _index + 1;
-              setState(() {});
-              _normals.elementAtOrNull(_index)?.play();
-            }
-          }
-        });
-        await c.initialize();
-        list.add(c);
-        print('play-cret: ${e.$1}, end');
+    final actions = _videos.where((e) => e.isTouch).toList();
+    final normals = _videos.where((e) => !e.isDefault && !e.isTouch).toList();
+    final first = _videos.firstWhereOrNull((e) => e.isDefault) ?? normals.firstOrNull;
+    if (first == null) return;
+
+    final List<BoxVideo> orders = [];
+    if (normals.isEmpty) {
+      orders.add(first);
+    } else {
+      for (var e in normals) {
+        orders.add(first);
+        orders.add(first);
+        orders.add(e);
       }
-      _normals = list;
-      // _orders = [0, 0, 1, 0, 0, 2, 0, 0, 3];
-      _orders = [0, 1, 2, 3];
-      _index = 0;
-      setState(() {});
-      _normals.elementAtOrNull(_index)?.play();
+    }
+
+    List<VideoPlayerController> list = [];
+    for (var e in orders.indexed) {
+      print('cont: ${e.$1}, begin');
+      final cont = VideoPlayerController.file(File(e.$2.path!));
+      await cont.initialize();
+      cont.addListener(() => _playerChanged(e.$1));
+      list.add(cont);
+      print('cont: ${e.$1}, end');
+    }
+    _orders = list;
+    _index = 0;
+    setState(() {});
+    _orders.elementAtOrNull(_index)?.play();
+  }
+
+  void _playerChanged(int i) {
+    final cont = _orders.elementAtOrNull(i);
+    if (cont == null) return;
+    print('cont: $i, completed:${cont.value.isCompleted}');
+    if (cont.value.isCompleted) {
+      if (i == _index) {
+        _index = _index + 1 == _orders.length ? 0 : _index + 1;
+        print('cont: next $_index');
+        setState(() {});
+        _orders.elementAtOrNull(_index)?.play();
+      } else {
+        print('cont: ignore');
+      }
     }
   }
 
-  List<VideoPlayerController> _normals = [];
-  List<int> _orders = [];
+  List<VideoPlayerController> _orders = [];
   int _index = 0;
-
   VideoPlayerController? _react;
 
   @override
@@ -106,11 +124,10 @@ class _PlayPageState extends State<PlayPage> {
           children: [
             if (_react?.value.isInitialized == true)
               AspectRatio(aspectRatio: _react!.value.aspectRatio, child: VideoPlayer(_react!))
-            else if (_orders.elementAtOrNull(_index) != null &&
-                _normals.elementAtOrNull(_orders[_index])?.value.isInitialized == true)
+            else if (_orders.elementAtOrNull(_index)?.value.isInitialized == true)
               AspectRatio(
-                aspectRatio: _normals.elementAtOrNull(_orders[_index])!.value.aspectRatio,
-                child: VideoPlayer(_normals.elementAtOrNull(_orders[_index])!),
+                aspectRatio: _orders.elementAtOrNull(_index)!.value.aspectRatio,
+                child: VideoPlayer(_orders.elementAtOrNull(_index)!),
               ),
 
             Text('data: ${widget.box.name}'),
