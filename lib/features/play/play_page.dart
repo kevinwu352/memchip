@@ -124,6 +124,8 @@ class _PlayPageState extends State<PlayPage> {
       if (_pending != null) {
         _ai = _pending;
         _pending = null;
+      } else {
+        _ai = null;
       }
       print('norm: next [$_ni, $_ai]');
       setState(() {});
@@ -143,7 +145,12 @@ class _PlayPageState extends State<PlayPage> {
     if (!cont.value.isCompleted) return;
     if (i == _ai) {
       // _ni =
-      _ai = null;
+      if (_pending != null) {
+        _ai = _pending;
+        _pending = null;
+      } else {
+        _ai = null;
+      }
       print('actn: next [$_ni, $_ai]');
       setState(() {});
       if (_ai != null) {
@@ -169,12 +176,14 @@ class _PlayPageState extends State<PlayPage> {
       body: SizedBox.expand(
         child: GestureDetector(
           onTap: () {
-            if (_ai == null) {
-              print('tapped, next play action');
-              _pending = 0;
-            } else {
-              print('tapped, next play normal');
-            }
+            // if (_ai == null) {
+            //   print('tapped, next play action');
+            //   _pending = 0;
+            // } else {
+            //   print('tapped, next play normal');
+            // }
+            print('tapped, next play action');
+            _pending = 0;
           },
           child: Stack(
             children: [
@@ -182,15 +191,6 @@ class _PlayPageState extends State<PlayPage> {
                 AspectRatio(aspectRatio: _actions[_ai!].value.aspectRatio, child: VideoPlayer(_actions[_ai!]))
               else if (_normals.elementAtOrNull(_ni)?.value.isInitialized == true)
                 AspectRatio(aspectRatio: _normals[_ni].value.aspectRatio, child: VideoPlayer(_normals[_ni])),
-
-              // if (_react?.value.isInitialized == true)
-              //   AspectRatio(aspectRatio: _react!.value.aspectRatio, child: VideoPlayer(_react!))
-              // else if (_orders.elementAtOrNull(_oi)?.value.isInitialized == true)
-              //   AspectRatio(
-              //     aspectRatio: _orders.elementAtOrNull(_oi)!.value.aspectRatio,
-              //     child: VideoPlayer(_orders.elementAtOrNull(_oi)!),
-              //   ),
-              // Text('data: ${widget.box.name}'),
             ],
           ),
         ),
