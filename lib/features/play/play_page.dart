@@ -77,20 +77,9 @@ class _PlayPageState extends State<PlayPage> {
     final first = _videos.firstWhereOrNull((e) => e.isDefault) ?? normals.firstOrNull;
     if (first == null) return;
 
-    final List<BoxVideo> ordered = [first, ...normals];
-    // final List<BoxVideo> ordered = [];
-    // if (normals.isEmpty) {
-    //   ordered.add(first);
-    // } else {
-    //   for (var e in normals) {
-    //     // ordered.add(first);
-    //     ordered.add(first);
-    //     ordered.add(e);
-    //   }
-    // }
-
-    List<VideoPlayerController> list1 = [];
-    for (var e in actions.indexed) {
+    final doubled = [...actions, ...actions];
+    final List<VideoPlayerController> list1 = [];
+    for (var e in doubled.indexed) {
       // print('cont: ${e.$1}, begin');
       final cont = VideoPlayerController.file(File(e.$2.path!));
       await cont.initialize();
@@ -100,6 +89,17 @@ class _PlayPageState extends State<PlayPage> {
     }
     _actions = list1;
 
+    // final ordered = [first, ...normals];
+    final List<BoxVideo> ordered = [];
+    if (normals.isEmpty) {
+      ordered.add(first);
+    } else {
+      for (var e in normals) {
+        // ordered.add(first);
+        ordered.add(first);
+        ordered.add(e);
+      }
+    }
     List<VideoPlayerController> list2 = [];
     for (var e in ordered.indexed) {
       // print('cont: ${e.$1}, begin');
@@ -110,6 +110,7 @@ class _PlayPageState extends State<PlayPage> {
       // print('cont: ${e.$1}, end');
     }
     _normals = list2;
+
     _ni = 0;
     setState(() {});
     _normals.elementAtOrNull(_ni)?.play();
@@ -120,22 +121,14 @@ class _PlayPageState extends State<PlayPage> {
     if (cont == null) return;
     if (!cont.value.isCompleted) return;
     if (i == _ni) {
+      print('norm: completed $i==$_ni, next');
       _ni = _ni + 1 == _normals.length ? 0 : _ni + 1;
-      if (_pending != null) {
-        _ai = _pending;
-        _pending = null;
-      } else {
-        _ai = null;
-      }
+      _loadActionIfNeeded();
       print('norm: next [$_ni, $_ai]');
       setState(() {});
-      if (_ai != null) {
-        _actions.elementAtOrNull(_ai!)?.play();
-      } else {
-        _normals.elementAtOrNull(_ni)?.play();
-      }
+      _startPlaying();
     } else {
-      print('norm: ignore');
+      print('norm: completed $i!=$_ni, ignore');
     }
   }
 
@@ -144,22 +137,31 @@ class _PlayPageState extends State<PlayPage> {
     if (cont == null) return;
     if (!cont.value.isCompleted) return;
     if (i == _ai) {
+      print('actn: completed $i==$_ai, next');
       // _ni =
-      if (_pending != null) {
-        _ai = _pending;
-        _pending = null;
-      } else {
-        _ai = null;
-      }
+      _loadActionIfNeeded();
       print('actn: next [$_ni, $_ai]');
       setState(() {});
-      if (_ai != null) {
-        _actions.elementAtOrNull(_ai!)?.play();
-      } else {
-        _normals.elementAtOrNull(_ni)?.play();
-      }
+      _startPlaying();
     } else {
-      print('actn: ignore');
+      print('actn: completed $i!=$_ai, ignore');
+    }
+  }
+
+  void _loadActionIfNeeded() {
+    if (_pending != null) {
+      _ai = _pending;
+      _pending = null;
+    } else {
+      _ai = null;
+    }
+  }
+
+  void _startPlaying() {
+    if (_ai != null) {
+      _actions.elementAtOrNull(_ai!)?.play();
+    } else {
+      _normals.elementAtOrNull(_ni)?.play();
     }
   }
 
@@ -171,19 +173,12 @@ class _PlayPageState extends State<PlayPage> {
 
   @override
   Widget build(BuildContext context) {
-    print('reload');
     return Scaffold(
       body: SizedBox.expand(
         child: GestureDetector(
           onTap: () {
-            // if (_ai == null) {
-            //   print('tapped, next play action');
-            //   _pending = 0;
-            // } else {
-            //   print('tapped, next play normal');
-            // }
-            print('tapped, next play action');
-            _pending = 0;
+            _pending = _ai == 0 ? 1 : 0;
+            print('tapped, next action, $_pending');
           },
           child: Stack(
             children: [
