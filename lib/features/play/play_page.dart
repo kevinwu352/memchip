@@ -77,23 +77,24 @@ class _PlayPageState extends State<PlayPage> {
     final first = _videos.firstWhereOrNull((e) => e.isDefault) ?? normals.firstOrNull;
     if (first == null) return;
 
-    final List<BoxVideo> ordered = [];
-    if (normals.isEmpty) {
-      ordered.add(first);
-    } else {
-      for (var e in normals) {
-        // ordered.add(first);
-        ordered.add(first);
-        ordered.add(e);
-      }
-    }
+    final List<BoxVideo> ordered = [first, ...normals];
+    // final List<BoxVideo> ordered = [];
+    // if (normals.isEmpty) {
+    //   ordered.add(first);
+    // } else {
+    //   for (var e in normals) {
+    //     // ordered.add(first);
+    //     ordered.add(first);
+    //     ordered.add(e);
+    //   }
+    // }
 
     List<VideoPlayerController> list1 = [];
     for (var e in actions.indexed) {
       // print('cont: ${e.$1}, begin');
       final cont = VideoPlayerController.file(File(e.$2.path!));
       await cont.initialize();
-      // cont.addListener(() => _playerChanged(e.$1));
+      cont.addListener(() => _actionUpdated(e.$1));
       list1.add(cont);
       // print('cont: ${e.$1}, end');
     }
@@ -101,12 +102,12 @@ class _PlayPageState extends State<PlayPage> {
 
     List<VideoPlayerController> list2 = [];
     for (var e in ordered.indexed) {
-      print('cont: ${e.$1}, begin');
+      // print('cont: ${e.$1}, begin');
       final cont = VideoPlayerController.file(File(e.$2.path!));
       await cont.initialize();
       cont.addListener(() => _normalUpdated(e.$1));
       list2.add(cont);
-      print('cont: ${e.$1}, end');
+      // print('cont: ${e.$1}, end');
     }
     _normals = list2;
     _ni = 0;
@@ -120,42 +121,78 @@ class _PlayPageState extends State<PlayPage> {
     if (!cont.value.isCompleted) return;
     if (i == _ni) {
       _ni = _ni + 1 == _normals.length ? 0 : _ni + 1;
-      print('cont: next $_ni');
+      if (_pending != null) {
+        _ai = _pending;
+        _pending = null;
+      }
+      print('norm: next [$_ni, $_ai]');
       setState(() {});
-      _normals.elementAtOrNull(_ni)?.play();
+      if (_ai != null) {
+        _actions.elementAtOrNull(_ai!)?.play();
+      } else {
+        _normals.elementAtOrNull(_ni)?.play();
+      }
     } else {
-      print('cont: ignore');
+      print('norm: ignore');
     }
   }
 
-  void _actionUpdated(int i) {}
+  void _actionUpdated(int i) {
+    final cont = _actions.elementAtOrNull(i);
+    if (cont == null) return;
+    if (!cont.value.isCompleted) return;
+    if (i == _ai) {
+      // _ni =
+      _ai = null;
+      print('actn: next [$_ni, $_ai]');
+      setState(() {});
+      if (_ai != null) {
+        _actions.elementAtOrNull(_ai!)?.play();
+      } else {
+        _normals.elementAtOrNull(_ni)?.play();
+      }
+    } else {
+      print('actn: ignore');
+    }
+  }
 
   List<VideoPlayerController> _normals = [];
   int _ni = 0;
   List<VideoPlayerController> _actions = [];
   int? _ai;
+  int? _pending;
 
   @override
   Widget build(BuildContext context) {
     print('reload');
     return Scaffold(
       body: SizedBox.expand(
-        child: Stack(
-          children: [
-            if (_ai != null && _actions[_ai!].value.isInitialized)
-              AspectRatio(aspectRatio: _actions[_ai!].value.aspectRatio, child: VideoPlayer(_actions[_ai!]))
-            else if (_normals.elementAtOrNull(_ni)?.value.isInitialized == true)
-              AspectRatio(aspectRatio: _normals[_ni].value.aspectRatio, child: VideoPlayer(_normals[_ni])),
+        child: GestureDetector(
+          onTap: () {
+            if (_ai == null) {
+              print('tapped, next play action');
+              _pending = 0;
+            } else {
+              print('tapped, next play normal');
+            }
+          },
+          child: Stack(
+            children: [
+              if (_ai != null && _actions[_ai!].value.isInitialized)
+                AspectRatio(aspectRatio: _actions[_ai!].value.aspectRatio, child: VideoPlayer(_actions[_ai!]))
+              else if (_normals.elementAtOrNull(_ni)?.value.isInitialized == true)
+                AspectRatio(aspectRatio: _normals[_ni].value.aspectRatio, child: VideoPlayer(_normals[_ni])),
 
-            // if (_react?.value.isInitialized == true)
-            //   AspectRatio(aspectRatio: _react!.value.aspectRatio, child: VideoPlayer(_react!))
-            // else if (_orders.elementAtOrNull(_oi)?.value.isInitialized == true)
-            //   AspectRatio(
-            //     aspectRatio: _orders.elementAtOrNull(_oi)!.value.aspectRatio,
-            //     child: VideoPlayer(_orders.elementAtOrNull(_oi)!),
-            //   ),
-            // Text('data: ${widget.box.name}'),
-          ],
+              // if (_react?.value.isInitialized == true)
+              //   AspectRatio(aspectRatio: _react!.value.aspectRatio, child: VideoPlayer(_react!))
+              // else if (_orders.elementAtOrNull(_oi)?.value.isInitialized == true)
+              //   AspectRatio(
+              //     aspectRatio: _orders.elementAtOrNull(_oi)!.value.aspectRatio,
+              //     child: VideoPlayer(_orders.elementAtOrNull(_oi)!),
+              //   ),
+              // Text('data: ${widget.box.name}'),
+            ],
+          ),
         ),
       ),
     );
