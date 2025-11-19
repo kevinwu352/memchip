@@ -60,36 +60,62 @@ class _PlayPageState extends State<PlayPage> {
     _startIfPossible();
   }
 
-  void _startIfPossible() {
+  void _startIfPossible() async {
     final completed = _videos.every((e) => e.path is String);
     if (completed) {
       print('play-down: completed, to-play');
 
-      _controller = VideoPlayerController.file(File(_videos[0].path!))
-        ..initialize().then((_) {
-          print('bbb');
-          // _controller.play();
-          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-          setState(() {});
+      List<VideoPlayerController> list = [];
+      for (var e in _videos.indexed) {
+        print('play-cret: ${e.$1}, begin');
+        final c = VideoPlayerController.file(File(e.$2.path!));
+        c.addListener(() {
+          print('completed: ${e.$1} ${c.value.isCompleted}');
+          if (c.value.isCompleted) {
+            if (_index == e.$1) {
+              _index = _index == 3 ? 0 : _index + 1;
+              setState(() {});
+              _normals.elementAtOrNull(_index)?.play();
+            }
+          }
         });
-      print('aaa');
-      _controller.play();
+        await c.initialize();
+        list.add(c);
+        print('play-cret: ${e.$1}, end');
+      }
+      _normals = list;
+      // _orders = [0, 0, 1, 0, 0, 2, 0, 0, 3];
+      _orders = [0, 1, 2, 3];
+      _index = 0;
+      setState(() {});
+      _normals.elementAtOrNull(_index)?.play();
     }
   }
 
-  late VideoPlayerController _controller;
+  List<VideoPlayerController> _normals = [];
+  List<int> _orders = [];
+  int _index = 0;
+
+  VideoPlayerController? _react;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          //
-          if (_controller.value.isInitialized)
-            AspectRatio(aspectRatio: _controller.value.aspectRatio, child: VideoPlayer(_controller)),
+      body: SizedBox.expand(
+        child: Stack(
+          children: [
+            if (_react?.value.isInitialized == true)
+              AspectRatio(aspectRatio: _react!.value.aspectRatio, child: VideoPlayer(_react!))
+            else if (_orders.elementAtOrNull(_index) != null &&
+                _normals.elementAtOrNull(_orders[_index])?.value.isInitialized == true)
+              AspectRatio(
+                aspectRatio: _normals.elementAtOrNull(_orders[_index])!.value.aspectRatio,
+                child: VideoPlayer(_normals.elementAtOrNull(_orders[_index])!),
+              ),
 
-          Text('data: ${widget.box.name}'),
-        ],
+            Text('data: ${widget.box.name}'),
+          ],
+        ),
       ),
     );
   }
