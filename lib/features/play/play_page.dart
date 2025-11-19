@@ -17,18 +17,25 @@ class _PlayPageState extends State<PlayPage> {
   @override
   void initState() {
     super.initState();
+    // _videos = [
+    //   // widget.box.videoUrls[0],
+    //   widget.box.videoUrls[1],
+    //   widget.box.videoUrls[2],
+    //   widget.box.videoUrls[3],
+    // ];
     _setUp();
   }
 
   @override
   void dispose() {
     widget.vdown.statusChanged = null;
-    _orders.forEach((e) => e.dispose());
-    _react?.dispose();
+    _normals.forEach((e) => e.dispose());
+    _actions.forEach((e) => e.dispose());
     super.dispose();
   }
 
   late final _videos = widget.box.videoUrls;
+  // late List<BoxVideo> _videos;
 
   void _setUp() {
     for (var e in _videos.indexed) {
@@ -70,67 +77,84 @@ class _PlayPageState extends State<PlayPage> {
     final first = _videos.firstWhereOrNull((e) => e.isDefault) ?? normals.firstOrNull;
     if (first == null) return;
 
-    final List<BoxVideo> orders = [];
+    final List<BoxVideo> ordered = [];
     if (normals.isEmpty) {
-      orders.add(first);
+      ordered.add(first);
     } else {
       for (var e in normals) {
-        orders.add(first);
-        orders.add(first);
-        orders.add(e);
+        // ordered.add(first);
+        ordered.add(first);
+        ordered.add(e);
       }
     }
 
-    List<VideoPlayerController> list = [];
-    for (var e in orders.indexed) {
+    List<VideoPlayerController> list1 = [];
+    for (var e in actions.indexed) {
+      // print('cont: ${e.$1}, begin');
+      final cont = VideoPlayerController.file(File(e.$2.path!));
+      await cont.initialize();
+      // cont.addListener(() => _playerChanged(e.$1));
+      list1.add(cont);
+      // print('cont: ${e.$1}, end');
+    }
+    _actions = list1;
+
+    List<VideoPlayerController> list2 = [];
+    for (var e in ordered.indexed) {
       print('cont: ${e.$1}, begin');
       final cont = VideoPlayerController.file(File(e.$2.path!));
       await cont.initialize();
-      cont.addListener(() => _playerChanged(e.$1));
-      list.add(cont);
+      cont.addListener(() => _normalUpdated(e.$1));
+      list2.add(cont);
       print('cont: ${e.$1}, end');
     }
-    _orders = list;
-    _index = 0;
+    _normals = list2;
+    _ni = 0;
     setState(() {});
-    _orders.elementAtOrNull(_index)?.play();
+    _normals.elementAtOrNull(_ni)?.play();
   }
 
-  void _playerChanged(int i) {
-    final cont = _orders.elementAtOrNull(i);
+  void _normalUpdated(int i) {
+    final cont = _normals.elementAtOrNull(i);
     if (cont == null) return;
-    print('cont: $i, completed:${cont.value.isCompleted}');
-    if (cont.value.isCompleted) {
-      if (i == _index) {
-        _index = _index + 1 == _orders.length ? 0 : _index + 1;
-        print('cont: next $_index');
-        setState(() {});
-        _orders.elementAtOrNull(_index)?.play();
-      } else {
-        print('cont: ignore');
-      }
+    if (!cont.value.isCompleted) return;
+    if (i == _ni) {
+      _ni = _ni + 1 == _normals.length ? 0 : _ni + 1;
+      print('cont: next $_ni');
+      setState(() {});
+      _normals.elementAtOrNull(_ni)?.play();
+    } else {
+      print('cont: ignore');
     }
   }
 
-  List<VideoPlayerController> _orders = [];
-  int _index = 0;
-  VideoPlayerController? _react;
+  void _actionUpdated(int i) {}
+
+  List<VideoPlayerController> _normals = [];
+  int _ni = 0;
+  List<VideoPlayerController> _actions = [];
+  int? _ai;
 
   @override
   Widget build(BuildContext context) {
+    print('reload');
     return Scaffold(
       body: SizedBox.expand(
         child: Stack(
           children: [
-            if (_react?.value.isInitialized == true)
-              AspectRatio(aspectRatio: _react!.value.aspectRatio, child: VideoPlayer(_react!))
-            else if (_orders.elementAtOrNull(_index)?.value.isInitialized == true)
-              AspectRatio(
-                aspectRatio: _orders.elementAtOrNull(_index)!.value.aspectRatio,
-                child: VideoPlayer(_orders.elementAtOrNull(_index)!),
-              ),
+            if (_ai != null && _actions[_ai!].value.isInitialized)
+              AspectRatio(aspectRatio: _actions[_ai!].value.aspectRatio, child: VideoPlayer(_actions[_ai!]))
+            else if (_normals.elementAtOrNull(_ni)?.value.isInitialized == true)
+              AspectRatio(aspectRatio: _normals[_ni].value.aspectRatio, child: VideoPlayer(_normals[_ni])),
 
-            Text('data: ${widget.box.name}'),
+            // if (_react?.value.isInitialized == true)
+            //   AspectRatio(aspectRatio: _react!.value.aspectRatio, child: VideoPlayer(_react!))
+            // else if (_orders.elementAtOrNull(_oi)?.value.isInitialized == true)
+            //   AspectRatio(
+            //     aspectRatio: _orders.elementAtOrNull(_oi)!.value.aspectRatio,
+            //     child: VideoPlayer(_orders.elementAtOrNull(_oi)!),
+            //   ),
+            // Text('data: ${widget.box.name}'),
           ],
         ),
       ),
