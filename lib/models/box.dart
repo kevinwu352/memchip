@@ -81,6 +81,7 @@ class BoxVideo {
   String videoUrl;
   bool isDefault;
   bool isTouch;
+  String? path;
 
   BoxVideo({required this.action, required this.videoUrl, required this.isDefault, required this.isTouch});
 

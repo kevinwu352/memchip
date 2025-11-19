@@ -37,4 +37,11 @@ extension IterableExt<E> on Iterable<E> {
 
   Map<E, T> toMap<T>(T? Function(E e) transform) =>
       Map.fromEntries(map((e) => MapEntry(e, transform(e))).where((e) => e.value != null)).cast<E, T>();
+
+  E? firstWhereOrNull(bool Function(E e) test) {
+    for (var e in this) {
+      if (test(e)) return e;
+    }
+    return null;
+  }
 }

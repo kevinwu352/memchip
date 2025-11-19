@@ -14,6 +14,7 @@ import '/features/category/category_page.dart';
 import '/features/create/create_human_page.dart';
 import '/features/create/create_pet_page.dart';
 import '/features/detail/detail_page.dart';
+import '/features/play/play_page.dart';
 
 import '/models/box.dart';
 
@@ -29,6 +30,7 @@ abstract final class Routes {
   static const createHuman = '/create-human';
   static const createPet = '/create-pet';
   static const detail = '/detail';
+  static const play = '/play';
 }
 
 final RouteObserver<ModalRoute<void>> kRouteOb = RouteObserver<ModalRoute<void>>();
@@ -70,6 +72,10 @@ GoRouter router() => GoRouter(
     GoRoute(
       path: Routes.detail,
       builder: (context, state) => DetailPage(box: GoRouterState.of(context).extra as Box, network: context.read()),
+    ),
+    GoRoute(
+      path: Routes.play,
+      builder: (context, state) => PlayPage(box: GoRouterState.of(context).extra as Box, vdown: context.read()),
     ),
   ],
 );
