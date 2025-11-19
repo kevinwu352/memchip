@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import '/pch.dart';
 import '/utils/video_downloader.dart';
 
@@ -24,10 +26,10 @@ class _PlayPageState extends State<PlayPage> {
     super.dispose();
   }
 
-  late final videos = widget.box.videoUrls;
+  late final _videos = widget.box.videoUrls;
 
   void _setUp() {
-    for (var e in videos.indexed) {
+    for (var e in _videos.indexed) {
       if (widget.vdown.statusOf(e.$2.videoUrl) == VDStatus.downloaded) {
         print('play-down: ${e.$1}, downloaded');
         e.$2.path = widget.vdown.pathOf(e.$2.videoUrl);
@@ -38,7 +40,7 @@ class _PlayPageState extends State<PlayPage> {
       }
     }
     print(
-      'play-down: (${videos.where((e) => e.path == null).indexed.map((e) => '${e.$1}').join(',')})/${videos.length}',
+      'play-down: (${_videos.where((e) => e.path == null).indexed.map((e) => '${e.$1}').join(',')})/${_videos.length}',
     );
     widget.vdown.statusChanged = _downloadChanged;
     widget.vdown.run();
@@ -46,12 +48,12 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   void _downloadChanged(VDStatus status, String url) {
-    final video = videos.firstWhereOrNull((e) => e.videoUrl == url);
+    final video = _videos.firstWhereOrNull((e) => e.videoUrl == url);
     if (video != null) {
       if (status == VDStatus.downloaded) {
         video.path = widget.vdown.pathOf(url);
         print(
-          'play-down: (${videos.where((e) => e.path == null).indexed.map((e) => '${e.$1}').join(',')})/${videos.length}',
+          'play-down: (${_videos.where((e) => e.path == null).indexed.map((e) => '${e.$1}').join(',')})/${_videos.length}',
         );
       }
     }
@@ -59,11 +61,23 @@ class _PlayPageState extends State<PlayPage> {
   }
 
   void _startIfPossible() {
-    final completed = videos.every((e) => e.path is String);
+    final completed = _videos.every((e) => e.path is String);
     if (completed) {
       print('play-down: completed, to-play');
+
+      _controller = VideoPlayerController.file(File(_videos[0].path!))
+        ..initialize().then((_) {
+          print('bbb');
+          // _controller.play();
+          // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+          setState(() {});
+        });
+      print('aaa');
+      _controller.play();
     }
   }
+
+  late VideoPlayerController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +85,9 @@ class _PlayPageState extends State<PlayPage> {
       body: Stack(
         children: [
           //
+          if (_controller.value.isInitialized)
+            AspectRatio(aspectRatio: _controller.value.aspectRatio, child: VideoPlayer(_controller)),
+
           Text('data: ${widget.box.name}'),
         ],
       ),
