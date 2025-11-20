@@ -18,7 +18,7 @@ class _PlayPageState extends State<PlayPage> {
   void initState() {
     super.initState();
     // _videos = [
-    //   // widget.box.videoUrls[0],
+    //   widget.box.videoUrls[0],
     //   widget.box.videoUrls[1],
     //   widget.box.videoUrls[2],
     //   widget.box.videoUrls[3],
@@ -77,7 +77,11 @@ class _PlayPageState extends State<PlayPage> {
     final first = _videos.firstWhereOrNull((e) => e.isDefault) ?? normals.firstOrNull;
     if (first == null) return;
 
-    final doubled = [...actions, ...actions];
+    final List<BoxVideo> doubled = []; // to solve player complete twice problem
+    for (var e in actions) {
+      doubled.add(e);
+      doubled.add(e);
+    }
     final List<VideoPlayerController> list1 = [];
     for (var e in doubled.indexed) {
       // print('cont: ${e.$1}, begin');
@@ -92,6 +96,7 @@ class _PlayPageState extends State<PlayPage> {
     // final ordered = [first, ...normals];
     final List<BoxVideo> ordered = [];
     if (normals.isEmpty) {
+      ordered.add(first); // to solve player complete twice problem
       ordered.add(first);
     } else {
       for (var e in normals) {
@@ -177,7 +182,8 @@ class _PlayPageState extends State<PlayPage> {
       body: SizedBox.expand(
         child: GestureDetector(
           onTap: () {
-            _pending = _ai == 0 ? 1 : 0;
+            final i = 0 * 2;
+            _pending = _ai == i ? i + 1 : i;
             print('tapped, next action, $_pending');
           },
           child: Stack(
