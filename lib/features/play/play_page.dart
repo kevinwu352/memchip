@@ -37,7 +37,7 @@ class _PlayPageState extends State<PlayPage> {
 
   bool _preparing = true;
 
-  bool _showAlert = true;
+  // bool _showAlert = true;
 
   late final _videos = widget.box.videoUrls;
   // late List<BoxVideo> _videos;
@@ -194,11 +194,43 @@ class _PlayPageState extends State<PlayPage> {
     int count = _videos.where((e) => e.isTouch).length;
     if (count == 1) {
       n = 0;
+    } else if (count == 2) {
+      switch (i) {
+        case 0:
+        case 1:
+          n = 0;
+        case 2:
+        case 3:
+          n = 1;
+      }
+    } else if (count == 3) {
+      switch (i) {
+        case 0:
+        case 1:
+          n = 0;
+        case 2:
+          n = 1;
+        case 3:
+          n = 2;
+      }
+    } else if (count >= 4) {
+      switch (i) {
+        case 0:
+          n = 0;
+        case 1:
+          n = 1;
+        case 2:
+          n = 2;
+        case 3:
+          n = 3;
+      }
     }
     if (n != null) {
       final m = n * 2;
       _pending = _ai == m ? m + 1 : m;
-      print('tapped, next action, $_pending');
+      print('tapped:$i, action: $n,$_pending');
+    } else {
+      print('tapped:$i, action: $n');
     }
   }
 
