@@ -188,6 +188,19 @@ class _PlayPageState extends State<PlayPage> {
   int? _ai;
   int? _pending;
 
+  void _actionTapped(int i) {
+    int? n;
+    int count = _videos.where((e) => e.isTouch).length;
+    if (count == 1) {
+      n = 0;
+    }
+    if (n != null) {
+      final m = n * 2;
+      _pending = _ai == m ? m + 1 : m;
+      print('tapped, next action, $_pending');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -199,12 +212,7 @@ class _PlayPageState extends State<PlayPage> {
 
             if (_controller != null)
               AspectRatio(aspectRatio: _controller!.value.aspectRatio, child: VideoPlayer(_controller!)),
-
-            _ActionView(
-              onTapped: (i) {
-                print(i);
-              },
-            ),
+            if (_controller != null) _ActionView(onTapped: _actionTapped),
           ],
         ),
       ),
