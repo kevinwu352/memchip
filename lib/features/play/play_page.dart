@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:video_player/video_player.dart';
 import '/pch.dart';
 import '/utils/video_downloader.dart';
@@ -204,6 +205,7 @@ class _PlayPageState extends State<PlayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SizedBox.expand(
         child: Stack(
           alignment: Alignment.center,
@@ -213,6 +215,16 @@ class _PlayPageState extends State<PlayPage> {
             if (_controller != null)
               AspectRatio(aspectRatio: _controller!.value.aspectRatio, child: VideoPlayer(_controller!)),
             if (_controller != null) _ActionView(onTapped: _actionTapped),
+
+            Positioned(
+              left: 10,
+              top: 65,
+              child: IconButton(
+                onPressed: () => context.pop(),
+                icon: Icon(Icons.adaptive.arrow_back),
+                color: MyColors.white100,
+              ),
+            ),
           ],
         ),
       ),
