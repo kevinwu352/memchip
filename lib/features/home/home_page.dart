@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
   void didChangeDependencies() {
     super.didChangeDependencies();
     kRouteOb.subscribe(this, ModalRoute.of(context)!);
+    _loadLocale();
   }
 
   @override
@@ -54,6 +55,13 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver, RouteA
       ],
       onEvent: (event) => vm.loadChips(force: true),
     );
+  }
+
+  void _loadLocale() {
+    if (widget.network is HttpClient) {
+      final name = AppLocalizations.of(context)?.localeName;
+      (widget.network as HttpClient).local = name?.startsWith('zh') == true ? 'zh' : 'en';
+    }
   }
 
   @override
@@ -297,7 +305,7 @@ class _EntryView extends StatelessWidget {
                         child: Text(
                           GetTimeAgo.parse(
                             box.createdTime,
-                            locale: AppLocalizations.of(context)!.localeName.startsWith('zh') ? 'zh' : 'en',
+                            locale: AppLocalizations.of(context)?.localeName.startsWith('zh') == true ? 'zh' : 'en',
                           ),
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: MyColors.gray500),

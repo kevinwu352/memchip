@@ -124,6 +124,7 @@ class _PlayPageState extends State<PlayPage> {
     _actions = list2;
     _ai = null;
 
+    // await Future.delayed(Duration(seconds: 2));
     _preparing = false;
     _controller = _normals.elementAtOrNull(_ni);
     setState(() {});

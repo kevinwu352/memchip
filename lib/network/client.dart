@@ -30,6 +30,16 @@ final class HttpClient implements Networkable {
     }
   }
 
+  String? get local => headers['lan'];
+  set local(String? value) {
+    // print('set-local: $value');
+    if (value is String) {
+      headers['lan'] = value;
+    } else {
+      headers.remove('lan');
+    }
+  }
+
   @override
   Future<Result<Response>> reqRaw(Endpoint api) async {
     try {

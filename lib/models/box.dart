@@ -150,5 +150,5 @@ class Box {
     );
   }
 
-  int? get previewIndex => previewImages.indexOf(generateImage);
+  int? get previewIndex => withValue(previewImages.indexOf(generateImage), (v) => v >= 0 ? v : null);
 }
