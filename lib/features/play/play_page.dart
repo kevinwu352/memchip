@@ -34,10 +34,15 @@ class _PlayPageState extends State<PlayPage> {
     super.dispose();
   }
 
+  bool _preparing = true;
+
+  bool _showAlert = true;
+
   late final _videos = widget.box.videoUrls;
   // late List<BoxVideo> _videos;
 
   void _setUp() {
+    _preparing = true;
     for (var e in _videos.indexed) {
       if (widget.vdown.statusOf(e.$2.videoUrl) == VDStatus.downloaded) {
         e.$2.path = widget.vdown.pathOf(e.$2.videoUrl);
@@ -77,22 +82,6 @@ class _PlayPageState extends State<PlayPage> {
     final first = _videos.firstWhereOrNull((e) => e.isDefault) ?? normals.firstOrNull;
     if (first == null) return;
 
-    final List<BoxVideo> doubled = []; // to solve player complete twice problem
-    for (var e in actions) {
-      doubled.add(e);
-      doubled.add(e);
-    }
-    final List<VideoPlayerController> list1 = [];
-    for (var e in doubled.indexed) {
-      // print('cont: ${e.$1}, begin');
-      final cont = VideoPlayerController.file(File(e.$2.path!));
-      await cont.initialize();
-      cont.addListener(() => _actionUpdated(e.$1));
-      list1.add(cont);
-      // print('cont: ${e.$1}, end');
-    }
-    _actions = list1;
-
     // final ordered = [first, ...normals];
     final List<BoxVideo> ordered = [];
     if (normals.isEmpty) {
@@ -105,20 +94,39 @@ class _PlayPageState extends State<PlayPage> {
         ordered.add(e);
       }
     }
-    List<VideoPlayerController> list2 = [];
+    List<VideoPlayerController> list1 = [];
     for (var e in ordered.indexed) {
       // print('cont: ${e.$1}, begin');
       final cont = VideoPlayerController.file(File(e.$2.path!));
       await cont.initialize();
       cont.addListener(() => _normalUpdated(e.$1));
+      list1.add(cont);
+      // print('cont: ${e.$1}, end');
+    }
+    _normals = list1;
+    _ni = 0;
+
+    final List<BoxVideo> doubled = []; // to solve player complete twice problem
+    for (var e in actions) {
+      doubled.add(e);
+      doubled.add(e);
+    }
+    final List<VideoPlayerController> list2 = [];
+    for (var e in doubled.indexed) {
+      // print('cont: ${e.$1}, begin');
+      final cont = VideoPlayerController.file(File(e.$2.path!));
+      await cont.initialize();
+      cont.addListener(() => _actionUpdated(e.$1));
       list2.add(cont);
       // print('cont: ${e.$1}, end');
     }
-    _normals = list2;
+    _actions = list2;
+    _ai = null;
 
-    _ni = 0;
+    _preparing = false;
+    _controller = _normals.elementAtOrNull(_ni);
     setState(() {});
-    _normals.elementAtOrNull(_ni)?.play();
+    _controller?.play();
   }
 
   void _normalUpdated(int i) {
@@ -128,10 +136,11 @@ class _PlayPageState extends State<PlayPage> {
     if (i == _ni) {
       print('norm: completed $i==$_ni, next');
       _ni = _ni + 1 == _normals.length ? 0 : _ni + 1;
-      _loadActionIfNeeded();
+      _loadAction();
+      _loadController();
       print('norm: next [$_ni, $_ai]');
       setState(() {});
-      _startPlaying();
+      _controller?.play();
     } else {
       print('norm: completed $i!=$_ni, ignore');
     }
@@ -144,16 +153,17 @@ class _PlayPageState extends State<PlayPage> {
     if (i == _ai) {
       print('actn: completed $i==$_ai, next');
       // _ni =
-      _loadActionIfNeeded();
+      _loadAction();
+      _loadController();
       print('actn: next [$_ni, $_ai]');
       setState(() {});
-      _startPlaying();
+      _controller?.play();
     } else {
       print('actn: completed $i!=$_ai, ignore');
     }
   }
 
-  void _loadActionIfNeeded() {
+  void _loadAction() {
     if (_pending != null) {
       _ai = _pending;
       _pending = null;
@@ -162,13 +172,15 @@ class _PlayPageState extends State<PlayPage> {
     }
   }
 
-  void _startPlaying() {
+  void _loadController() {
     if (_ai != null) {
-      _actions.elementAtOrNull(_ai!)?.play();
+      _controller = _actions.elementAtOrNull(_ai!);
     } else {
-      _normals.elementAtOrNull(_ni)?.play();
+      _controller = _normals.elementAtOrNull(_ni);
     }
   }
+
+  VideoPlayerController? _controller;
 
   List<VideoPlayerController> _normals = [];
   int _ni = 0;
@@ -187,11 +199,12 @@ class _PlayPageState extends State<PlayPage> {
             print('tapped, next action, $_pending');
           },
           child: Stack(
+            alignment: Alignment.center,
             children: [
-              if (_ai != null && _actions[_ai!].value.isInitialized)
-                AspectRatio(aspectRatio: _actions[_ai!].value.aspectRatio, child: VideoPlayer(_actions[_ai!]))
-              else if (_normals.elementAtOrNull(_ni)?.value.isInitialized == true)
-                AspectRatio(aspectRatio: _normals[_ni].value.aspectRatio, child: VideoPlayer(_normals[_ni])),
+              if (_preparing) CircularProgressIndicator.adaptive(backgroundColor: Colors.red),
+
+              if (_controller != null)
+                AspectRatio(aspectRatio: _controller!.value.aspectRatio, child: VideoPlayer(_controller!)),
             ],
           ),
         ),
