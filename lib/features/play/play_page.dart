@@ -192,23 +192,71 @@ class _PlayPageState extends State<PlayPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox.expand(
-        child: GestureDetector(
-          onTap: () {
-            final i = 0 * 2;
-            _pending = _ai == i ? i + 1 : i;
-            print('tapped, next action, $_pending');
-          },
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              if (_preparing) CircularProgressIndicator.adaptive(backgroundColor: Colors.red),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            if (_preparing) CircularProgressIndicator.adaptive(backgroundColor: Colors.red),
 
-              if (_controller != null)
-                AspectRatio(aspectRatio: _controller!.value.aspectRatio, child: VideoPlayer(_controller!)),
+            if (_controller != null)
+              AspectRatio(aspectRatio: _controller!.value.aspectRatio, child: VideoPlayer(_controller!)),
+
+            _ActionView(
+              onTapped: (i) {
+                print(i);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionView extends StatelessWidget {
+  const _ActionView({required this.onTapped});
+  final void Function(int i) onTapped;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => onTapped(0),
+                  // child: Container(color: Colors.red),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => onTapped(1),
+                  // child: Container(color: Colors.green),
+                ),
+              ),
             ],
           ),
         ),
-      ),
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => onTapped(2),
+                  // child: Container(color: Colors.blue),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => onTapped(3),
+                  // child: Container(color: Colors.teal),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
