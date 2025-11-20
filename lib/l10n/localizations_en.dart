@@ -15,22 +15,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
-  String get http_error_unknown => 'Unknown Error en';
+  String get http_error_unknown => 'Unknown Error';
 
   @override
-  String get http_error_network => 'Network Error en';
+  String get http_error_network => 'Network Error';
 
   @override
-  String get http_error_status => 'Status Error en';
+  String get http_error_status => 'Status Error';
 
   @override
-  String get http_error_decode => 'Decode Error en';
+  String get http_error_decode => 'Decode Error';
 
   @override
-  String get http_error_operation => 'Operation Failed en';
+  String get http_error_operation => 'Operation Failed';
 
   @override
-  String get http_success => 'Done en';
+  String get http_success => 'Done';
 
   @override
   String get login_title => 'Sign In';
@@ -48,10 +48,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get login_account_title => 'Account';
 
   @override
-  String get login_account_ph1 => 'Email/Phone/Username';
+  String get login_account_ph1 => 'Email/Username';
 
   @override
-  String get login_account_ph2 => 'Email/Phone';
+  String get login_account_ph2 => 'Email';
 
   @override
   String get login_password_title => 'Password';
@@ -83,7 +83,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get register_account_title => 'Account';
 
   @override
-  String get register_account_ph => 'Email/Phone/Username';
+  String get register_account_ph => 'Email/Username';
 
   @override
   String get register_code_title => 'Password';
@@ -93,21 +93,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get register_submit_btn => 'Register';
-
-  @override
-  String get home_nickname_empty => 'Nickname';
-
-  @override
-  String get home_phomail_empty => 'N/A';
-
-  @override
-  String get home_section_title => 'My Chips';
-
-  @override
-  String get home_empty_info => 'No chips yet';
-
-  @override
-  String get home_new_btn => 'New Chip';
 
   @override
   String get about_page_title => 'About Us';
@@ -130,23 +115,38 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get category_page_title => 'Create Character';
+  String get home_nickname_empty => 'Nickname';
+
+  @override
+  String get home_phomail_empty => 'N/A';
+
+  @override
+  String get home_section_title => 'My Chips';
+
+  @override
+  String get home_empty_info => 'No chips yet';
+
+  @override
+  String get home_new_btn => 'New Chip';
+
+  @override
+  String get category_page_title => 'Chips Category';
 
   @override
   String get category_human_info => 'Please add a clear character image.';
 
   @override
-  String get category_human_btn => 'Create Human Character';
+  String get category_human_btn => 'Create Human Chips';
 
   @override
   String get category_pet_info =>
       'Please upload one clear front photo and one side photo of your pet.';
 
   @override
-  String get category_pet_btn => 'Create Pet Character';
+  String get category_pet_btn => 'Create Pet Chips';
 
   @override
-  String get create_page_title => 'Create Image Frame';
+  String get create_page_title => 'Create Box';
 
   @override
   String get create_image_title => 'Add Image';
@@ -168,10 +168,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get create_basic_title => 'Basic Information';
 
   @override
-  String get create_name_title_human => 'Image Frame Name';
+  String get create_name_title_human => 'Box Name';
 
   @override
-  String get create_name_ph_human => 'Enter image frame name';
+  String get create_name_ph_human => 'Enter box name';
 
   @override
   String get create_name_title_pet => 'Pet Name';
@@ -316,10 +316,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get detail_generate_info =>
-      'Please select one image from below to create a your chips.';
+      'Please select one image from below to create a your character.';
 
   @override
-  String get detail_generate_btn => 'Generate Chips';
+  String get detail_generate_btn => 'Generate Character';
 
   @override
   String get detail_generate_btn_ing => 'Generating...';

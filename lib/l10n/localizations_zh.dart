@@ -15,28 +15,28 @@ class AppLocalizationsZh extends AppLocalizations {
   String get cancel => '取消';
 
   @override
-  String get http_error_unknown => 'Unknown Error zh';
+  String get http_error_unknown => '未知错误';
 
   @override
-  String get http_error_network => 'Network Error zh';
+  String get http_error_network => '网络错误';
 
   @override
-  String get http_error_status => 'Status Error zh';
+  String get http_error_status => '状态错误';
 
   @override
-  String get http_error_decode => 'Decode Error zh';
+  String get http_error_decode => '解码错误';
 
   @override
-  String get http_error_operation => 'Operation Failed zh';
+  String get http_error_operation => '操作失败';
 
   @override
-  String get http_success => 'Done zh';
+  String get http_success => '成功';
 
   @override
-  String get login_title => 'Sign In';
+  String get login_title => '登录';
 
   @override
-  String get login_subtitle => 'Sign In';
+  String get login_subtitle => '永恒的回忆 温暖的陪伴';
 
   @override
   String get login_method_password => '密码登录';
@@ -48,16 +48,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get login_account_title => '账户';
 
   @override
-  String get login_account_ph1 => 'Email/Phone/Username';
+  String get login_account_ph1 => '邮箱/手机号/用户名';
 
   @override
-  String get login_account_ph2 => 'Email/Phone';
+  String get login_account_ph2 => '邮箱/手机号';
 
   @override
   String get login_password_title => '密码';
 
   @override
-  String get login_code_title => 'Code';
+  String get login_code_title => '验证码';
 
   @override
   String login_code_send_btn(num seconds) {
@@ -67,7 +67,7 @@ class AppLocalizationsZh extends AppLocalizations {
       other: ' ($seconds)',
       zero: '',
     );
-    return 'Send$_temp0';
+    return '发送$_temp0';
   }
 
   @override
@@ -77,22 +77,42 @@ class AppLocalizationsZh extends AppLocalizations {
   String get login_register_btn => '注册';
 
   @override
-  String get register_page_title => 'Register';
+  String get register_page_title => '注册';
 
   @override
-  String get register_account_title => 'Account';
+  String get register_account_title => '账户';
 
   @override
-  String get register_account_ph => 'Email/Phone/Username';
+  String get register_account_ph => '邮箱/手机号/用户名';
 
   @override
-  String get register_code_title => 'Password';
+  String get register_code_title => '密码';
 
   @override
-  String get register_confirm_title => 'Confirm Password';
+  String get register_confirm_title => '确认密码';
 
   @override
-  String get register_submit_btn => 'Register';
+  String get register_submit_btn => '注册';
+
+  @override
+  String get about_page_title => '关于我们';
+
+  @override
+  String get about_line_license_title => '开源组件许可';
+
+  @override
+  String get about_line_term_title => '服务条款';
+
+  @override
+  String get about_line_privacy_title => '隐私政策';
+
+  @override
+  String get about_logout_btn => '退出';
+
+  @override
+  String about_version(Object version) {
+    return '版本: $version';
+  }
 
   @override
   String get home_nickname_empty => '用户昵称';
@@ -101,194 +121,172 @@ class AppLocalizationsZh extends AppLocalizations {
   String get home_phomail_empty => '暂无';
 
   @override
-  String get home_section_title => 'My Chips zh';
+  String get home_section_title => '我的影像盒';
 
   @override
-  String get home_empty_info => 'No chips yet zh';
+  String get home_empty_info => '暂无影像盒';
 
   @override
-  String get home_new_btn => 'New Chip zh';
+  String get home_new_btn => '新建影像盒';
 
   @override
-  String get about_page_title => 'About Us';
+  String get category_page_title => '影像盒分类';
 
   @override
-  String get about_line_license_title => 'Open Source Licenses';
+  String get category_human_info => '用一张清晰的人像图片生成';
 
   @override
-  String get about_line_term_title => 'Terms of Service';
+  String get category_human_btn => '创建人物影像盒';
 
   @override
-  String get about_line_privacy_title => 'Privacy Policy';
+  String get category_pet_info => '用一张宠物正面照和一张侧面照来生成';
 
   @override
-  String get about_logout_btn => 'Log out';
+  String get category_pet_btn => '创建宠物影像盒';
 
   @override
-  String about_version(Object version) {
-    return 'Version: $version';
-  }
+  String get create_page_title => '创建影像盒';
 
   @override
-  String get category_page_title => 'Create Character zh';
+  String get create_image_title => '添加照片';
 
   @override
-  String get category_human_info => 'Please add a clear character image. zh';
+  String get create_image_library => '媒体库';
 
   @override
-  String get category_human_btn => 'Create Human Character zh';
+  String get create_image_camera => '相机';
 
   @override
-  String get category_pet_info =>
-      'Please upload one clear front photo and one side photo of your pet. zh';
+  String get create_image_info_human => '请上传一张清晰的人像照片。';
 
   @override
-  String get category_pet_btn => 'Create Pet Character zh';
+  String get create_image_info_pet => '请上传一张宠物正面照片和一张侧面照片。';
 
   @override
-  String get create_page_title => 'Create Image Frame';
+  String get create_basic_title => '基本信息';
 
   @override
-  String get create_image_title => 'Add Image';
+  String get create_name_title_human => '影像盒名称';
 
   @override
-  String get create_image_library => 'Photo library';
+  String get create_name_ph_human => '请输入名称';
 
   @override
-  String get create_image_camera => 'Camera';
+  String get create_name_title_pet => '宠物名';
 
   @override
-  String get create_image_info_human => 'Please add a clear character image.';
+  String get create_name_ph_pet => '请输入宠物名';
 
   @override
-  String get create_image_info_pet =>
-      'Please upload one clear front photo and one side photo of your pet.';
+  String get create_gender_title => '性别';
 
   @override
-  String get create_basic_title => 'Basic Information';
+  String get create_gender_male_human => '男';
 
   @override
-  String get create_name_title_human => 'Image Frame Name';
+  String get create_gender_female_human => '女';
 
   @override
-  String get create_name_ph_human => 'Enter image frame name';
+  String get create_gender_male_pet => '男';
 
   @override
-  String get create_name_title_pet => 'Pet Name';
+  String get create_gender_female_pet => '女';
 
   @override
-  String get create_name_ph_pet => 'Enter pet name';
+  String get create_age_title => '年龄段';
 
   @override
-  String get create_gender_title => 'Gender';
+  String get create_age_ph => '请选择年龄段';
 
   @override
-  String get create_gender_male_human => 'Male';
+  String get create_age_range1 => '儿童 (0-12)';
 
   @override
-  String get create_gender_female_human => 'Female';
+  String get create_age_range2 => '青少年 (13-17)';
 
   @override
-  String get create_gender_male_pet => 'Boy';
+  String get create_age_range3 => '青年 (18-35)';
 
   @override
-  String get create_gender_female_pet => 'Girl';
+  String get create_age_range4 => '中年 (36-59)';
 
   @override
-  String get create_age_title => 'Age Range';
+  String get create_age_range5 => '都看 (60+)';
 
   @override
-  String get create_age_ph => 'Select age range';
+  String get create_figure_title => '身材类型';
 
   @override
-  String get create_age_range1 => 'Children (0-12)';
+  String get create_figure1 => '偏瘦';
 
   @override
-  String get create_age_range2 => 'Teenager (13-17)';
+  String get create_figure2 => '标准';
 
   @override
-  String get create_age_range3 => 'Youth (18-35)';
+  String get create_figure3 => '健壮';
 
   @override
-  String get create_age_range4 => 'Middle-Aged (36-59)';
+  String get create_figure4 => '丰满';
 
   @override
-  String get create_age_range5 => 'Seniors (60+)';
+  String get create_species_title => '宠物各类';
 
   @override
-  String get create_figure_title => 'Figure Type';
+  String get create_species_cat => '猫';
 
   @override
-  String get create_figure1 => 'Slim';
+  String get create_species_dog => '狗';
 
   @override
-  String get create_figure2 => 'Standard';
+  String get create_species_rabbit => '兔子';
 
   @override
-  String get create_figure3 => 'Fit';
+  String get create_species_parrot => '鹦鹉';
 
   @override
-  String get create_figure4 => 'Chubby';
+  String get create_species_hamster => '仓鼠';
 
   @override
-  String get create_species_title => 'Pet Type';
+  String get create_species_other => '其它';
 
   @override
-  String get create_species_cat => 'Cat';
+  String get create_tail_title => '尾巴';
 
   @override
-  String get create_species_dog => 'Dog';
+  String get create_tail_yes => '有尾巴';
 
   @override
-  String get create_species_rabbit => 'Rabbit';
+  String get create_tail_no => '无尾巴';
 
   @override
-  String get create_species_parrot => 'Parrot';
+  String get create_personality_title => '性格';
 
   @override
-  String get create_species_hamster => 'Hamster';
+  String get create_personality_playful => '活泼';
 
   @override
-  String get create_species_other => 'Other';
+  String get create_personality_quiet => '安静';
 
   @override
-  String get create_tail_title => 'Tail';
+  String get create_personality_foodie => '贪吃';
 
   @override
-  String get create_tail_yes => 'With tail';
+  String get create_personality_timid => '胆小';
 
   @override
-  String get create_tail_no => 'No tail';
+  String get create_personality_clingy => '粘人';
 
   @override
-  String get create_personality_title => 'Personality';
+  String get create_personality_solo => '独立';
 
   @override
-  String get create_personality_playful => 'Playful';
+  String get create_personality_naughty => '调皮';
 
   @override
-  String get create_personality_quiet => 'Quiet';
+  String get create_personality_tame => '乖巧';
 
   @override
-  String get create_personality_foodie => 'Foodie';
-
-  @override
-  String get create_personality_timid => 'Timid';
-
-  @override
-  String get create_personality_clingy => 'Clingy';
-
-  @override
-  String get create_personality_solo => 'Solo';
-
-  @override
-  String get create_personality_naughty => 'Naughty';
-
-  @override
-  String get create_personality_tame => 'Tame';
-
-  @override
-  String get create_create_btn => 'Create';
+  String get create_create_btn => '创建';
 
   @override
   String get detail_delete_alert_title => '警告';

@@ -113,37 +113,37 @@ abstract class AppLocalizations {
   /// No description provided for @http_error_unknown.
   ///
   /// In en, this message translates to:
-  /// **'Unknown Error en'**
+  /// **'Unknown Error'**
   String get http_error_unknown;
 
   /// No description provided for @http_error_network.
   ///
   /// In en, this message translates to:
-  /// **'Network Error en'**
+  /// **'Network Error'**
   String get http_error_network;
 
   /// No description provided for @http_error_status.
   ///
   /// In en, this message translates to:
-  /// **'Status Error en'**
+  /// **'Status Error'**
   String get http_error_status;
 
   /// No description provided for @http_error_decode.
   ///
   /// In en, this message translates to:
-  /// **'Decode Error en'**
+  /// **'Decode Error'**
   String get http_error_decode;
 
   /// No description provided for @http_error_operation.
   ///
   /// In en, this message translates to:
-  /// **'Operation Failed en'**
+  /// **'Operation Failed'**
   String get http_error_operation;
 
   /// No description provided for @http_success.
   ///
   /// In en, this message translates to:
-  /// **'Done en'**
+  /// **'Done'**
   String get http_success;
 
   /// No description provided for @login_title.
@@ -179,13 +179,13 @@ abstract class AppLocalizations {
   /// No description provided for @login_account_ph1.
   ///
   /// In en, this message translates to:
-  /// **'Email/Phone/Username'**
+  /// **'Email/Username'**
   String get login_account_ph1;
 
   /// No description provided for @login_account_ph2.
   ///
   /// In en, this message translates to:
-  /// **'Email/Phone'**
+  /// **'Email'**
   String get login_account_ph2;
 
   /// No description provided for @login_password_title.
@@ -233,7 +233,7 @@ abstract class AppLocalizations {
   /// No description provided for @register_account_ph.
   ///
   /// In en, this message translates to:
-  /// **'Email/Phone/Username'**
+  /// **'Email/Username'**
   String get register_account_ph;
 
   /// No description provided for @register_code_title.
@@ -253,36 +253,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Register'**
   String get register_submit_btn;
-
-  /// No description provided for @home_nickname_empty.
-  ///
-  /// In en, this message translates to:
-  /// **'Nickname'**
-  String get home_nickname_empty;
-
-  /// No description provided for @home_phomail_empty.
-  ///
-  /// In en, this message translates to:
-  /// **'N/A'**
-  String get home_phomail_empty;
-
-  /// No description provided for @home_section_title.
-  ///
-  /// In en, this message translates to:
-  /// **'My Chips'**
-  String get home_section_title;
-
-  /// No description provided for @home_empty_info.
-  ///
-  /// In en, this message translates to:
-  /// **'No chips yet'**
-  String get home_empty_info;
-
-  /// No description provided for @home_new_btn.
-  ///
-  /// In en, this message translates to:
-  /// **'New Chip'**
-  String get home_new_btn;
 
   /// No description provided for @about_page_title.
   ///
@@ -320,10 +290,40 @@ abstract class AppLocalizations {
   /// **'Version: {version}'**
   String about_version(Object version);
 
+  /// No description provided for @home_nickname_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Nickname'**
+  String get home_nickname_empty;
+
+  /// No description provided for @home_phomail_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get home_phomail_empty;
+
+  /// No description provided for @home_section_title.
+  ///
+  /// In en, this message translates to:
+  /// **'My Chips'**
+  String get home_section_title;
+
+  /// No description provided for @home_empty_info.
+  ///
+  /// In en, this message translates to:
+  /// **'No chips yet'**
+  String get home_empty_info;
+
+  /// No description provided for @home_new_btn.
+  ///
+  /// In en, this message translates to:
+  /// **'New Chip'**
+  String get home_new_btn;
+
   /// No description provided for @category_page_title.
   ///
   /// In en, this message translates to:
-  /// **'Create Character'**
+  /// **'Chips Category'**
   String get category_page_title;
 
   /// No description provided for @category_human_info.
@@ -335,7 +335,7 @@ abstract class AppLocalizations {
   /// No description provided for @category_human_btn.
   ///
   /// In en, this message translates to:
-  /// **'Create Human Character'**
+  /// **'Create Human Chips'**
   String get category_human_btn;
 
   /// No description provided for @category_pet_info.
@@ -347,13 +347,13 @@ abstract class AppLocalizations {
   /// No description provided for @category_pet_btn.
   ///
   /// In en, this message translates to:
-  /// **'Create Pet Character'**
+  /// **'Create Pet Chips'**
   String get category_pet_btn;
 
   /// No description provided for @create_page_title.
   ///
   /// In en, this message translates to:
-  /// **'Create Image Frame'**
+  /// **'Create Box'**
   String get create_page_title;
 
   /// No description provided for @create_image_title.
@@ -395,13 +395,13 @@ abstract class AppLocalizations {
   /// No description provided for @create_name_title_human.
   ///
   /// In en, this message translates to:
-  /// **'Image Frame Name'**
+  /// **'Box Name'**
   String get create_name_title_human;
 
   /// No description provided for @create_name_ph_human.
   ///
   /// In en, this message translates to:
-  /// **'Enter image frame name'**
+  /// **'Enter box name'**
   String get create_name_ph_human;
 
   /// No description provided for @create_name_title_pet.
@@ -689,13 +689,13 @@ abstract class AppLocalizations {
   /// No description provided for @detail_generate_info.
   ///
   /// In en, this message translates to:
-  /// **'Please select one image from below to create a your chips.'**
+  /// **'Please select one image from below to create a your character.'**
   String get detail_generate_info;
 
   /// No description provided for @detail_generate_btn.
   ///
   /// In en, this message translates to:
-  /// **'Generate Chips'**
+  /// **'Generate Character'**
   String get detail_generate_btn;
 
   /// No description provided for @detail_generate_btn_ing.
