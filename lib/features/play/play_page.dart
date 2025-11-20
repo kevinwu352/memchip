@@ -242,7 +242,7 @@ class _PlayPageState extends State<PlayPage> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            if (_preparing) CircularProgressIndicator.adaptive(backgroundColor: Colors.red),
+            if (_preparing) CircularProgressIndicator.adaptive(backgroundColor: MyColors.white100),
 
             if (_controller != null)
               AspectRatio(aspectRatio: _controller!.value.aspectRatio, child: VideoPlayer(_controller!)),
