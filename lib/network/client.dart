@@ -8,7 +8,7 @@ import 'response.dart';
 final kCurrentHost = 'apiuniapp.paoxiaokeji.com';
 
 abstract class Networkable {
-  Future<Result<Response>> reqRaw(Endpoint api);
+  Future<Result<Response>> reqResponse(Endpoint api);
   Future<Result<Res>> reqRes<T>(Endpoint api, {T Function(Map<String, dynamic>)? init, String? key});
 }
 
@@ -41,7 +41,7 @@ final class HttpClient implements Networkable {
   }
 
   @override
-  Future<Result<Response>> reqRaw(Endpoint api) async {
+  Future<Result<Response>> reqResponse(Endpoint api) async {
     try {
       final response = await _req(api);
       return Result.ok(response);

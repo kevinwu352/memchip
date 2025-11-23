@@ -1,4 +1,4 @@
 extension StringUriExt on String {
-  String get encodeComponent => Uri.encodeComponent(this);
-  String get decodeComponent => Uri.decodeComponent(this);
+  String get componentEncoded => Uri.encodeComponent(this);
+  String get componentDecoded => Uri.decodeComponent(this);
 }

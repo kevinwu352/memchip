@@ -8,7 +8,7 @@ enum HttpError implements Exception {
   decode,
   operation;
 
-  String? localized(BuildContext? context) {
+  String localized(BuildContext? context) {
     if (context != null) {
       switch (this) {
         case unknown:

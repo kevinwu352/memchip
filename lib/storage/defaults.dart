@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import '/core/core.dart';
-import 'hive_ext.dart';
 import '/models/user.dart';
 
 enum _Keys { kThemeCodeKey, kLanguageCodeKey, kCurrentUserKey }
@@ -16,24 +15,33 @@ final class Defaults extends ChangeNotifier {
   }
 
   Future<void> load() async {
-    // await _box.setValue(_Keys.kThemeCodeKey.name, null);
-    // await _box.setValue(_Keys.kLanguageCodeKey.name, null);
-    if (kDebugMode) debugPrint('Defaults: ${_box.toMap()}');
-
-    _theme = withValue(
-      _box.getString(_Keys.kThemeCodeKey.name),
-      (v) => ThemeMode.values.firstWhere((e) => e.name == v, orElse: () => ThemeMode.system),
-    );
-
-    _language = withValue(
-      _box.getListOf<String>(_Keys.kLanguageCodeKey.name) ?? [],
-      (v) => v.isNotEmpty ? Locale(v[0], v.elementAtOrNull(1)) : null,
-    );
-
     try {
-      _user = _box.getObject(_Keys.kCurrentUserKey.name, User.fromJson);
+      // await _box.setValue(_Keys.kThemeCodeKey.name, null);
+      // await _box.setValue(_Keys.kLanguageCodeKey.name, null);
+      if (kDebugMode) debugPrint('Defaults: ${_box.toMap()}');
+
+      _theme = withValue(
+        withValue(_box.get(_Keys.kThemeCodeKey.name), (v) => v is String ? v : null),
+        (v) => ThemeMode.values.firstWhere((e) => e.name == v, orElse: () => ThemeMode.system),
+      );
+
+      _language = withValue(
+        withValue(
+          _box.get(_Keys.kLanguageCodeKey.name),
+          (v) => v is List ? v.whereType<String>().toList() : <String>[],
+        ),
+        (v) => v.isNotEmpty ? Locale(v[0], v.elementAtOrNull(1)) : null,
+      );
+
+      _user = withValue(
+        withValue(
+          _box.get(_Keys.kCurrentUserKey.name),
+          (v) => v is Map ? v.map((k, v) => MapEntry(k.toString(), v)) : null,
+        ),
+        (v) => v != null ? User.fromJson(v) : null,
+      );
     } catch (e) {
-      if (kDebugMode) debugPrint('Defaults: load `user` failed, $e');
+      if (kDebugMode) debugPrint('Defaults: load failed, $e');
     }
   }
 
@@ -61,4 +69,8 @@ final class Defaults extends ChangeNotifier {
     _box.setValue(_Keys.kCurrentUserKey.name, value?.toJson());
     notifyListeners();
   }
+}
+
+extension HiveBoxExt<E> on Box<E> {
+  Future<void> setValue(String key, E? value) async => value is E ? await put(key, value) : await delete(key);
 }

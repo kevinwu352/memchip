@@ -1,4 +1,4 @@
-import 'object_ext.dart';
+import 'uncat.dart';
 
 extension IterableExt<E> on Iterable<E> {
   E? firstWhereOrNull(bool Function(E e) test) {
@@ -36,13 +36,14 @@ extension MapExt<K, V> on Map<K, V> {
 
   void setValue(K k, V? v) => v is V ? this[k] = v : remove(k);
 
-  bool? getBool(K key) => this[key].asOr<bool>();
-  int? getInt(K key) => this[key].asOr<int>();
-  double? getDouble(K key) => this[key].asOr<double>();
-  String? getString(K key) => this[key].asOr<String>();
+  bool? getBool(K key) => withValue(this[key], (v) => v is bool ? v : null);
+  int? getInt(K key) => withValue(this[key], (v) => v is int ? v : null);
+  double? getDouble(K key) => withValue(this[key], (v) => v is double ? v : null);
+  String? getString(K key) => withValue(this[key], (v) => v is String ? v : null);
 
-  Map<String, Object?>? getMap(K key) => this[key].asOr<Map>()?.map((k, v) => MapEntry(k.toString(), v));
+  Map<String, Object?>? getMap(K key) =>
+      withValue(this[key], (v) => v is Map ? v.map((k, v) => MapEntry(k.toString(), v as Object?)) : null);
 
-  List<Object?>? getList(K key) => this[key].asOr<List>();
-  List<T>? getListOf<T>(K key) => this[key].asOr<List>()?.whereType<T>().toList();
+  List<Object?>? getList(K key) => withValue(this[key], (v) => v is List ? v.whereType<Object?>().toList() : null);
+  List<T>? getListOf<T>(K key) => withValue(this[key], (v) => v is List ? v.whereType<T>().toList() : null);
 }

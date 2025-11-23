@@ -19,7 +19,7 @@ import '/features/play/play_page.dart';
 import '/models/box.dart';
 
 abstract final class Routes {
-  static String web(String url) => '/web/${url.encodeComponent}';
+  static String web(String url) => '/web/${url.componentEncoded}';
 
   static const splash = '/splash';
   static const home = '/home';
@@ -41,7 +41,7 @@ GoRouter router() => GoRouter(
   routes: [
     GoRoute(
       path: '/web/:url',
-      builder: (context, state) => WebPage(url: state.pathParameters['url']?.decodeComponent),
+      builder: (context, state) => WebPage(url: state.pathParameters['url']?.componentDecoded),
     ),
 
     GoRoute(path: Routes.splash, builder: (context, state) => SplashPage()),

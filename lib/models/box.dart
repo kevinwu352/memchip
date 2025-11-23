@@ -88,8 +88,8 @@ class BoxVideo {
   factory BoxVideo.fromApi(Map<String, dynamic> json) {
     final action = json['action'] as String;
     final videoUrl = json['videoUrl'] as String;
-    final isDefault = withValue(json['isDefault'], (v) => v is bool ? v : false);
-    final isTouch = withValue(json['isTouch'], (v) => v is bool ? v : false);
+    final isDefault = json.getBool('isDefault') ?? false;
+    final isTouch = json.getBool('isTouch') ?? false;
     return BoxVideo(action: action, videoUrl: videoUrl, isDefault: isDefault, isTouch: isTouch);
   }
 }
@@ -129,7 +129,7 @@ class Box {
     final coverImage = [json['coverImage'], photos?.elementAtOrNull(0)].whereType<String>().firstOrNull ?? '';
     final frontImage = [json['frontImage'], photos?.elementAtOrNull(1)].whereType<String>().firstOrNull ?? '';
     final previewImages = json.getListOf<String>('previewImages') ?? [];
-    final generateImage = withValue(json['generateImage'], (v) => v is String ? v : '');
+    final generateImage = json.getString('generateImage') ?? '';
     final videoUrls =
         json
             .getListOf<Map>('videoUrls')

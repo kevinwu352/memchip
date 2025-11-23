@@ -1,9 +1,11 @@
 export '/l10n/localizations.dart';
 
 export '/core/core.dart';
-export '/storage/storage.dart';
+export '/storage/defaults.dart';
+export '/storage/secures.dart';
 export '/network/network.dart';
-export '/theme/theme.dart';
+export '/theme/colors.dart';
+export '/theme/styles.dart';
 
 export '/models/user.dart';
 export '/models/box.dart';
