@@ -3,7 +3,6 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class WebPage extends StatefulWidget {
   const WebPage({super.key, this.url});
-
   final String? url;
 
   @override
@@ -14,15 +13,15 @@ class _WebPageState extends State<WebPage> {
   @override
   void initState() {
     super.initState();
-    webvc = WebViewController()
+    _webvc = WebViewController()
       ..setNavigationDelegate(
         NavigationDelegate(
           onProgress: (value) async {
-            final prog = value / 100;
-            final ttl = await webvc.getTitle();
+            final progress = value / 100;
+            final title = await _webvc.getTitle();
             setState(() {
-              progress = prog;
-              title = ttl ?? '';
+              _progress = progress;
+              _title = title ?? '';
             });
           },
         ),
@@ -30,18 +29,18 @@ class _WebPageState extends State<WebPage> {
       ..loadRequest(Uri.parse(widget.url ?? 'about:blank'));
   }
 
-  late WebViewController webvc;
-  String title = '';
-  double progress = 0.0;
+  late WebViewController _webvc;
+  String _title = '';
+  double _progress = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(_title)),
       body: Stack(
         children: [
-          WebViewWidget(controller: webvc),
-          if (progress < 0.95) LinearProgressIndicator(value: progress),
+          WebViewWidget(controller: _webvc),
+          if (_progress < 0.95) LinearProgressIndicator(value: _progress),
         ],
       ),
     );

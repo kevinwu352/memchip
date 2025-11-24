@@ -14,34 +14,14 @@ Future<void> pathInit() async {
 String pathmk(String part2, [String? part3, String? part4, String? part5]) =>
     join(_docroot, part2, part3, part4, part5);
 
-Future<bool> direExist(String path) async {
+Future<bool> fileExist(String path) async => File(path).exists();
+bool fileExistSync(String path) => File(path).existsSync();
+
+Future<bool> dirExist(String path) async => Directory(path).exists();
+bool dirExistSync(String path) => Directory(path).existsSync();
+Future<void> dirCreate(String path) async {
   final dir = Directory(path);
-  final exist = await dir.exists();
-  return exist;
-}
-
-bool direExistSync(String path) {
-  final dir = Directory(path);
-  final exist = dir.existsSync();
-  return exist;
-}
-
-Future<bool> fileExist(String path) async {
-  final fil = File(path);
-  final exist = await fil.exists();
-  return exist;
-}
-
-bool fileExistSync(String path) {
-  final fil = File(path);
-  final exist = fil.existsSync();
-  return exist;
-}
-
-Future<void> direCreate(String path) async {
-  final dir = Directory(path);
-  final exist = await dir.exists();
-  if (!exist) {
+  if (!dir.existsSync()) {
     await dir.create(recursive: true);
   }
 }

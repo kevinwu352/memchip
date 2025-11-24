@@ -8,7 +8,7 @@ enum VDStatus { unknown, downloading, waiting, downloaded, failed }
 class VideoDownloader extends ChangeNotifier {
   Future<void> init() async {
     final path = pathmk('downloads');
-    await direCreate(path);
+    await dirCreate(path);
   }
 
   void enqueue(String url) {
