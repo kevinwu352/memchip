@@ -25,14 +25,10 @@ sealed class Result<T> {
   const factory Result.error(Exception error) = Error._;
 
   /// Convert to `Result<void>`
-  Result<void> toVoid() {
-    switch (this) {
-      case Ok():
-        return Result.ok(null);
-      case Error():
-        return Result.error((this as Error).error);
-    }
-  }
+  Result<void> get erased => switch (this) {
+    Ok() => Result.ok(null),
+    Error() => Result.error((this as Error).error),
+  };
 
   /// Get value
   T get val => switch (this) {
