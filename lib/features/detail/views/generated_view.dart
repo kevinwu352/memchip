@@ -30,6 +30,8 @@ class GeneratedView extends StatelessWidget {
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Container(color: MyColors.white100),
                   errorWidget: (context, url, error) => Container(color: MyColors.white100),
+                  fadeInDuration: Duration.zero,
+                  fadeOutDuration: Duration.zero,
                 ),
               ),
             ),

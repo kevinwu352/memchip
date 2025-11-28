@@ -97,6 +97,8 @@ class _EntryView extends StatelessWidget {
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(color: MyColors.white100),
               errorWidget: (context, url, error) => Container(color: MyColors.white100),
+              fadeInDuration: Duration.zero,
+              fadeOutDuration: Duration.zero,
             ),
           ),
           if (selected) Image.asset('assets/images/detail_check_mask.png', fit: BoxFit.fill),

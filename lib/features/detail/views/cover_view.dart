@@ -21,6 +21,8 @@ class CoverView extends StatelessWidget {
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(color: MyColors.white100),
               errorWidget: (context, url, error) => Container(color: MyColors.white100),
+              fadeInDuration: Duration.zero,
+              fadeOutDuration: Duration.zero,
             ),
           ),
           Image.asset('assets/images/detail_cover_frame.png'),

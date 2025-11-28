@@ -168,15 +168,15 @@ class _HeaderView extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(24),
-          child: avatarUrl != null
-              ? CachedNetworkImage(
-                  imageUrl: avatarUrl ?? '',
-                  placeholder: (context, url) => Image.asset('assets/images/home_avatar.png'),
-                  errorWidget: (context, url, error) => Image.asset('assets/images/home_avatar.png'),
-                  width: 48,
-                  height: 48,
-                )
-              : Image.asset('assets/images/home_avatar.png', width: 48, height: 48),
+          child: CachedNetworkImage(
+            imageUrl: avatarUrl ?? '',
+            placeholder: (context, url) => Image.asset('assets/images/home_avatar.png'),
+            errorWidget: (context, url, error) => Image.asset('assets/images/home_avatar.png'),
+            width: 48,
+            height: 48,
+            fadeInDuration: Duration.zero,
+            fadeOutDuration: Duration.zero,
+          ),
         ),
 
         SizedBox(width: 12),
@@ -264,6 +264,8 @@ class _EntryView extends StatelessWidget {
                 fit: BoxFit.cover,
                 placeholder: (context, url) => Container(color: MyColors.white100),
                 errorWidget: (context, url, error) => Container(color: MyColors.white100),
+                fadeInDuration: Duration.zero,
+                fadeOutDuration: Duration.zero,
               ),
             ),
             Container(
