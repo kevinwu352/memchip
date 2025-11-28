@@ -62,7 +62,7 @@ final class RegisterVm extends ChangeNotifier {
   void _register(String account, String code) async {
     try {
       submiting = true;
-      final result = await network.reqRes(Api.accountRegister(account, code));
+      final result = await network.req(Api.accountRegister(account, code));
       final res = result.val.checked;
       onSnack?.call(res.message);
       onRegistered?.call();

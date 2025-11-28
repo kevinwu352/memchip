@@ -73,7 +73,7 @@ final class LoginVm extends ChangeNotifier {
   void _sendCode(String email) async {
     try {
       sending = true;
-      final result = await network.reqRes(Api.accountSendCode(email));
+      final result = await network.req(Api.accountSendCode(email));
       final res = result.val.checked;
       onSnack?.call(res.message);
       _startCounting();
@@ -122,7 +122,7 @@ final class LoginVm extends ChangeNotifier {
   void _login(String account, String code) async {
     try {
       submiting = true;
-      final result = await network.reqRes(Api.accountLogin(account, code), init: User.fromApi);
+      final result = await network.req(Api.accountLogin(account, code), init: User.fromApi);
       final res = result.val;
       final user = res.getObj<User>();
       onSnack?.call(res.message);
@@ -141,7 +141,7 @@ final class LoginVm extends ChangeNotifier {
   void _check(String account, String code) async {
     try {
       submiting = true;
-      final result = await network.reqRes(Api.accountCheckCode(account, code), init: User.fromApi);
+      final result = await network.req(Api.accountCheckCode(account, code), init: User.fromApi);
       final res = result.val;
       final user = res.getObj<User>();
       onSnack?.call(res.message);

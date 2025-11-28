@@ -1,3 +1,3 @@
 # memchip
 
-A new Flutter project.
+The best Flutter sample project ever.

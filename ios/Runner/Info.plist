@@ -18,6 +18,8 @@
 	<string>This app requires access to your photo library to allow you to select photos for your chips.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses the camera to allow you to take photos for your chips.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>This app requires access to the accelerometer to provide rotation information.</string>
 	<key>CFBundleName</key>
 	<string>memchip</string>
 	<key>CFBundlePackageType</key>

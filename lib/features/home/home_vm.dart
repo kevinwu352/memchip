@@ -16,7 +16,7 @@ final class HomeVm extends ChangeNotifier {
     try {
       _updating = true;
       if (tokenValid) {
-        final result = await network.reqRes(Api.accountGetUser(), init: User.fromApi);
+        final result = await network.req(Api.accountGetUser(), init: User.fromApi);
         final user = result.val.getObj<User>();
         defaults.user = user;
         _userUpdatedTime = DateTime.now();
@@ -48,7 +48,7 @@ final class HomeVm extends ChangeNotifier {
     try {
       loading = true;
       if (tokenValid) {
-        final result = await network.reqRes(Api.boxGetAll(), init: Box.fromApi);
+        final result = await network.req(Api.boxGetAll(), init: Box.fromApi);
         boxes = result.val.getLst<Box>() ?? [];
         _chipsUpdatedTime = DateTime.now();
         // print('load: got-boxes:$_chipsUpdatedTime');

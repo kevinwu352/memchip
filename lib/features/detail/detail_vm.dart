@@ -31,7 +31,7 @@ final class DetailVm extends ChangeNotifier {
 
   Future<void> _updateBox() async {
     try {
-      final result = await network.reqRes(Api.boxGetOne(box.id), init: Box.fromApi);
+      final result = await network.req(Api.boxGetOne(box.id), init: Box.fromApi);
       final obj = result.val.getObj<Box>();
       if (obj != null) box = obj;
     } catch (e) {
@@ -54,7 +54,7 @@ final class DetailVm extends ChangeNotifier {
   void _delete(String id) async {
     try {
       deleting = true;
-      final result = await network.reqRes(Api.boxDelete(id));
+      final result = await network.req(Api.boxDelete(id));
       final res = result.val.checked;
       onSnack?.call(res.message);
       onDeleted?.call();
@@ -87,7 +87,7 @@ final class DetailVm extends ChangeNotifier {
   void _activate(String id, String code) async {
     try {
       activating = true;
-      final result = await network.reqRes(Api.boxActivate(id, code));
+      final result = await network.req(Api.boxActivate(id, code));
       final res = result.val.checked;
       await _updateBox();
       onSnack?.call(res.message);
@@ -115,7 +115,7 @@ final class DetailVm extends ChangeNotifier {
   void _preview(String id) async {
     try {
       previewing = true;
-      final result = await network.reqRes(Api.boxPreview(id));
+      final result = await network.req(Api.boxPreview(id));
       final res = result.val.checked;
       await _updateBox();
       onSnack?.call(res.message);
@@ -160,7 +160,7 @@ final class DetailVm extends ChangeNotifier {
       if (box.type == BoxType.human) {
         print('human:true, has-gest:${_gests.isNotEmpty}, ${_gests.isNotEmpty ? 'continue' : 'to-retrive'}');
         if (_gests.isEmpty) {
-          final result = await network.reqRes(Api.boxGetGests(), init: Gest.fromApi, key: 'availableActions');
+          final result = await network.req(Api.boxGetGests(), init: Gest.fromApi, key: 'availableActions');
           _gests = result.val.getLst<Gest>() ?? [];
           print('human:true, has-gest:${_gests.isNotEmpty}, ${_gests.isNotEmpty ? 'continue' : 'failed and return'}');
           if (_gests.isEmpty) {
@@ -180,7 +180,7 @@ final class DetailVm extends ChangeNotifier {
       }
 
       print('to-generate');
-      final result = await network.reqRes(Api.boxGenerate(box.id, box.previewImages[selectedPreview!], actions));
+      final result = await network.req(Api.boxGenerate(box.id, box.previewImages[selectedPreview!], actions));
       final res = result.val.checked;
       await _updateBox();
       onSnack?.call(res.message);

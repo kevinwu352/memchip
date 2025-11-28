@@ -96,7 +96,7 @@ final class CreatePetVm extends ChangeNotifier {
   ) async {
     try {
       submiting = true;
-      final result = await network.reqRes(Api.boxCreatePet(name, image1, image2, gender, species, tail, personality));
+      final result = await network.req(Api.boxCreatePet(name, image1, image2, gender, species, tail, personality));
       final res = result.val.checked;
       onSnack?.call(res.message);
       onCreated?.call();
