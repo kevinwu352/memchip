@@ -14,7 +14,6 @@ void main() async {
   await secures.load();
 
   final defaults = Defaults();
-  await defaults.init();
   await defaults.load();
 
   final vdown = VideoDownloader();
