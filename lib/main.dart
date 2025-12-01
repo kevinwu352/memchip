@@ -11,10 +11,10 @@ void main() async {
   await pathInit();
 
   final secures = Secures();
-  await secures.load();
+  await secures.init();
 
   final defaults = Defaults();
-  await defaults.load();
+  await defaults.init();
 
   final vdown = VideoDownloader();
   await vdown.init();
